@@ -1,4 +1,4 @@
-#' Conditional permutation test fo the estimating equation approach adjusting for covariates with supplementary data
+#' Conditional permutation test for the estimating equation approach adjusting for covariates with supplementary data
 #'
 #' One paragraph describing this function
 #'

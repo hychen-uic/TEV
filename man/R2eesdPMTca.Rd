@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eesdPMTca.R
 \name{R2eesdPMTca}
 \alias{R2eesdPMTca}
-\title{Conditional permutation test fo the estimating equation approach adjusting for covariates with supplementary data}
+\title{Conditional permutation test for the estimating equation approach adjusting for covariates with supplementary data}
 \usage{
 R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 }
