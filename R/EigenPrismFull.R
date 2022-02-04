@@ -1,10 +1,13 @@
+#' @include EigenPrism.R
+NULL
+
 #' EigenPrism procedure integrating the low and high dimensional cases
 #'
 #' One paragraph describing this function...
 #'
 #' @param y outcome
 #' @param x covariates
-#' @param sigma significance level
+#' @param alpha significance level
 #'
 #' @details Details of this function...
 #'
@@ -42,7 +45,7 @@ EigenPrismFull=function(y,x,alpha=c(0.01,0.05,0.1)){
       }
     }else{ #linear model fit
       aa=lm(y~x)
-      resid=summary(aa)$sigma   # estimated reidual variance
+      resid=summary(aa)$sigma   # estimated residual variance
       r2=1-resid^2/sigy
       for(i in 1:length(alpha)){
         ci[(2*i-1):(2*i)]=1-(1-r2)*(n-p-1)/c(qchisq(alpha[i]/2,df=n-p-1),qchisq(1-alpha[i]/2,df=n-p-1))

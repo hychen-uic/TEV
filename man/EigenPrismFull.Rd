@@ -11,7 +11,7 @@ EigenPrismFull(y, x, alpha = c(0.01, 0.05, 0.1))
 
 \item{x}{covariates}
 
-\item{sigma}{significance level}
+\item{alpha}{significance level}
 }
 \value{
 Estimate and CI

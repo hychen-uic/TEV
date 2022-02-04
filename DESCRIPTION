@@ -13,3 +13,24 @@ Imports:
     cccp,
     graphics,
     stats
+Collate: 
+    'EigenPrism.R'
+    'EigenPrismFull.R'
+    'R2GCTA.R'
+    'R2ee.R'
+    'R2eePMT.R'
+    'R2eePMTca.R'
+    'R2eePMTcaa.R'
+    'R2eePMTcab.R'
+    'R2eeadj.R'
+    'R2eeadjPMT.R'
+    'R2eels.R'
+    'R2eelsPMT.R'
+    'R2eelsPMTca.R'
+    'R2eelsPMTcaa.R'
+    'R2eesd.R'
+    'R2eesd0.R'
+    'R2eesdPMT.R'
+    'R2eesdPMTca.R'
+    'R2eesdPMTcaa.R'
+    'utils.R'

@@ -1,3 +1,61 @@
+#----------------------------------------#
+#    decorrelation transformation        #
+#----------------------------------------#
+transf=function(x){
+
+  Xsvd=svd(x)
+  tran=Xsvd$v%*%diag(1/Xsvd$d)%*%t(Xsvd$v)/sqrt(n) #### what is variable n here?
+  z=as.matrix(x)%*%tran
+
+  list(z)
+}
+
+transfsd=function(x,X){
+
+  Xsvd=svd(rbind(x,X))
+  tran=Xsvd$v%*%diag(1/Xsvd$d)%*%t(Xsvd$v)/sqrt(n) #### what is variable n here?
+  z=as.matrix(x)%*%tran
+
+  list(z)
+}
+
+### projection when n>p ###
+proj1=function(x){ # without supplementary data
+
+  n=dim(x)[1]
+  p=dim(x)[2]
+  for(j in 1:p){
+    mux=mean(c(x[,j]))
+    sdx=sd(c(x[,j]))
+
+    x[,j]=(x[,j]-mux)/sdx
+  }
+
+  proj=diag(rep(1,n))-x%*%solve(t(x)%*%x)%*%t(x)
+
+  list(proj)
+}
+
+proj2=function(x,X){ # with supplementary data
+
+  n=dim(x)[1]
+  p=dim(x)[2]
+  N=dim(X)[1]
+  xx=rbind(x,X)
+  for(j in 1:p){
+    muxx=mean(c(xx[,j]))
+    sdxx=sd(c(xx[,j]))
+
+    xx[,j]=(xx[,j]-muxx)/sdxx
+  }
+
+  projx=diag(rep(1,n))-xx[1:n,]%*%solve(t(xx)%*%xx)%*%t(xx[1:n,])*(n+N)/n
+  projX=diag(rep(1:N))-xx[(n+1):(n+N),]%*%solve(t(xx)%*%xx)%*%t(xx[(n+1):(n+N),])*(n+N)/N
+
+  list(projx,projX)
+}
+
+
 zscale=function(z){
   n=dim(z)[1]
   p=dim(z)[2]

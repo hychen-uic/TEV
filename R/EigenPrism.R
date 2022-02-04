@@ -1,7 +1,6 @@
-#' @import cccp
 #' @import graphics
+#' @import cccp
 NULL
-
 #' EigenPrism procedure for estimating and generating confidence intervals
 #'
 #' This function implements the Eigen Prism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
