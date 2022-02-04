@@ -17,8 +17,9 @@ R2eesd0=function(y,x,X,lam,niter=1,VA=0,EB=0,know="yes",nrep=1000){
   p=dim(x)[2]
   N=dim(X)[1]
   if(dim(X)[2]!=p){
-    print("Stop: supplement data dimension does not match")
-    break
+    # print("Stop: supplement data dimension does not match")
+    # break
+    stop("Supplement data dimension does not match!")
   }
   #1. Standardization
 
