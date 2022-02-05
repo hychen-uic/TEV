@@ -1,6 +1,7 @@
 #----------------------------------------#
 #    decorrelation transformation        #
 #----------------------------------------#
+#' @export
 transf=function(x){
 
   xsvd=svd(x)
@@ -10,6 +11,7 @@ transf=function(x){
   list(z)
 }
 
+#' @export
 transfsd=function(x,X){
 
   Xsvd=svd(rbind(x,X))
@@ -55,7 +57,7 @@ proj2=function(x,X){ # with supplementary data
   list(projx,projX)
 }
 
-
+#' @export
 zscale=function(z){
   n=dim(z)[1]
   p=dim(z)[2]
