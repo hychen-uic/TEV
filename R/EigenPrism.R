@@ -3,7 +3,7 @@
 NULL
 #' EigenPrism procedure for estimating and generating confidence intervals
 #'
-#' This function implements the Eigen Prism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
+#' This function implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
 #'
 #' @param y response vector of length n
 #' @param X n by p design matrix. Columns are automatically centered and scaled to variance 1, and they cannot include

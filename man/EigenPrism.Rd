@@ -36,7 +36,7 @@ estimate: unbiased estimate of the target (for heritability, only approximately 
         CI: 100*(1-alpha)% confidence interval for target
 }
 \description{
-This function implements the Eigen Prism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
+This function implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
 }
 \details{
 Details of this function, some explanations of the input arguments...
