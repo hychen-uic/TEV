@@ -41,7 +41,7 @@ R2eeadj=function(y,xa,xb,niter=1){
     sdxa=sd(c(xa[,j]))
     xa[,j]=(xa[,j]-mua)/sdxa
   }
-  for(j in 1:(p-pa)){    #### NOTE: what is p variable here.
+  for(j in 1:pb){
     mub=mean(c(xb[,j]))
     sdxb=sd(c(xb[,j]))
     xb[,j]=(xb[,j]-mub)/sdxb
@@ -101,3 +101,4 @@ R2eeadj=function(y,xa,xb,niter=1){
 
   list(c(r2a,r2b,r2b0))
 }
+

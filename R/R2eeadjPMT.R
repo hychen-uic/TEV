@@ -44,7 +44,7 @@ R2eeadjPMT=function(y,xa,xb,niter=5,npm=1000,proja){
     sdxa=sd(c(xa[,j]))
     xa[,j]=(xa[,j]-mua)/sdxa
   }
-  for(j in 1:(p-pa)){    #### NOTE: what is p variable here.
+  for(j in 1:pb){
     mub=mean(c(xb[,j]))
     sdxb=sd(c(xb[,j]))
     xb[,j]=(xb[,j]-mub)/sdxb
@@ -54,7 +54,7 @@ R2eeadjPMT=function(y,xa,xb,niter=5,npm=1000,proja){
 
   yr=proja%*%y    # projection
   xrb=proja%*%xb  # projection
-  for(j in 1:(p-pa)){    #### NOTE: what is p variable here.
+  for(j in 1:pb){
     mub=mean(c(xrb[,j]))
     sdb=sd(c(xrb[,j]))
     xrb[,j]=(xrb[,j]-mub)/sdb
@@ -104,6 +104,7 @@ R2eeadjPMT=function(y,xa,xb,niter=5,npm=1000,proja){
     r2b=as.numeric((dena*numb-denba*numa)/(dena*denb-denab*denba))
     r2b=min(1,max(0,r2b))
   }
+  r2=c(r2a,r2b)
 
   #4. Compute permutation p-value for H0: r2=0.
   result=array(0,c(npm,2))
@@ -130,6 +131,6 @@ R2eeadjPMT=function(y,xa,xb,niter=5,npm=1000,proja){
   acc=2*sqrt(pvalueESTb*(1-pvalueESTb)/npm)
   pvalueBOUNDb=max(pvalueESTb+acc,pvalueESTb+crt)
 
-  list(matrix(c(pvalueESTa,pvalueESTb,pvalueBOUNDa,pvalueBOUNDb),ncol=2),r2,result) #### NOTE: what is r2 variable here.
+  list(matrix(c(pvalueESTa,pvalueESTb,pvalueBOUNDa,pvalueBOUNDb),ncol=2),r2,result)
 
 }

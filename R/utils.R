@@ -3,8 +3,8 @@
 #----------------------------------------#
 transf=function(x){
 
-  Xsvd=svd(x)
-  tran=Xsvd$v%*%diag(1/Xsvd$d)%*%t(Xsvd$v)/sqrt(n) #### what is variable n here?
+  xsvd=svd(x)
+  tran=xsvd$v%*%diag(1/sqrt(xsvd$d))%*%t(xsvd$v)
   z=as.matrix(x)%*%tran
 
   list(z)
@@ -13,7 +13,7 @@ transf=function(x){
 transfsd=function(x,X){
 
   Xsvd=svd(rbind(x,X))
-  tran=Xsvd$v%*%diag(1/Xsvd$d)%*%t(Xsvd$v)/sqrt(n) #### what is variable n here?
+  tran=Xsvd$v%*%diag(1/sqrt(Xsvd$d))%*%t(Xsvd$v)
   z=as.matrix(x)%*%tran
 
   list(z)
