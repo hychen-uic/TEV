@@ -6,8 +6,8 @@
 #' @param x covariates
 #' @param lam parameter adjusting the format of the weighting matrix
 #' @param niter number of iterations for updating lambda
-#' @param bt Default is "T"
-#' @param btn ...
+#' @param bt Boolean variable specifying whether to compute bootstrap variance. Default is "T"
+#' @param btn Bootstrap sample size
 #'
 #' @details Details of this function...
 #'
