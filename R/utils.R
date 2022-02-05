@@ -1,6 +1,11 @@
 #----------------------------------------#
 #    decorrelation transformation        #
 #----------------------------------------#
+
+#' Decorrelation transformation
+#'
+#' @param x input
+#'
 #' @export
 transf=function(x){
 
@@ -11,6 +16,11 @@ transf=function(x){
   list(z)
 }
 
+#' Decorrelation
+#'
+#' @param x input 1
+#' @param X input 2
+#'
 #' @export
 transfsd=function(x,X){
 
@@ -57,6 +67,10 @@ proj2=function(x,X){ # with supplementary data
   list(projx,projX)
 }
 
+#' Transformation function
+#'
+#' @param z input argument
+#'
 #' @export
 zscale=function(z){
   n=dim(z)[1]
