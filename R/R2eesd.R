@@ -1,23 +1,29 @@
-#' confidence interval for estimating equation approach with supplementary covariate data
+#' Estimation and inference on the explained variation by the estimating equation approach
+#' with supplementary covariate data
 #'
-#' One paragraph describing this function...
+#' This function estimates the proportion of the explained variation using the estimating
+#' equation approach incorporating supplementary covariate data.
 #'
 #' @param y outcome
 #' @param x covariates
 #' @param X supplementary covariate data
 #' @param lam parameter adjusting the format of the weighting matrix. Default is 0.2
 #' @param niter number of iterations for updating lambda. Default is 3
-#' @param V V[1:3] == V[1]=VA, V[2]=VAB, V[3]=VB
-#' @param E E[1:3] == E[1]=EC, E[2]=ED, E[3]=EF
-#' @param know if VA and EB are known, options include "yes" and "no". Default is "yes"
-#' @param nrep Monte Carlo sample size for updating VA and EB
+#' @param V \code{V[1:3] == V[1]=VA}, \code{V[2]=VAB}, \code{V[3]=VB}
+#' @param E \code{E[1:3] == E[1]=EC}, \code{E[2]=ED}, \code{E[3]=EF}
+#' @param know if V and E are known, options include "yes" and "no". Default is "yes"
+#' @param nrep Monte Carlo sample size for updating V and E
 #'
-#' @details Details of this function...
+#' @details The estimation approach does not assume independent covariates and can
+#' deal with the case n <= p.
 #'
-#' @return Output of this function...
+#' @return Output includes the estimator of the proportion of variation explained and
+#' its variance, and the confidence intervals.
 #'
-#' @references reference 1 here...
-#' @references reference 2 here...
+#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' @references An additional reference is to be added.
 #'
 #' @examples \dontrun{R2eesd(y,x,X,lam=0.2,niter=3,V=rep(0,3),E=rep(0,3),know="yes",nrep=1000)}
 #'

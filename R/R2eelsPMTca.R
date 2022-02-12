@@ -1,18 +1,22 @@
-#' Conditional permutation test for the least squares approach
+#' Conditional permutation test for no explained variation using the least-square approach
 #'
-#' One paragraph describing this function...
+#' This function performs conditional tests of no variation explained by the additional
+#' covariates when adjusted for the one set of covariates.
 #'
 #' @param y outcome
-#' @param x covariates
-#' @param pa dimension of covariates to be adjusted
+#' @param x all the covariates
+#' @param pa dimension of the first pat of covariates to be adjusted
 #' @param npm permutation sample size. Default is 1000
 #'
-#' @details Details of this function...
+#' @details The conditional permutation test needs to perform the second part of the
+#' covariates and can be computationally slow.
 #'
-#' @return Output of this function...
+#' @return The function outputs the estimated additional variation explained
+#' and the p-values of the test.
 #'
-#' @references Reference 1 here...
-#' @references Reference 2 here...
+#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+#' under review by Int. J. Environ. Res. Public Health 2022.
 #'
 #' @examples \dontrun{R2eelsPMTca(y,x,pa,npm=1000)}
 #'

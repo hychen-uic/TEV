@@ -2,7 +2,8 @@
 % Please edit documentation in R/R2eesdPMT.R
 \name{R2eesdPMT}
 \alias{R2eesdPMT}
-\title{Permutation test for estimating equation approach with supplementary covariate data}
+\title{Permutation test for no explained variation by
+estimating equation approach with supplementary covariate data}
 \usage{
 R2eesdPMT(y, x, X, lam, niter = 3, npm = 1000)
 }
@@ -20,20 +21,24 @@ R2eesdPMT(y, x, X, lam, niter = 3, npm = 1000)
 \item{npm}{Monte Carlo sample size for permutation. Default is 1000}
 }
 \value{
-Output of this function...
+Output is the estimator of the proportion of explained variation
+and the p-value for the test.
 }
 \description{
-One paragraph describing this function...
+This function permutes the outcome and use the estimator for the
+proportion of variation explained for performing test of no explained variation.
 }
 \details{
-Details of this function...
+The algorithm is fast because only the outcome is permuted.
 }
 \examples{
 \dontrun{R2eesdPMT(y,x,X,lam,niter=3,npm=1000)}
 
 }
 \references{
-Reference 1 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 
-Reference 2 here...
+An additional reference is to be added..
 }

@@ -1,16 +1,16 @@
-#' Confidence intervals for the least squares approach
+#' Estimate the proportion of explained variation by the least squares approach
 #'
-#' One paragraph describing this fucntion
+#' This function works only for n > p. But covariates are not required to be independent.
 #'
 #' @param y outcome
 #' @param x covariates
 #'
-#' @details Details of this function...
+#' @details This method uses the least square approach.
 #'
-#' @return Ooutput of this fucntion...
+#' @return Output includes estimates, variance, and confidence intervals.
 #'
-#' @references Reference 1 here...
-#' @references Reference 2 here...
+#' @references Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
+#' linear model with dense effects. arXiv:2201.08723
 #'
 #' @examples \dontrun{R2eels(y,x)}
 #'

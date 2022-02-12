@@ -1,4 +1,4 @@
-#' Permutation test for the two-group estimating equation approach
+#' Permutation test for the two-group estimating equation approach (Need further work)
 #'
 #' One paragraph describing this function...
 #'
@@ -13,8 +13,7 @@
 #'
 #' @return Output of this function...
 #'
-#' @references Reference 1 here...
-#' @references Reference 2 here...
+#' @references To be added.
 #'
 #' @examples \dontrun{R2eeadjPMT(y,xa,xb,niter=5,npm=1000,proja)}
 #'

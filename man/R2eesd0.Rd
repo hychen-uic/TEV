@@ -2,9 +2,20 @@
 % Please edit documentation in R/R2eesd0.R
 \name{R2eesd0}
 \alias{R2eesd0}
-\title{Funtion for temporary comparison}
+\title{Estimation and inference on the explained variation
+by the estimating equation approach with supplementary covariate data}
 \usage{
-R2eesd0(y, x, X, lam, niter = 1, VA = 0, EB = 0, know = "yes", nrep = 1000)
+R2eesd0(
+  y,
+  x,
+  X,
+  lam = 0.2,
+  niter = 3,
+  VA = 0,
+  EB = 0,
+  know = "yes",
+  nrep = 1000
+)
 }
 \arguments{
 \item{y}{outcome}
@@ -13,18 +24,38 @@ R2eesd0(y, x, X, lam, niter = 1, VA = 0, EB = 0, know = "yes", nrep = 1000)
 
 \item{X}{supplementary covariate data}
 
-\item{lam}{parameter adjusting the format of the weighting matrix}
+\item{lam}{parameter adjusting the format of the weighting matrix. Default is 0.2}
 
-\item{niter}{number of iterations for updating lambda}
+\item{niter}{number of iterations for updating lambda. Default is 3}
 
-\item{VA}{the first item of the variance value if known}
+\item{VA}{pre-calculated variance component}
 
-\item{EB}{the second term of the variance expression if known}
+\item{EB}{pre-calculated variance componenet}
 
-\item{know}{"yes" if VA and EB are known, "no" otherwise}
+\item{know}{if VA and EB are known, options include "yes" and "no". Default is "yes"}
 
-\item{nrep}{Monte Carlp sample size for computing VA and EB}
+\item{nrep}{Monte Carlo sample size for computing VA and EB}
+}
+\value{
+Output include the estimator of the proportion of variation explained and
+its variance, and the confidence intervals.
 }
 \description{
-Funtion for temporary comparison
+This function estimates the proportion of the explained variation using
+the estimating equation approach incorporating supplementary covariate data.
+}
+\details{
+The estimation approach does not assume independent covariates and can deal with the case n <= p.
+This differs from \code{R2eesd} in the way the variance is estimated.
+}
+\examples{
+\dontrun{R2eesd0(y,x,X,lam=0.2,niter=3,VA=0,EB=0,know="no",nrep=1000)}
+
+}
+\references{
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+
+An additional reference is to be added.
 }

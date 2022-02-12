@@ -2,7 +2,8 @@
 % Please edit documentation in R/R2eesd.R
 \name{R2eesd}
 \alias{R2eesd}
-\title{confidence interval for estimating equation approach with supplementary covariate data}
+\title{Estimation and inference on the explained variation by the estimating equation approach
+with supplementary covariate data}
 \usage{
 R2eesd(
   y,
@@ -27,22 +28,25 @@ R2eesd(
 
 \item{niter}{number of iterations for updating lambda. Default is 3}
 
-\item{V}{V[1:3] == V[1]=VA, V[2]=VAB, V[3]=VB}
+\item{V}{\code{V[1:3] == V[1]=VA}, \code{V[2]=VAB}, \code{V[3]=VB}}
 
-\item{E}{E[1:3] == E[1]=EC, E[2]=ED, E[3]=EF}
+\item{E}{\code{E[1:3] == E[1]=EC}, \code{E[2]=ED}, \code{E[3]=EF}}
 
-\item{know}{if VA and EB are known, options include "yes" and "no". Default is "yes"}
+\item{know}{if V and E are known, options include "yes" and "no". Default is "yes"}
 
-\item{nrep}{Monte Carlo sample size for updating VA and EB}
+\item{nrep}{Monte Carlo sample size for updating V and E}
 }
 \value{
-Output of this function...
+Output includes the estimator of the proportion of variation explained and
+its variance, and the confidence intervals.
 }
 \description{
-One paragraph describing this function...
+This function estimates the proportion of the explained variation using the estimating
+equation approach incorporating supplementary covariate data.
 }
 \details{
-Details of this function...
+The estimation approach does not assume independent covariates and can
+deal with the case n <= p.
 }
 \examples{
 \dontrun{R2eesd(y,x,X,lam=0.2,niter=3,V=rep(0,3),E=rep(0,3),know="yes",nrep=1000)}
@@ -50,7 +54,9 @@ Details of this function...
 
 }
 \references{
-reference 1 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 
-reference 2 here...
+An additional reference is to be added.
 }

@@ -16,21 +16,20 @@ R2eeadj(y, xa, xb, niter = 1)
 \item{niter}{number of iterations for updating lambda. Default is 1}
 }
 \value{
-Output of this function...
+The output includes the estimates and confidence intervals.
 }
 \description{
-One paragraph describing this function...
+This method uses two estimating equations to estimate the variations
+of the outcome explained by the two parts of covariates simultaneously.
 }
 \details{
-Details of this function...
+This method assumes covariates are independent.
 }
 \examples{
-\dontrun{R2eeadj(y,xa,xb,niter=1)}
+\dontrun{R2eeadj(y,xa,xb)}
 
 
 }
 \references{
-Reference 1...
-
-Reference 2...
+To be added.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eelsPMT.R
 \name{R2eelsPMT}
 \alias{R2eelsPMT}
-\title{Permutation test for the least squares approach}
+\title{Permutation test for no explained variation}
 \usage{
 R2eelsPMT(y, x, npm = 1000)
 }
@@ -14,20 +14,22 @@ R2eelsPMT(y, x, npm = 1000)
 \item{npm}{permutation sample size. Default is 1000}
 }
 \value{
-Ouput of this function...
+Output is the estimate of the proportion of the explained variation
+and the p-value of the test.
 }
 \description{
-One paragraph describing this function
+This function performs test of no explained variation by
+permuting the outcome using least square approach.
 }
 \details{
-Details of this function...
+The computation permutes outcome and is computationally fast.
 }
 \examples{
 \dontrun{R2eelsPMT(y,x,npm=1000)}
 
 }
 \references{
-Reference 1 here...
-
-Reference 2 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 }

@@ -17,15 +17,21 @@ EigenPrismFull(y, x, alpha = c(0.01, 0.05, 0.1))
 Estimate and CI
 }
 \description{
-One paragraph describing this function...
+For n > p, use least square approach under normal error to find the confidence interval
+for the explained variation. For n <= p, use the EigenPrism approach by Jansen et al (2017).
 }
 \details{
 Details of this function...
 }
 \examples{
-\dontrun{...}
+\dontrun{EigenPrismFull(y, x)}
 
 }
 \references{
-reference 1 here...
+Chen, H.Y. (2022). Statistical inference on explained variation in
+high-dimensional linear model with dense effects. arXiv:2201.08723
+
+Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference
+for high-dimensional signal-to-noise ratios.
+\emph{Journal of Royal Statistical Society, Ser. B.}, \strong{79}, 1037-1065.
 }

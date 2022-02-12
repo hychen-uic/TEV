@@ -1,22 +1,28 @@
 #' GCTA approach
 #'
-#' This function implements the GCTA approach assuming independent covariates and normally distributed errors, with bootstrap variance.
+#' This function implements the GCTA approach assuming independent covariates
+#' and normally distributed errors, with bootstrap variance.
 #'
 #' @param y outcome
 #' @param x covariates
 #' @param lam parameter adjusting the format of the weighting matrix
 #' @param niter number of iterations for updating lambda
-#' @param bt Boolean variable specifying whether to compute bootstrap variance. Default is "T"
-#' @param btn Bootstrap sample size
+#' @param bt default is "T"
+#' @param btn bootstrap sample size
 #'
-#' @details Details of this function...
+#' @details The function uses the singular value decomposition for estimation and bootstrap
+#' sampling approach for variance estimation under normal random errors.
 #'
-#' @return Output of this function...
+#' @return Output includes estimator and its variance of the proportional variation explained by the covariates.
 #'
-#' @references Reference 1 here...
-#' @references Reference 2 here...
+#' @references Schweiger, R., Kaufman, S., Laaksonen, R., Kleber, M. E., Marz, W., Eskin, E., Rosset, S., Halperin, E. (2016).
+#' Fats and ac-curate construction of confidence intervals for heritability.
+#' *The American Journal of Human Genetics*, **98**, 1181-1192.
+#' @references Yang, J., Lee, S. H., Wray, N. R., Goddard, M. E., Visscher, P. (2016).
+#' GCTA-GREML accounts for linkage disequilibrium when estimating genetic variance from genome-wide SNPs.
+#' *Proceedings of the National Academy of Sciences*, **113**, E4579-E4580.
 #'
-#' @examples \dontrun{...}
+#' @examples \dontrun{R2GCTA(y, x)}
 #'
 #' @export
 R2GCTA=function(y,x,lam,niter=10,bt='T',btn){

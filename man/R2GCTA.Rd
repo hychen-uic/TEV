@@ -15,25 +15,31 @@ R2GCTA(y, x, lam, niter = 10, bt = "T", btn)
 
 \item{niter}{number of iterations for updating lambda}
 
-\item{bt}{Default is "T"}
+\item{bt}{default is "T"}
 
-\item{btn}{...}
+\item{btn}{bootstrap sample size}
 }
 \value{
-Output of this function...
+Output includes estimator and its variance of the proportional variation explained by the covariates.
 }
 \description{
-This function implements the GCTA approach assuming independent covariates and normally distributed errors, with bootstrap variance.
+This function implements the GCTA approach assuming independent covariates
+and normally distributed errors, with bootstrap variance.
 }
 \details{
-Details of this function...
+The function uses the singular value decomposition for estimation and bootstrap
+sampling approach for variance estimation under normal random errors.
 }
 \examples{
-\dontrun{...}
+\dontrun{R2GCTA(y, x)}
 
 }
 \references{
-Reference 1 here...
+Schweiger, R., Kaufman, S., Laaksonen, R., Kleber, M. E., Marz, W., Eskin, E., Rosset, S., Halperin, E. (2016).
+Fats and ac-curate construction of confidence intervals for heritability.
+\emph{The American Journal of Human Genetics}, \strong{98}, 1181-1192.
 
-Reference 2 here...
+Yang, J., Lee, S. H., Wray, N. R., Goddard, M. E., Visscher, P. (2016).
+GCTA-GREML accounts for linkage disequilibrium when estimating genetic variance from genome-wide SNPs.
+\emph{Proceedings of the National Academy of Sciences}, \strong{113}, E4579-E4580.
 }

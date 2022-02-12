@@ -1,6 +1,8 @@
-#' Conditional permutation test for the estimating equation approach adjusting for covariates with supplementary data
+#' Permutation test for no additional explained variation by adding extra
+#' covariates using the estimating equation approach incoporating supplementary covariate data
 #'
-#' One paragraph describing this function
+#' This function permutes the outcome and use the estimator for the proportion of
+#' variation explained for performing test of no explained variation.
 #'
 #' @param y outcome
 #' @param x covariates
@@ -10,12 +12,14 @@
 #' @param niter number of iteration for updating lambda
 #' @param npm Monte Carlo sample size for permutation
 #'
-#' @details Details of this function...
+#' @details The algorithm can be slow because the second part of the covariates need to be permuted.
 #'
-#' @return Output of this function...
+#' @return Output is the estimator of the proportion of explained variation and the p-value for the test.
 #'
-#' @references Reference 1 here...
-#' @references Reference 2 here...
+#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' @references An additional reference is to be added.
 #'
 #' @examples \dontrun{R2eesdPMTca(y,x,X,pa,lam=0.2,niter=3,npm=1000)}
 #'

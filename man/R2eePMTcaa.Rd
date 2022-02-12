@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eePMTcaa.R
 \name{R2eePMTcaa}
 \alias{R2eePMTcaa}
-\title{Another conditional permutation test}
+\title{Conditional permutation test adjusting for covariates for estimating equation approach}
 \usage{
 R2eePMTcaa(y, x, pa, lam = 0.2, niter = 3, npm = 1000)
 }
@@ -20,20 +20,23 @@ R2eePMTcaa(y, x, pa, lam = 0.2, niter = 3, npm = 1000)
 \item{npm}{Monte Carlo sample size for permutation. Default is 1000}
 }
 \value{
-The output of this function...
+Output is the estimate of the proportion of the variation explained by
+the additional covariates and the p-value of the test.
 }
 \description{
-One paragraph describing this function...
+This function performs test of no extra variation explained by the additional covariates
+by permuting the additional covariates using the estimating equation approach.
 }
 \details{
-Details of this function...
+The computation permutes the second part of the covariates and is computationally slow.
+It differs from \code{R2eePMTca} in the way of matrix computation.
 }
 \examples{
 \dontrun{R2eePMTcaa(y,x,pa,lam=0.2,niter=3,npm=1000)}
 
 }
 \references{
-reference 1 here...
-
-reference 2 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 }

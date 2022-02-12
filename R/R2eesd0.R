@@ -1,17 +1,35 @@
-#' Funtion for temporary comparison
+#' Estimation and inference on the explained variation
+#' by the estimating equation approach with supplementary covariate data
+#'
+#' This function estimates the proportion of the explained variation using
+#' the estimating equation approach incorporating supplementary covariate data.
 #'
 #' @param y outcome
 #' @param x covariates
 #' @param X supplementary covariate data
-#' @param lam parameter adjusting the format of the weighting matrix
-#' @param niter number of iterations for updating lambda
-#' @param VA the first item of the variance value if known
-#' @param EB the second term of the variance expression if known
-#' @param know "yes" if VA and EB are known, "no" otherwise
-#' @param nrep Monte Carlp sample size for computing VA and EB
+#' @param lam parameter adjusting the format of the weighting matrix. Default is 0.2
+#' @param niter number of iterations for updating lambda. Default is 3
+#' @param VA pre-calculated variance component
+#' @param EB pre-calculated variance componenet
+#' @param know if VA and EB are known, options include "yes" and "no". Default is "yes"
+#' @param nrep Monte Carlo sample size for computing VA and EB
+#'
+#' @details The estimation approach does not assume independent covariates and can deal with the case n <= p.
+#' This differs from \code{R2eesd} in the way the variance is estimated.
+#'
+#' @return Output include the estimator of the proportion of variation explained and
+#' its variance, and the confidence intervals.
+#'
+#' @examples \dontrun{R2eesd0(y,x,X,lam=0.2,niter=3,VA=0,EB=0,know="no",nrep=1000)}
+#'
+#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#'
+#' @references An additional reference is to be added.
 #'
 #' @export
-R2eesd0=function(y,x,X,lam,niter=1,VA=0,EB=0,know="yes",nrep=1000){
+R2eesd0=function(y,x,X,lam=0.2,niter=3,VA=0,EB=0,know="yes",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]

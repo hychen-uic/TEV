@@ -1,21 +1,23 @@
 #' @import stats
 NULL
 
-#' Computes the confidence interval with the estimating equation approach
+#' Compute the estimator of the proportion of the explained variation
 #'
-#' One paragraph describing this function...
+#' This function implements method for computing point estimate, variance estimate, and
+#' confidence intervals of the proportion of variation of an outcome explained by a set
+#' of covariates assuming the covariates are independent.
 #'
 #' @param y outcome
 #' @param x covariates
-#' @param lam parameter adjusting the format of the weighting matrix. Default is 0.1
+#' @param lam initial parameter value (>= 0) for the weighting matrix. Default is 0.1
 #' @param niter number of iterations for updating lambda
 #'
-#' @details details about this function...
+#' @details The computation uses the singular value decomposition and asymptotic variance formula.
 #'
-#' @return The output is the confidence interval...
+#' @return The output includes estimates, variance, and confidence intervals.
 #'
-#' @references reference 1 here...
-#' @references reference 2 here...
+#' @references Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
+#' linear model with dense effects. arXiv:2201.08723
 #'
 #' @examples \dontrun{R2ee(y,x,lam=0.1,niter=3)}
 #'

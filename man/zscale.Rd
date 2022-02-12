@@ -9,6 +9,10 @@ zscale(z)
 \arguments{
 \item{z}{input argument}
 }
+\value{
+rescale data matrix.
+}
 \description{
-Transformation function
+This function rescales each variable in the data by subtracting mean and
+divided by standard deviation estimates
 }

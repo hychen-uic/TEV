@@ -2,7 +2,8 @@
 % Please edit documentation in R/R2eesdPMTca.R
 \name{R2eesdPMTca}
 \alias{R2eesdPMTca}
-\title{Conditional permutation test for the estimating equation approach adjusting for covariates with supplementary data}
+\title{Permutation test for no additional explained variation by adding extra
+covariates using the estimating equation approach incoporating supplementary covariate data}
 \usage{
 R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 }
@@ -22,20 +23,23 @@ R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 \item{npm}{Monte Carlo sample size for permutation}
 }
 \value{
-Output of this function...
+Output is the estimator of the proportion of explained variation and the p-value for the test.
 }
 \description{
-One paragraph describing this function
+This function permutes the outcome and use the estimator for the proportion of
+variation explained for performing test of no explained variation.
 }
 \details{
-Details of this function...
+The algorithm can be slow because the second part of the covariates need to be permuted.
 }
 \examples{
 \dontrun{R2eesdPMTca(y,x,X,pa,lam=0.2,niter=3,npm=1000)}
 
 }
 \references{
-Reference 1 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 
-Reference 2 here...
+An additional reference is to be added.
 }

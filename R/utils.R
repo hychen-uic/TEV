@@ -4,7 +4,11 @@
 
 #' Decorrelation transformation
 #'
+#' Decorrelation transformation
+#'
 #' @param x input
+#'
+#' @return Decorrelation matrix for x.
 #'
 #' @export
 transf=function(x){
@@ -16,10 +20,14 @@ transf=function(x){
   list(z)
 }
 
-#' Decorrelation
+#' Decorrelation transformation with supplementary data
+#'
+#' Decorrelation with the aid of supplementary data
 #'
 #' @param x input 1
 #' @param X input 2
+#'
+#' @return Decorrelation matrix for x.
 #'
 #' @export
 transfsd=function(x,X){
@@ -69,7 +77,12 @@ proj2=function(x,X){ # with supplementary data
 
 #' Transformation function
 #'
+#' This function rescales each variable in the data by subtracting mean and
+#' divided by standard deviation estimates
+#'
 #' @param z input argument
+#'
+#' @return rescale data matrix.
 #'
 #' @export
 zscale=function(z){

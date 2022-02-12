@@ -20,8 +20,8 @@ EigenPrism(
 \item{X}{n by p design matrix. Columns are automatically centered and scaled to variance 1, and they cannot include
 one for the intercept terms.}
 
-\item{invsqrtSig}{if columns of X  are not independent, p by p positive definite matrix which is the square-root
-of the inverse of Sig, where Sig is the *correlation* matrix of the X. Default is identity}
+\item{invsqrtSig}{if columns of X are not independent, p by p positive definite matrix which is the square-root
+of the inverse of Sig, where Sig is the \emph{correlation} matrix of the X. Default is identity}
 
 \item{alpha}{significance level for confidence interval. Default is 0.05}
 
@@ -29,22 +29,27 @@ of the inverse of Sig, where Sig is the *correlation* matrix of the X. Default i
 
 \item{zero.ind}{vector of which indices of the weight vector w to constrain to zero. Default is none}
 
-\item{diagnostics}{Boolean variable indicating whether to generate the diagnostic plots for V_i, lambda_i, and w_i. Default is \code{TRUE}.}
+\item{diagnostics}{boolean variable indicating whether to generate the diagnostic plots for V_i,
+lambda_i, and w_i. Default is \code{TRUE}.}
 }
 \value{
 estimate: unbiased estimate of the target (for heritability, only approximately unbiased);
-        CI: 100*(1-alpha)% confidence interval for target
+CI: 100*(1-alpha)\% confidence interval for target
 }
 \description{
-This function implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
+This function implements the EigenPrism procedure for estimating and generating
+confidence intervals for variance components in high-dimensional linear model.
 }
 \details{
 Details of this function, some explanations of the input arguments...
 }
 \examples{
-\dontrun{...}
+\dontrun{EigenPrism(y, x)}
 
 }
 \references{
+Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference for high-dimensional signal-to-noise ratios.
+\emph{Journal of Royal Statistical Society, Ser. B.}, \strong{79}, 1037-1065.
+
 Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}.
 }

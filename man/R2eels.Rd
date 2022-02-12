@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eels.R
 \name{R2eels}
 \alias{R2eels}
-\title{Confidence intervals for the least squares approach}
+\title{Estimate the proportion of explained variation by the least squares approach}
 \usage{
 R2eels(y, x)
 }
@@ -12,20 +12,19 @@ R2eels(y, x)
 \item{x}{covariates}
 }
 \value{
-Ooutput of this fucntion...
+Output includes estimates, variance, and confidence intervals.
 }
 \description{
-One paragraph describing this fucntion
+This function works only for n > p. But covariates are not required to be independent.
 }
 \details{
-Details of this function...
+This method uses the least square approach.
 }
 \examples{
 \dontrun{R2eels(y,x)}
 
 }
 \references{
-Reference 1 here...
-
-Reference 2 here...
+Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
+linear model with dense effects. arXiv:2201.08723
 }

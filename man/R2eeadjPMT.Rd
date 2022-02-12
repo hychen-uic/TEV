@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eeadjPMT.R
 \name{R2eeadjPMT}
 \alias{R2eeadjPMT}
-\title{Permutation test for the two-group estimating equation approach}
+\title{Permutation test for the two-group estimating equation approach (Need further work)}
 \usage{
 R2eeadjPMT(y, xa, xb, niter = 5, npm = 1000, proja)
 }
@@ -33,7 +33,5 @@ Details of this function...
 
 }
 \references{
-Reference 1 here...
-
-Reference 2 here...
+To be added.
 }

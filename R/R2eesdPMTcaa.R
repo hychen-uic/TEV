@@ -1,26 +1,31 @@
-#' Another conditional permutation test...
+#' Permutation test for no additional explained variation by adding
+#' extra covariates using the estimating equation approach incorporating supplementary covariate data
 #'
-#' One paragraph describing this function...
+#' This function permutes the outcome and use the estimator for the proportion of variation
+#' explained for performing test of no explained variation.
 #'
 #' @param y outcome
 #' @param x covariates
 #' @param X supplementary covariate data
 #' @param pa dimension of covariates to be adjusted
-#' @param lam parameter adjusting the format of the weighting matrix. Default is 0.1
+#' @param lam parameter adjusting the format of the weighting matrix. Default is 0.2
 #' @param niter number of iteration for updating lambda. Default is 3
 #' @param npm Monte Carlo sample size for permutation. Default is 1000
 #'
-#' @details Details of this function...
+#' @details The algorithm can be slow because the second part of the covariates need to be permuted.
+#' The approach differs from the \code{R2eesdPMTca} in the way the matrix operations are handled.
 #'
-#' @return Ouput of this function...
+#' @return Output is the estimator of the proportion of explained variation and the p-value for the test.
 #'
-#' @references Reference 1 here...
-#' @references Reference 2 here...
+#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' @references An additional reference is to be added.
 #'
 #' @examples \dontrun{R2eesdPMTcaa(y,x,X,pa,lam=0.1,niter=3,npm=1000)}
 #'
 #' @export
-R2eesdPMTcaa=function(y,x,X,pa,lam=0.1,niter=3,npm=1000){
+R2eesdPMTcaa=function(y,x,X,pa,lam=0.2,niter=3,npm=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]

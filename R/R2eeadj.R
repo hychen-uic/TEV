@@ -1,20 +1,20 @@
 #' Confidence intervals for the two-group estimating equation approach
 #'
-#' One paragraph describing this function...
+#' This method uses two estimating equations to estimate the variations
+#' of the outcome explained by the two parts of covariates simultaneously.
 #'
 #' @param y outcome
 #' @param xa covariates to be adjusted
 #' @param xb covariate effects to be computed
 #' @param niter number of iterations for updating lambda. Default is 1
 #'
-#' @details Details of this function...
+#' @details This method assumes covariates are independent.
 #'
-#' @return Output of this function...
+#' @return The output includes the estimates and confidence intervals.
 #'
-#' @references Reference 1...
-#' @references Reference 2...
+#' @references To be added.
 #'
-#' @examples \dontrun{R2eeadj(y,xa,xb,niter=1)}
+#' @examples \dontrun{R2eeadj(y,xa,xb)}
 #'
 #'
 #' @export

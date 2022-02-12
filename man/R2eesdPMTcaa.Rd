@@ -2,9 +2,10 @@
 % Please edit documentation in R/R2eesdPMTcaa.R
 \name{R2eesdPMTcaa}
 \alias{R2eesdPMTcaa}
-\title{Another conditional permutation test...}
+\title{Permutation test for no additional explained variation by adding
+extra covariates using the estimating equation approach incorporating supplementary covariate data}
 \usage{
-R2eesdPMTcaa(y, x, X, pa, lam = 0.1, niter = 3, npm = 1000)
+R2eesdPMTcaa(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 }
 \arguments{
 \item{y}{outcome}
@@ -15,27 +16,31 @@ R2eesdPMTcaa(y, x, X, pa, lam = 0.1, niter = 3, npm = 1000)
 
 \item{pa}{dimension of covariates to be adjusted}
 
-\item{lam}{parameter adjusting the format of the weighting matrix. Default is 0.1}
+\item{lam}{parameter adjusting the format of the weighting matrix. Default is 0.2}
 
 \item{niter}{number of iteration for updating lambda. Default is 3}
 
 \item{npm}{Monte Carlo sample size for permutation. Default is 1000}
 }
 \value{
-Ouput of this function...
+Output is the estimator of the proportion of explained variation and the p-value for the test.
 }
 \description{
-One paragraph describing this function...
+This function permutes the outcome and use the estimator for the proportion of variation
+explained for performing test of no explained variation.
 }
 \details{
-Details of this function...
+The algorithm can be slow because the second part of the covariates need to be permuted.
+The approach differs from the \code{R2eesdPMTca} in the way the matrix operations are handled.
 }
 \examples{
 \dontrun{R2eesdPMTcaa(y,x,X,pa,lam=0.1,niter=3,npm=1000)}
 
 }
 \references{
-Reference 1 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 
-Reference 2 here...
+An additional reference is to be added.
 }

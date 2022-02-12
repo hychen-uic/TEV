@@ -2,34 +2,36 @@
 % Please edit documentation in R/R2eelsPMTcaa.R
 \name{R2eelsPMTcaa}
 \alias{R2eelsPMTcaa}
-\title{Another conditional permutation test...}
+\title{Conditional permutation test for no explained variation using the least-square approach}
 \usage{
 R2eelsPMTcaa(y, x, pa, npm = 1000)
 }
 \arguments{
 \item{y}{outcome}
 
-\item{x}{covariates}
+\item{x}{all the covariates}
 
-\item{pa}{dimension of covariates to be adjusted}
+\item{pa}{dimension of the first part of covariates to be adjusted}
 
 \item{npm}{permutation sample size. Default is 1000}
 }
 \value{
-Output of this function...
+The function outputs the estimated additional variation explained and the p-values of the test.
 }
 \description{
-One paragraph descirbing this function...
+This function performs conditional tests of no variation explained by the additional
+covariates when adjusted for the one set of covariates.
 }
 \details{
-Details of this function...
+The conditional permutation test needs to perform the second part of the covariates
+and can be computationally slow. This function differs from \code{R2eelsPMTca} in the way the matrix operation is used.
 }
 \examples{
 \dontrun{R2eelsPMTcaa(y,x,pa,npm=1000)}
 
 }
 \references{
-Reference 1 here...
-
-Reference 2 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+under review by Int. J. Environ. Res. Public Health 2022.
 }

@@ -9,6 +9,9 @@ transf(x)
 \arguments{
 \item{x}{input}
 }
+\value{
+Decorrelation matrix for x.
+}
 \description{
 Decorrelation transformation
 }

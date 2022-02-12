@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2ee.R
 \name{R2ee}
 \alias{R2ee}
-\title{Computes the confidence interval with the estimating equation approach}
+\title{Compute the estimator of the proportion of the explained variation}
 \usage{
 R2ee(y, x, lam = 0.1, niter = 3)
 }
@@ -11,25 +11,26 @@ R2ee(y, x, lam = 0.1, niter = 3)
 
 \item{x}{covariates}
 
-\item{lam}{parameter adjusting the format of the weighting matrix. Default is 0.1}
+\item{lam}{initial parameter value (>= 0) for the weighting matrix. Default is 0.1}
 
 \item{niter}{number of iterations for updating lambda}
 }
 \value{
-The output is the confidence interval...
+The output includes estimates, variance, and confidence intervals.
 }
 \description{
-One paragraph describing this function...
+This function implements method for computing point estimate, variance estimate, and
+confidence intervals of the proportion of variation of an outcome explained by a set
+of covariates assuming the covariates are independent.
 }
 \details{
-details about this function...
+The computation uses the singular value decomposition and asymptotic variance formula.
 }
 \examples{
 \dontrun{R2ee(y,x,lam=0.1,niter=3)}
 
 }
 \references{
-reference 1 here...
-
-reference 2 here...
+Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
+linear model with dense effects. arXiv:2201.08723
 }

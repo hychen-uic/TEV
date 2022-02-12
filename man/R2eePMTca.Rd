@@ -13,27 +13,29 @@ R2eePMTca(y, x, pa, lam = 0.2, niter = 3, npm = 1000)
 
 \item{pa}{dimension of covariates to be adjusted}
 
-\item{lam}{paramter adjusting the format of the weighting matrix. Default is 0.2}
+\item{lam}{parameter adjusting the format of the weighting matrix. Default is 0.2}
 
 \item{niter}{number of iteration for updating lambda. Default is 3}
 
 \item{npm}{Monte Carlo sample size for permutation. Default is 1000}
 }
 \value{
-Output of this function...
+Output is the estimate of the proportion of the variation explained by the
+additional covariates and the p-value of the test.
 }
 \description{
-One paragraph describing this function...
+This function performs test of no extra variation explained by the additional covariates
+by permuting the additional covariates using the estimating equation approach.
 }
 \details{
-Details of this function...
+The computation permutes the second part of the covariates and is computationally slow.
 }
 \examples{
 \dontrun{R2eePMTca(y,x,pa,lam=0.2,niter=3,npm=1000)}
 
 }
 \references{
-Reference 1 here...
-
-Reference 2 here...
+Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 }

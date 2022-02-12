@@ -3,26 +3,30 @@
 NULL
 #' EigenPrism procedure for estimating and generating confidence intervals
 #'
-#' This function implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
+#' This function implements the EigenPrism procedure for estimating and generating
+#' confidence intervals for variance components in high-dimensional linear model.
 #'
 #' @param y response vector of length n
 #' @param X n by p design matrix. Columns are automatically centered and scaled to variance 1, and they cannot include
 #'          one for the intercept terms.
-#' @param invsqrtSig if columns of X  are not independent, p by p positive definite matrix which is the square-root
+#' @param invsqrtSig if columns of X are not independent, p by p positive definite matrix which is the square-root
 #'                   of the inverse of Sig, where Sig is the *correlation* matrix of the X. Default is identity
 #' @param alpha significance level for confidence interval. Default is 0.05
 #' @param target target of estimation/inference: options include "beta2", "sigma2", or "heritability"
 #' @param zero.ind vector of which indices of the weight vector w to constrain to zero. Default is none
-#' @param diagnostics Boolean variable indicating whether to generate the diagnostic plots for V_i, lambda_i, and w_i. Default is \code{TRUE}.
+#' @param diagnostics boolean variable indicating whether to generate the diagnostic plots for V_i,
+#' lambda_i, and w_i. Default is \code{TRUE}.
 #'
 #' @details Details of this function, some explanations of the input arguments...
 #'
 #' @return estimate: unbiased estimate of the target (for heritability, only approximately unbiased);
 #'         CI: 100*(1-alpha)% confidence interval for target
 #'
+#' @references Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference for high-dimensional signal-to-noise ratios.
+#' *Journal of Royal Statistical Society, Ser. B.*, **79**, 1037-1065.
 #' @references Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}.
 #'
-#' @examples \dontrun{...}
+#' @examples \dontrun{EigenPrism(y, x)}
 #'
 #' @export
 EigenPrism <- function(y,X,invsqrtSig=NULL,alpha=c(0.01,0.05,0.10),target='beta2',zero.ind=c(),diagnostics=T){

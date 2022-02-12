@@ -1,6 +1,7 @@
-#' Permutation test for the estimating equation approach
+#' Permutation test for no explained variation
 #'
-#' One paragraph describing this function...
+#' This function performs test of no explained
+#' variation by permuting the outcome using the estimating equation approach.
 #'
 #' @param y outcome
 #' @param x covariates
@@ -8,12 +9,14 @@
 #' @param niter number of iterations for updating lambda. Default is 3
 #' @param npm permutation sample size. Default is 1000
 #'
-#' @details Details of the function...
+#' @details The computation permutes outcome and is computationally fast.
 #'
-#' @return The output of running this function...
+#' @return Output is the estimate of the proportion of the explained variation and
+#' the p-value of the test.
 #'
-#' @references reference 1 here...
-#' @references reference 2 here...
+#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
+#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
+#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 #'
 #' @examples \dontrun{R2eePMT(y,x,lam=0.12,niter=3,npm=1000)}
 #'

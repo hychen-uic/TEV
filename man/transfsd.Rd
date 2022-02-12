@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{transfsd}
 \alias{transfsd}
-\title{Decorrelation}
+\title{Decorrelation transformation with supplementary data}
 \usage{
 transfsd(x, X)
 }
@@ -11,6 +11,9 @@ transfsd(x, X)
 
 \item{X}{input 2}
 }
+\value{
+Decorrelation matrix for x.
+}
 \description{
-Decorrelation
+Decorrelation with the aid of supplementary data
 }
