@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2ee.R
 \name{R2ee}
 \alias{R2ee}
-\title{Compute the estimator of the proportion of the explained variation}
+\title{Proportion of the explained variation by the estimating equation approach}
 \usage{
 R2ee(y, x, lam = 0.1, niter = 3)
 }
@@ -13,21 +13,20 @@ R2ee(y, x, lam = 0.1, niter = 3)
 
 \item{lam}{initial parameter value (>= 0) for the weighting matrix. Default is 0.1}
 
-\item{niter}{number of iterations for updating lambda}
+\item{niter}{number of iterations for updating lam}
 }
 \value{
-The output includes estimates, variance, and confidence intervals.
+The output includes estimate of the proportion of explained variation, variance estimates
+under normality and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
 }
 \description{
-This function implements method for computing point estimate, variance estimate, and
-confidence intervals of the proportion of variation of an outcome explained by a set
-of covariates assuming the covariates are independent.
+This function computes the estimator of the proportion of the explained variation assuming independent covariates.
 }
 \details{
 The computation uses the singular value decomposition and asymptotic variance formula.
 }
 \examples{
-\dontrun{R2ee(y,x,lam=0.1,niter=3)}
+\dontrun{R2ee(y, x, lam = 0.1,niter = 3)}
 
 }
 \references{

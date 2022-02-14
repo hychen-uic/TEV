@@ -1,21 +1,23 @@
-#' Estimate the proportion of explained variation by the least squares approach
+#' Least-square approach to proportion of the explained variation
 #'
-#' This function works only for n > p. But covariates are not required to be independent.
+#' This function uses least-square estimates in computing the proportion of the explained variation.
 #'
 #' @param y outcome
 #' @param x covariates
 #'
-#' @details This method uses the least square approach.
+#' @details This functions uses the least square approach and works only for n > p. But covariates are
+#' not required to be independent.
 #'
-#' @return Output includes estimates, variance, and confidence intervals.
+#' @return Output includes estimate of proportion of the explained variation, variance estimates
+#' under normality and non-normality error, and the corresponding confidence intervals.
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
 #' linear model with dense effects. arXiv:2201.08723
 #'
-#' @examples \dontrun{R2eels(y,x)}
+#' @examples \dontrun{R2eels(y, x)}
 #'
 #' @export
-R2eels=function(y,x){
+R2eels=function(y, x){
 
   # y==outcome
   # x==covariates

@@ -1,4 +1,4 @@
-#' Permutation test for no explained variation
+#' Permutation test for no explained variation using least-square estimate
 #'
 #' This function performs test of no explained variation by
 #' permuting the outcome using least square approach.
@@ -9,8 +9,8 @@
 #'
 #' @details The computation permutes outcome and is computationally fast.
 #'
-#' @return Output is the estimate of the proportion of the explained variation
-#' and the p-value of the test.
+#' @return Output includes the p-values (estimate and bound) of the test,
+#' estimate of proportion of the explained variation, and simulation results.
 #'
 #' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 #' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
@@ -19,7 +19,7 @@
 #' @examples \dontrun{R2eelsPMT(y,x,npm=1000)}
 #'
 #' @export
-R2eelsPMT=function(y,x,npm=1000){
+R2eelsPMT=function(y, x, npm = 1000){
 
   n=dim(x)[1]
   p=dim(x)[2]

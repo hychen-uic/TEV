@@ -2,7 +2,7 @@
 % Please edit documentation in R/EigenPrismFull.R
 \name{EigenPrismFull}
 \alias{EigenPrismFull}
-\title{EigenPrism procedure integrating the low and high dimensional cases}
+\title{Extended EigenPrism approach}
 \usage{
 EigenPrismFull(y, x, alpha = c(0.01, 0.05, 0.1))
 }
@@ -14,14 +14,14 @@ EigenPrismFull(y, x, alpha = c(0.01, 0.05, 0.1))
 \item{alpha}{significance level}
 }
 \value{
-Estimate and CI
+Output includes estimate of the proportion of the explained variation and the confidence intervals
 }
 \description{
-For n > p, use least square approach under normal error to find the confidence interval
-for the explained variation. For n <= p, use the EigenPrism approach by Jansen et al (2017).
+This function combines the function from Jensen for n <= p and a chi-square inversion for confidence interval under
+error variance for n > p.
 }
 \details{
-Details of this function...
+For n > p, confidence intervals are obtained using least-square estimates.
 }
 \examples{
 \dontrun{EigenPrismFull(y, x)}
@@ -34,4 +34,6 @@ high-dimensional linear model with dense effects. arXiv:2201.08723
 Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference
 for high-dimensional signal-to-noise ratios.
 \emph{Journal of Royal Statistical Society, Ser. B.}, \strong{79}, 1037-1065.
+
+Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}
 }

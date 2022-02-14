@@ -1,7 +1,7 @@
 #' @import graphics
 #' @import cccp
 NULL
-#' EigenPrism procedure for estimating and generating confidence intervals
+#' EigenPrism approach
 #'
 #' This function implements the EigenPrism procedure for estimating and generating
 #' confidence intervals for variance components in high-dimensional linear model.
@@ -17,7 +17,7 @@ NULL
 #' @param diagnostics boolean variable indicating whether to generate the diagnostic plots for V_i,
 #' lambda_i, and w_i. Default is \code{TRUE}.
 #'
-#' @details Details of this function, some explanations of the input arguments...
+#' @details This function is a copy of Jansen's R program.
 #'
 #' @return estimate: unbiased estimate of the target (for heritability, only approximately unbiased);
 #'         CI: 100*(1-alpha)% confidence interval for target
@@ -29,7 +29,7 @@ NULL
 #' @examples \dontrun{EigenPrism(y, x)}
 #'
 #' @export
-EigenPrism <- function(y,X,invsqrtSig=NULL,alpha=c(0.01,0.05,0.10),target='beta2',zero.ind=c(),diagnostics=T){
+EigenPrism <- function(y, X, invsqrtSig = NULL,alpha = c(0.01, 0.05, 0.10),target = 'beta2', zero.ind = c(), diagnostics = T){
   # Author: Lucas Janson (statweb.stanford.edu/~ljanson)
   # Runs EigenPrism procedure for estimating and generating confidence
   #  intervals for variance components in high-dimensional linear model:

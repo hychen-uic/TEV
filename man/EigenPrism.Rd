@@ -2,7 +2,7 @@
 % Please edit documentation in R/EigenPrism.R
 \name{EigenPrism}
 \alias{EigenPrism}
-\title{EigenPrism procedure for estimating and generating confidence intervals}
+\title{EigenPrism approach}
 \usage{
 EigenPrism(
   y,
@@ -41,7 +41,7 @@ This function implements the EigenPrism procedure for estimating and generating
 confidence intervals for variance components in high-dimensional linear model.
 }
 \details{
-Details of this function, some explanations of the input arguments...
+This function is a copy of Jansen's R program.
 }
 \examples{
 \dontrun{EigenPrism(y, x)}

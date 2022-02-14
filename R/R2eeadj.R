@@ -1,4 +1,4 @@
-#' Confidence intervals for the two-group estimating equation approach
+#' Two-group estimating equation approach to proportion of the explained variation
 #'
 #' This method uses two estimating equations to estimate the variations
 #' of the outcome explained by the two parts of covariates simultaneously.
@@ -14,7 +14,7 @@
 #'
 #' @references To be added.
 #'
-#' @examples \dontrun{R2eeadj(y,xa,xb)}
+#' @examples \dontrun{R2eeadj(y, xa, xb, niter = 1)}
 #'
 #'
 #' @export

@@ -1,18 +1,18 @@
 #' @include EigenPrism.R
 NULL
 
-#' EigenPrism procedure integrating the low and high dimensional cases
+#' Extended EigenPrism approach
 #'
-#' For n > p, use least square approach under normal error to find the confidence interval
-#' for the explained variation. For n <= p, use the EigenPrism approach by Jansen et al (2017).
+#' This function combines the function from Jensen for n <= p and a chi-square inversion for confidence interval under
+#' error variance for n > p.
 #'
 #' @param y outcome
 #' @param x covariates
 #' @param alpha significance level
 #'
-#' @details Details of this function...
+#' @details For n > p, confidence intervals are obtained using least-square estimates.
 #'
-#' @return Estimate and CI
+#' @return Output includes estimate of the proportion of the explained variation and the confidence intervals
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in
 #' high-dimensional linear model with dense effects. arXiv:2201.08723
@@ -21,10 +21,12 @@ NULL
 #' for high-dimensional signal-to-noise ratios.
 #' *Journal of Royal Statistical Society, Ser. B.*, **79**, 1037-1065.
 #'
+#' @references Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}
+#'
 #' @examples \dontrun{EigenPrismFull(y, x)}
 #'
 #' @export
-EigenPrismFull=function(y,x,alpha=c(0.01,0.05,0.1)){
+EigenPrismFull=function(y, x, alpha = c(0.01, 0.05, 0.1)){
 
   n=dim(x)[1]
   p=dim(x)[2]

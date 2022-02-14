@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eeadj.R
 \name{R2eeadj}
 \alias{R2eeadj}
-\title{Confidence intervals for the two-group estimating equation approach}
+\title{Two-group estimating equation approach to proportion of the explained variation}
 \usage{
 R2eeadj(y, xa, xb, niter = 1)
 }
@@ -26,7 +26,7 @@ of the outcome explained by the two parts of covariates simultaneously.
 This method assumes covariates are independent.
 }
 \examples{
-\dontrun{R2eeadj(y,xa,xb)}
+\dontrun{R2eeadj(y, xa, xb, niter = 1)}
 
 
 }

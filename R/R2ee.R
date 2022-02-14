@@ -1,28 +1,27 @@
 #' @import stats
 NULL
 
-#' Compute the estimator of the proportion of the explained variation
+#' Proportion of the explained variation by the estimating equation approach
 #'
-#' This function implements method for computing point estimate, variance estimate, and
-#' confidence intervals of the proportion of variation of an outcome explained by a set
-#' of covariates assuming the covariates are independent.
+#' This function computes the estimator of the proportion of the explained variation assuming independent covariates.
 #'
 #' @param y outcome
 #' @param x covariates
 #' @param lam initial parameter value (>= 0) for the weighting matrix. Default is 0.1
-#' @param niter number of iterations for updating lambda
+#' @param niter number of iterations for updating lam
 #'
 #' @details The computation uses the singular value decomposition and asymptotic variance formula.
 #'
-#' @return The output includes estimates, variance, and confidence intervals.
+#' @return The output includes estimate of the proportion of explained variation, variance estimates
+#' under normality and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
 #' linear model with dense effects. arXiv:2201.08723
 #'
-#' @examples \dontrun{R2ee(y,x,lam=0.1,niter=3)}
+#' @examples \dontrun{R2ee(y, x, lam = 0.1,niter = 3)}
 #'
 #'@export
-R2ee=function(y,x,lam=0.1,niter=3){
+R2ee=function(y, x, lam = 0.1, niter = 3){
 
   n=dim(x)[1]
   p=dim(x)[2]

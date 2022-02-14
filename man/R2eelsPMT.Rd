@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eelsPMT.R
 \name{R2eelsPMT}
 \alias{R2eelsPMT}
-\title{Permutation test for no explained variation}
+\title{Permutation test for no explained variation using least-square estimate}
 \usage{
 R2eelsPMT(y, x, npm = 1000)
 }
@@ -14,8 +14,8 @@ R2eelsPMT(y, x, npm = 1000)
 \item{npm}{permutation sample size. Default is 1000}
 }
 \value{
-Output is the estimate of the proportion of the explained variation
-and the p-value of the test.
+Output includes the p-values (estimate and bound) of the test,
+estimate of proportion of the explained variation, and simulation results.
 }
 \description{
 This function performs test of no explained variation by
