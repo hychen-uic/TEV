@@ -1,4 +1,4 @@
-#' GCTA approach
+#' The GCTA approach with bootstrap variance
 #'
 #' This function implements the GCTA approach assuming independent covariates
 #' and normally distributed errors, with bootstrap variance.
@@ -13,7 +13,8 @@
 #' @details The function uses the singular value decomposition for estimation and bootstrap
 #' sampling approach for variance estimation under normal random errors.
 #'
-#' @return Output includes estimator and its variance of the proportional variation explained by the covariates.
+#' @return Output includes estimate of proportion of the explained variation,
+#' and bootstrap estimate, variance, and confidence intervals if bt = T.
 #'
 #' @references Schweiger, R., Kaufman, S., Laaksonen, R., Kleber, M. E., Marz, W., Eskin, E., Rosset, S., Halperin, E. (2016).
 #' Fats and ac-curate construction of confidence intervals for heritability.

@@ -10,7 +10,7 @@ zscale(z)
 \item{z}{input argument}
 }
 \value{
-rescale data matrix.
+Output is the rescale data matrix.
 }
 \description{
 This function rescales each variable in the data by subtracting mean and

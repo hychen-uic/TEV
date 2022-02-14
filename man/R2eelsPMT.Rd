@@ -25,11 +25,11 @@ permuting the outcome using least square approach.
 The computation permutes outcome and is computationally fast.
 }
 \examples{
-\dontrun{R2eelsPMT(y,x,npm=1000)}
+\dontrun{R2eelsPMT(y, x, npm=1000)}
 
 }
 \references{
 Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 }

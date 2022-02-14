@@ -5,23 +5,23 @@
 #'
 #' @param y outcome
 #' @param x all the covariates
-#' @param pa dimension of the first pat of covariates to be adjusted
+#' @param pa dimension of the first part of covariates to be adjusted
 #' @param npm permutation sample size. Default is 1000
 #'
 #' @details The conditional permutation test needs to perform the second part of the
 #' covariates and can be computationally slow.
 #'
-#' @return The function outputs the estimated additional variation explained
-#' and the p-values of the test.
+#' @return Output includes the p-values (estimate and bound) of the test, estimate of
+#' proportion of the extra explained variation, and simulation results.
 #'
 #' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 #' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#' under review by Int. J. Environ. Res. Public Health 2022.
+#' Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 #'
-#' @examples \dontrun{R2eelsPMTca(y,x,pa,npm=1000)}
+#' @examples \dontrun{R2eelsPMTca(y, x, pa, npm = 1000)}
 #'
 #' @export
-R2eelsPMTca=function(y,x,pa,npm=1000){
+R2eelsPMTca=function(y, x, pa, npm = 1000){
 
   n=dim(x)[1]
   p=dim(x)[2]

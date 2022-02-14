@@ -1,5 +1,4 @@
-#' Estimation and inference on the explained variation
-#' by the estimating equation approach with supplementary covariate data
+#' Estimating equation approach to proportion of the explained variation with supplementary covariate data
 #'
 #' This function estimates the proportion of the explained variation using
 #' the estimating equation approach incorporating supplementary covariate data.
@@ -10,21 +9,31 @@
 #' @param lam parameter adjusting the format of the weighting matrix. Default is 0.2
 #' @param niter number of iterations for updating lambda. Default is 3
 #' @param VA pre-calculated variance component
-#' @param EB pre-calculated variance componenet
+#' @param EB pre-calculated variance component
 #' @param know if VA and EB are known, options include "yes" and "no". Default is "yes"
 #' @param nrep Monte Carlo sample size for computing VA and EB
 #'
 #' @details The estimation approach does not assume independent covariates and can deal with the case n <= p.
+#' But require the sample sizes of x and X combined be greater than p.
 #' This differs from \code{R2eesd} in the way the variance is estimated.
 #'
-#' @return Output include the estimator of the proportion of variation explained and
-#' its variance, and the confidence intervals.
+#' @return The output includes estimate of the proportion of explained variation,
+#' variance estimates under normality and non-normality assumptions,
+#' and confidence intervals under normality and non-normality assumptions.
 #'
-#' @examples \dontrun{R2eesd0(y,x,X,lam=0.2,niter=3,VA=0,EB=0,know="no",nrep=1000)}
+#' @examples \dontrun{R2eesd0(y,
+#'                     x,
+#'                     X,
+#'                     lam = 0.2,
+#'                     niter = 3,
+#'                     VA = 0,
+#'                     EB = 0,
+#'                     know = "no",
+#'                     nrep = 1000)}
 #'
 #' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 #' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 #'
 #' @references An additional reference is to be added.
 #'

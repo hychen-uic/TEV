@@ -18,22 +18,22 @@ R2eePMT(y, x, lam = 0.12, niter = 3, npm = 1000)
 \item{npm}{permutation sample size. Default is 1000}
 }
 \value{
-Output is the estimate of the proportion of the explained variation and
-the p-value of the test.
+Output includes the p-values (estimate and bound) of the test,
+estimate of proportion of the explained variation, and simulation results.
 }
 \description{
 This function performs test of no explained
 variation by permuting the outcome using the estimating equation approach.
 }
 \details{
-The computation permutes outcome and is computationally fast.
+The computation permutes outcome and can be computationally fast.
 }
 \examples{
-\dontrun{R2eePMT(y,x,lam=0.12,niter=3,npm=1000)}
+\dontrun{R2eePMT(y, x, lam = 0.12, niter = 3, npm = 1000)}
 
 }
 \references{
 Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 }

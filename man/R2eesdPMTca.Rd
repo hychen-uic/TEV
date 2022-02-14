@@ -2,8 +2,8 @@
 % Please edit documentation in R/R2eesdPMTca.R
 \name{R2eesdPMTca}
 \alias{R2eesdPMTca}
-\title{Permutation test for no additional explained variation by adding extra
-covariates using the estimating equation approach incoporating supplementary covariate data}
+\title{Conditional permutation test for no extra explained variation by estimating equation approach
+with supplementary covariate dat}
 \usage{
 R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 }
@@ -23,17 +23,18 @@ R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 \item{npm}{Monte Carlo sample size for permutation}
 }
 \value{
-Output is the estimator of the proportion of explained variation and the p-value for the test.
+Output includes the p-values (estimate and bound) of the test,
+estimate of proportion of the extra explained variation, and simulation results.
 }
 \description{
-This function permutes the outcome and use the estimator for the proportion of
+This function permutes the outcome and uses the estimator for the proportion of
 variation explained for performing test of no explained variation.
 }
 \details{
 The algorithm can be slow because the second part of the covariates need to be permuted.
 }
 \examples{
-\dontrun{R2eesdPMTca(y,x,X,pa,lam=0.2,niter=3,npm=1000)}
+\dontrun{R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)}
 
 }
 \references{

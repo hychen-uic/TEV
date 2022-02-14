@@ -11,16 +11,17 @@
 #' @details The conditional permutation test needs to perform the second part of the covariates
 #' and can be computationally slow. This function differs from \code{R2eelsPMTca} in the way the matrix operation is used.
 #'
-#' @return The function outputs the estimated additional variation explained and the p-values of the test.
+#' @return Output includes the p-values (estimate and bound) of the test,
+#' estimate of proportion of the extra explained variation, and simulation results.
 #'
 #' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 #' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#' under review by Int. J. Environ. Res. Public Health 2022.
+#' Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 #'
-#' @examples \dontrun{R2eelsPMTcaa(y,x,pa,npm=1000)}
+#' @examples \dontrun{R2eelsPMTcaa(y, x, pa, npm = 1000)}
 #'
 #' @export
-R2eelsPMTcaa=function(y,x,pa,npm=1000){
+R2eelsPMTcaa=function(y, x, pa, npm = 1000){
 
   # y==outcome
   # x==covariates

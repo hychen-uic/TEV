@@ -2,8 +2,7 @@
 % Please edit documentation in R/R2eesd0.R
 \name{R2eesd0}
 \alias{R2eesd0}
-\title{Estimation and inference on the explained variation
-by the estimating equation approach with supplementary covariate data}
+\title{Estimating equation approach to proportion of the explained variation with supplementary covariate data}
 \usage{
 R2eesd0(
   y,
@@ -30,15 +29,16 @@ R2eesd0(
 
 \item{VA}{pre-calculated variance component}
 
-\item{EB}{pre-calculated variance componenet}
+\item{EB}{pre-calculated variance component}
 
 \item{know}{if VA and EB are known, options include "yes" and "no". Default is "yes"}
 
 \item{nrep}{Monte Carlo sample size for computing VA and EB}
 }
 \value{
-Output include the estimator of the proportion of variation explained and
-its variance, and the confidence intervals.
+The output includes estimate of the proportion of explained variation,
+variance estimates under normality and non-normality assumptions,
+and confidence intervals under normality and non-normality assumptions.
 }
 \description{
 This function estimates the proportion of the explained variation using
@@ -46,16 +46,25 @@ the estimating equation approach incorporating supplementary covariate data.
 }
 \details{
 The estimation approach does not assume independent covariates and can deal with the case n <= p.
+But require the sample sizes of x and X combined be greater than p.
 This differs from \code{R2eesd} in the way the variance is estimated.
 }
 \examples{
-\dontrun{R2eesd0(y,x,X,lam=0.2,niter=3,VA=0,EB=0,know="no",nrep=1000)}
+\dontrun{R2eesd0(y,
+                    x,
+                    X,
+                    lam = 0.2,
+                    niter = 3,
+                    VA = 0,
+                    EB = 0,
+                    know = "no",
+                    nrep = 1000)}
 
 }
 \references{
 Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 
 An additional reference is to be added.
 }

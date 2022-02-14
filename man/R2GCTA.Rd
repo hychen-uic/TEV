@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2GCTA.R
 \name{R2GCTA}
 \alias{R2GCTA}
-\title{GCTA approach}
+\title{The GCTA approach with bootstrap variance}
 \usage{
 R2GCTA(y, x, lam, niter = 10, bt = "T", btn)
 }
@@ -20,7 +20,8 @@ R2GCTA(y, x, lam, niter = 10, bt = "T", btn)
 \item{btn}{bootstrap sample size}
 }
 \value{
-Output includes estimator and its variance of the proportional variation explained by the covariates.
+Output includes estimate of proportion of the explained variation,
+and bootstrap estimate, variance, and confidence intervals if bt = T.
 }
 \description{
 This function implements the GCTA approach assuming independent covariates

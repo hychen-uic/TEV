@@ -2,8 +2,8 @@
 % Please edit documentation in R/R2eesdPMTcaa.R
 \name{R2eesdPMTcaa}
 \alias{R2eesdPMTcaa}
-\title{Permutation test for no additional explained variation by adding
-extra covariates using the estimating equation approach incorporating supplementary covariate data}
+\title{Conditional permutation test for no extra explained variation by estimating equation approach
+with supplementary covariate data}
 \usage{
 R2eesdPMTcaa(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 }
@@ -23,10 +23,11 @@ R2eesdPMTcaa(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 \item{npm}{Monte Carlo sample size for permutation. Default is 1000}
 }
 \value{
-Output is the estimator of the proportion of explained variation and the p-value for the test.
+Output includes the p-values (estimate and bound) of the test,
+estimate of proportion of the extra explained variation, and simulation results.
 }
 \description{
-This function permutes the outcome and use the estimator for the proportion of variation
+This function permutes the outcome and uses the estimator for the proportion of variation
 explained for performing test of no explained variation.
 }
 \details{
@@ -34,13 +35,13 @@ The algorithm can be slow because the second part of the covariates need to be p
 The approach differs from the \code{R2eesdPMTca} in the way the matrix operations are handled.
 }
 \examples{
-\dontrun{R2eesdPMTcaa(y,x,X,pa,lam=0.1,niter=3,npm=1000)}
+\dontrun{R2eesdPMTcaa(y, x, X, pa, lam = 0.1, niter = 3, npm = 1000)}
 
 }
 \references{
 Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 
 An additional reference is to be added.
 }

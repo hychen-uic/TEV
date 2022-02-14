@@ -21,24 +21,24 @@ R2eesdPMT(y, x, X, lam, niter = 3, npm = 1000)
 \item{npm}{Monte Carlo sample size for permutation. Default is 1000}
 }
 \value{
-Output is the estimator of the proportion of explained variation
-and the p-value for the test.
+Output includes the p-values (estimate and bound) of the test,
+estimate of proportion of the explained variation, and simulation results.
 }
 \description{
-This function permutes the outcome and use the estimator for the
+This function permutes the outcome and uses the estimator for the
 proportion of variation explained for performing test of no explained variation.
 }
 \details{
 The algorithm is fast because only the outcome is permuted.
 }
 \examples{
-\dontrun{R2eesdPMT(y,x,X,lam,niter=3,npm=1000)}
+\dontrun{R2eesdPMT(y, x, X, lam, niter = 3, npm = 1000)}
 
 }
 \references{
 Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 
 An additional reference is to be added..
 }

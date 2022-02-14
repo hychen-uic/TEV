@@ -20,8 +20,8 @@ R2eePMTca(y, x, pa, lam = 0.2, niter = 3, npm = 1000)
 \item{npm}{Monte Carlo sample size for permutation. Default is 1000}
 }
 \value{
-Output is the estimate of the proportion of the variation explained by the
-additional covariates and the p-value of the test.
+Output includes the p-values (estimate and bound) of the test,
+estimate of proportion of the extra explained variation, and simulation results.
 }
 \description{
 This function performs test of no extra variation explained by the additional covariates
@@ -31,11 +31,11 @@ by permuting the additional covariates using the estimating equation approach.
 The computation permutes the second part of the covariates and is computationally slow.
 }
 \examples{
-\dontrun{R2eePMTca(y,x,pa,lam=0.2,niter=3,npm=1000)}
+\dontrun{R2eePMTca(y, x, pa, lam = 0.2, niter = 3, npm = 1000)}
 
 }
 \references{
 Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 }

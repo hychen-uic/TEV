@@ -11,13 +11,13 @@ R2eelsPMTca(y, x, pa, npm = 1000)
 
 \item{x}{all the covariates}
 
-\item{pa}{dimension of the first pat of covariates to be adjusted}
+\item{pa}{dimension of the first part of covariates to be adjusted}
 
 \item{npm}{permutation sample size. Default is 1000}
 }
 \value{
-The function outputs the estimated additional variation explained
-and the p-values of the test.
+Output includes the p-values (estimate and bound) of the test, estimate of
+proportion of the extra explained variation, and simulation results.
 }
 \description{
 This function performs conditional tests of no variation explained by the additional
@@ -28,11 +28,11 @@ The conditional permutation test needs to perform the second part of the
 covariates and can be computationally slow.
 }
 \examples{
-\dontrun{R2eelsPMTca(y,x,pa,npm=1000)}
+\dontrun{R2eelsPMTca(y, x, pa, npm = 1000)}
 
 }
 \references{
 Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-under review by Int. J. Environ. Res. Public Health 2022.
+Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 }

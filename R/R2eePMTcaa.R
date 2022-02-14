@@ -13,14 +13,14 @@
 #' @details The computation permutes the second part of the covariates and is computationally slow.
 #' It differs from \code{R2eePMTca} in the way of matrix computation.
 #'
-#' @return Output is the estimate of the proportion of the variation explained by
-#' the additional covariates and the p-value of the test.
+#' @return Output includes the p-values (estimate and bound) of the test,
+#' estimate of proportion of the extra explained variation, and simulation results.
 #'
 #' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 #'  Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#'  Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#'  Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 #'
-#' @examples \dontrun{R2eePMTcaa(y,x,pa,lam=0.2,niter=3,npm=1000)}
+#' @examples \dontrun{R2eePMTcaa(y, x, pa, lam = 0.2, niter = 3, npm = 1000)}
 #'
 #' @export
 R2eePMTcaa=function(y,x,pa,lam=0.2,niter=3,npm=1000){

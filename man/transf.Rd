@@ -10,7 +10,7 @@ transf(x)
 \item{x}{input}
 }
 \value{
-Decorrelation matrix for x.
+Output is the decorrelation matrix for x.
 }
 \description{
 Decorrelation transformation

@@ -14,9 +14,9 @@
 #'
 #' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 #' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 #'
-#' @examples \dontrun{R2eelsPMT(y,x,npm=1000)}
+#' @examples \dontrun{R2eelsPMT(y, x, npm=1000)}
 #'
 #' @export
 R2eelsPMT=function(y, x, npm = 1000){

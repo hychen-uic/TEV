@@ -12,7 +12,7 @@ transfsd(x, X)
 \item{X}{input 2}
 }
 \value{
-Decorrelation matrix for x.
+Output is the decorrelation matrix for x.
 }
 \description{
 Decorrelation with the aid of supplementary data

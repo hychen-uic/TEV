@@ -9,19 +9,19 @@
 #' @param niter number of iterations for updating lambda. Default is 3
 #' @param npm permutation sample size. Default is 1000
 #'
-#' @details The computation permutes outcome and is computationally fast.
+#' @details The computation permutes outcome and can be computationally fast.
 #'
-#' @return Output is the estimate of the proportion of the explained variation and
-#' the p-value of the test.
+#' @return Output includes the p-values (estimate and bound) of the test,
+#' estimate of proportion of the explained variation, and simulation results.
 #'
 #' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
 #' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#' Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
 #'
-#' @examples \dontrun{R2eePMT(y,x,lam=0.12,niter=3,npm=1000)}
+#' @examples \dontrun{R2eePMT(y, x, lam = 0.12, niter = 3, npm = 1000)}
 #'
 #' @export
-R2eePMT=function(y,x,lam=0.12,niter=3,npm=1000){
+R2eePMT=function(y, x, lam = 0.12, niter = 3, npm = 1000){
 
   n=dim(x)[1]
   p=dim(x)[2]

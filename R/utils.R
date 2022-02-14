@@ -8,7 +8,7 @@
 #'
 #' @param x input
 #'
-#' @return Decorrelation matrix for x.
+#' @return Output is the decorrelation matrix for x.
 #'
 #' @export
 transf=function(x){
@@ -27,7 +27,7 @@ transf=function(x){
 #' @param x input 1
 #' @param X input 2
 #'
-#' @return Decorrelation matrix for x.
+#' @return Output is the decorrelation matrix for x.
 #'
 #' @export
 transfsd=function(x,X){
@@ -82,7 +82,7 @@ proj2=function(x,X){ # with supplementary data
 #'
 #' @param z input argument
 #'
-#' @return rescale data matrix.
+#' @return Output is the rescale data matrix.
 #'
 #' @export
 zscale=function(z){
