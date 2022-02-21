@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eesd0.R
 \name{R2eesd0}
 \alias{R2eesd0}
-\title{Estimating equation approach to proportion of the explained variation with supplementary covariate data}
+\title{Estimating equation approach to the proportion of the explained variation with supplementary covariate data}
 \usage{
 R2eesd0(
   y,
@@ -17,54 +17,44 @@ R2eesd0(
 )
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n.}
 
-\item{x}{covariates}
+\item{x}{covariates: a matrix of nxp dimension.}
 
-\item{X}{supplementary covariate data}
+\item{X}{supplementary covariates: a matrix of Nxp dimension.}
 
-\item{lam}{parameter adjusting the format of the weighting matrix. Default is 0.2}
+\item{lam}{parameter for altering the weighting matrix.}
 
-\item{niter}{number of iterations for updating lambda. Default is 3}
+\item{niter}{number of iterations for updating lam.}
 
-\item{VA}{pre-calculated variance component}
+\item{VA}{A variance term.}
 
-\item{EB}{pre-calculated variance component}
+\item{EB}{Another component of the variance.}
 
-\item{know}{if VA and EB are known, options include "yes" and "no". Default is "yes"}
+\item{know}{if VA and EB are known, options include "yes" and "no". Default is "yes" (usually for simulation only).}
 
 \item{nrep}{Monte Carlo sample size for computing VA and EB}
 }
 \value{
-The output includes estimate of the proportion of explained variation,
-variance estimates under normality and non-normality assumptions,
-and confidence intervals under normality and non-normality assumptions.
+Estimate of the proportion of explained variation, variance estimates under normality
+and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
 }
 \description{
-This function estimates the proportion of the explained variation using
-the estimating equation approach incorporating supplementary covariate data.
+This function computes the proportion of the explained variation adjusting for the correlation in covariates.
 }
 \details{
-The estimation approach does not assume independent covariates and can deal with the case n <= p.
-But require the sample sizes of x and X combined be greater than p.
-This differs from \code{R2eesd} in the way the variance is estimated.
+The estimation approach does not assume independent covariates and can deal
+with the case \eqn{n\le p}. But require the sample sizes of x and X combined be greater than p.
+This approach defers from \code{R2eesd} only in the way the variance of the estimator is estimated.
 }
 \examples{
-\dontrun{R2eesd0(y,
-                    x,
-                    X,
-                    lam = 0.2,
-                    niter = 3,
-                    VA = 0,
-                    EB = 0,
-                    know = "no",
-                    nrep = 1000)}
+\dontrun{R2eesd(y,x,X,lam=0.2,niter=3,VA=0,EB=0,know="no",nrep=1000)}
 
 }
 \references{
-Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
-Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+of Environmental Research and Public Health.
 
-An additional reference is to be added.
+reference 2 to be added.
 }

@@ -2,45 +2,47 @@
 % Please edit documentation in R/R2eesdPMTca.R
 \name{R2eesdPMTca}
 \alias{R2eesdPMTca}
-\title{Conditional permutation test for no extra explained variation by estimating equation approach
-with supplementary covariate dat}
+\title{Conditional permutation test for no extra variation explained using the least-square approach}
 \usage{
 R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n.}
 
-\item{x}{covariates}
+\item{x}{covariates: a matrix of nxp dimension.}
 
-\item{X}{supplementary covariate data}
+\item{X}{supplementary covariates: a matrix of Nxp dimension.}
 
-\item{pa}{dimension of covariates to be adjusted}
+\item{pa}{length of the covariates to be adjusted.}
 
-\item{lam}{parameter adjusting the format of the weighting matrix. Default is 0.2}
+\item{lam}{parameter adjusting the formation of the weighting matrix. Default is 0.12}
 
-\item{niter}{number of iteration for updating lambda}
+\item{niter}{number of iterations for updating lambda. Default is 3}
 
-\item{npm}{Monte Carlo sample size for permutation}
+\item{npm}{permutation sample size for simulation computation of p-value.}
 }
 \value{
-Output includes the p-values (estimate and bound) of the test,
-estimate of proportion of the extra explained variation, and simulation results.
+The p-values (estimate and bound) of the test, estimate of proportion of
+the explained variation for both parts together, the first part alone, and the second part
+given the first part, and simulation results.
 }
 \description{
-This function permutes the outcome and uses the estimator for the proportion of
-variation explained for performing test of no explained variation.
+This method performs permutation test by permuting the second part of the covariates and can be computationally slow.
 }
 \details{
-The algorithm can be slow because the second part of the covariates need to be permuted.
+This method tests no extra variation explained by the second part of covariates
+given that the first part of covariates in the model by permuting the second part of
+covariates and estimating using the estimating equation approach. P-value is computed
+using simulation approach.
 }
 \examples{
-\dontrun{R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)}
+\dontrun{R2eesdPMTca(y,x,X,pa,lam=0.12,niter=3,npm=1000)}
 
 }
 \references{
-Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
-Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+of Environmental Research and Public Health.
 
-An additional reference is to be added.
+Reference 2 to be added.
 }

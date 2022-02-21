@@ -2,32 +2,33 @@
 % Please edit documentation in R/R2eeadj.R
 \name{R2eeadj}
 \alias{R2eeadj}
-\title{Two-group estimating equation approach to proportion of the explained variation}
+\title{Estimating equation approach to the proportion of the explained variation with two subgroups.}
 \usage{
 R2eeadj(y, xa, xb, niter = 1)
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n.}
 
-\item{xa}{covariates to be adjusted}
+\item{xa}{covariates to be adjusted: a matrix of nxpa dimension.}
 
-\item{xb}{covariate effects to be computed}
+\item{xb}{covariate effects to be computed: a matrix of nxpb dimension.}
 
 \item{niter}{number of iterations for updating lambda. Default is 1}
 }
 \value{
-The output includes the estimates and confidence intervals.
+Estimates of the proportions of explained variations for xa, xb, and x=(xa,xb) respectively.
+No variance estimate is available currently.
 }
 \description{
-This method uses two estimating equations to estimate the variations
-of the outcome explained by the two parts of covariates simultaneously.
+This approach estimates the proportion of the explained variation in a linear model
+assuming the covariates are independent.
 }
 \details{
-This method assumes covariates are independent.
+This method uses two estimating equations to estimate the variations of the outcome explained
+by the two parts of covariates simultaneously.
 }
 \examples{
-\dontrun{R2eeadj(y, xa, xb, niter = 1)}
-
+\dontrun{R2eeadj(y,xa,xb,niter=1)}
 
 }
 \references{

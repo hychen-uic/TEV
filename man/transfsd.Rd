@@ -2,18 +2,23 @@
 % Please edit documentation in R/utils.R
 \name{transfsd}
 \alias{transfsd}
-\title{Decorrelation transformation with supplementary data}
+\title{Decorrelation}
 \usage{
 transfsd(x, X)
 }
 \arguments{
-\item{x}{input 1}
+\item{x}{a matrix of nxp dimension. Input matrix to be transformed}
 
-\item{X}{input 2}
+\item{X}{a matrix of Nxp dimension. Supplementary data for covariance matrix estimation}
 }
 \value{
-Output is the decorrelation matrix for x.
+decorrelation data matrix.
 }
 \description{
 Decorrelation with the aid of supplementary data
+}
+\details{
+This function use both the input data and the supplementary data to estimate
+the covariance matrix, and then use the estimated covariate matrix to decorrelate
+the input data matrix. require (n+N)>p.
 }

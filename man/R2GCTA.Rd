@@ -2,30 +2,32 @@
 % Please edit documentation in R/R2GCTA.R
 \name{R2GCTA}
 \alias{R2GCTA}
-\title{The GCTA approach with bootstrap variance}
+\title{The GCTA approach with bootstrap variance estimate}
 \usage{
 R2GCTA(y, x, lam, niter = 10, bt = "T", btn)
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n}
 
-\item{x}{covariates}
+\item{x}{covariates: a matrix of nxp dimension}
 
 \item{lam}{parameter adjusting the format of the weighting matrix}
 
 \item{niter}{number of iterations for updating lambda}
 
-\item{bt}{default is "T"}
+\item{bt}{variable specifying whether to compute bootstrap variance. Default is "T"}
 
 \item{btn}{bootstrap sample size}
 }
 \value{
-Output includes estimate of proportion of the explained variation,
-and bootstrap estimate, variance, and confidence intervals if bt = T.
+Estimate of proportion of the explained variation, and bootstrap estimate and
+variance and confidence intervals if bt=T
 }
 \description{
-This function implements the GCTA approach assuming independent covariates
-and normally distributed errors, with bootstrap variance.
+This function implements the genetic complex trait
+analysis of Yang et al (2010) approach assuming independent
+covariates and normally distributed errors, with bootstrap variance
+estimate of Schweiger et al (2016).
 }
 \details{
 The function uses the singular value decomposition for estimation and bootstrap

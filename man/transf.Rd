@@ -7,11 +7,16 @@
 transf(x)
 }
 \arguments{
-\item{x}{input}
+\item{x}{a matrix of nxp dimension}
 }
 \value{
-Output is the decorrelation matrix for x.
+decorrelation data matrix.
 }
 \description{
-Decorrelation transformation
+This function performs a decorrelation transformation of a data set.
+}
+\details{
+This function use the input data to estimate the covariance matrix,
+and then use the estimated covariate matrix to decorrelate
+the input data matrix. require n>p.
 }

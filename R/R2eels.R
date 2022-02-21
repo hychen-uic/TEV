@@ -2,19 +2,22 @@
 #'
 #' This function uses least-square estimates in computing the proportion of the explained variation.
 #'
-#' @param y outcome
-#' @param x covariates
+#' @param y outcome: a vector of length n.
+#' @param x covariates: a matrix of nxp dimension.
 #'
-#' @details This functions uses the least square approach and works only for n > p. But covariates are
-#' not required to be independent.
+#' @details This method works only for the case n>p. It uses the least-square approach
+#' for the estimation. Covariates are allowed to be correlated.
 #'
-#' @return Output includes estimate of proportion of the explained variation, variance estimates
-#' under normality and non-normality error, and the corresponding confidence intervals.
+#' @return Estimate of proportion of the explained variation, variance estimates under normality
+#'         and non-normality error, and the corresponding confidence intervals.
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
-#' linear model with dense effects. arXiv:2201.08723
+#'  linear model with dense effects. arXiv:2201.08723
+#' @references Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+#' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+#' of Environmental Research and Public Health.
 #'
-#' @examples \dontrun{R2eels(y, x)}
+#' @examples \dontrun{R2eels(y,x)}
 #'
 #' @export
 R2eels=function(y, x){

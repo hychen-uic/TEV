@@ -2,34 +2,39 @@
 % Please edit documentation in R/R2eelsPMT.R
 \name{R2eelsPMT}
 \alias{R2eelsPMT}
-\title{Permutation test for no explained variation using least-square estimate}
+\title{Conditional permutation test for no extra variation explained using the estimating equation approach}
 \usage{
 R2eelsPMT(y, x, npm = 1000)
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n.}
 
-\item{x}{covariates}
+\item{x}{covariates: a matrix of nxp dimension.}
 
-\item{npm}{permutation sample size. Default is 1000}
+\item{npm}{permutation sample size for simulation computation of p-value.}
 }
 \value{
-Output includes the p-values (estimate and bound) of the test,
-estimate of proportion of the explained variation, and simulation results.
+The p-values (estimate and bound) of the test, estimate of proportion of
+the explained variation for both parts together, the first part alone, and the second part
+given the first part, and simulation results.
 }
 \description{
-This function performs test of no explained variation by
-permuting the outcome using least square approach.
+This method performs permutation test by permuting the second part of the covariates and can be computationally slow.
 }
 \details{
-The computation permutes outcome and is computationally fast.
+This method tests no extra variation explained by the second part of covariates
+given that the first part of covariates in the model by permuting the second part of
+covariates and estimating using the estimating equation approach. P-value is computed
+using simulation approach.
 }
 \examples{
-\dontrun{R2eelsPMT(y, x, npm=1000)}
+\dontrun{R2eelsPMTca(y,x,lam=0.12,niter=3,npm=1000)}
 
 }
 \references{
-Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
-Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+of Environmental Research and Public Health.
+
+Reference 2 to be added.
 }

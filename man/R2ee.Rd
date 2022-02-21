@@ -2,34 +2,40 @@
 % Please edit documentation in R/R2ee.R
 \name{R2ee}
 \alias{R2ee}
-\title{Proportion of the explained variation by the estimating equation approach}
+\title{Estimating equation approach to the proportion of the explained variation}
 \usage{
 R2ee(y, x, lam = 0.1, niter = 3)
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n.}
 
-\item{x}{covariates}
+\item{x}{covariates: a matrix of nxp dimension.}
 
-\item{lam}{initial parameter value (>= 0) for the weighting matrix. Default is 0.1}
+\item{lam}{parameter for altering the weighting matrix.}
 
-\item{niter}{number of iterations for updating lam}
+\item{niter}{number of iterations for updating the lam parameter}
 }
 \value{
-The output includes estimate of the proportion of explained variation, variance estimates
-under normality and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
+Estimate of the proportion of explained variation, variance estimates under normality
+and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
 }
 \description{
-This function computes the estimator of the proportion of the explained variation assuming independent covariates.
+This approach estimates the proportion of the explained variation in a linear model
+assuming the covariates are independent.
 }
 \details{
-The computation uses the singular value decomposition and asymptotic variance formula.
+Both point estimate and confidence intervals
+are computed. Two set of confidence intervals under normal or non-normal error are computed.
 }
 \examples{
-\dontrun{R2ee(y, x, lam = 0.1,niter = 3)}
+\dontrun{R2ee(y,x,lam=0.1,niter=3)}
 
 }
 \references{
 Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
 linear model with dense effects. arXiv:2201.08723
+
+Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+of Environmental Research and Public Health.
 }

@@ -1,18 +1,18 @@
 #' @include EigenPrism.R
 NULL
-
-#' Extended EigenPrism approach
+#' Estimating proportion of explained variation using the least-square approach or the EigenPrism approach
 #'
-#' This function combines the function from Jensen for n <= p and a chi-square inversion for confidence interval under
-#' error variance for n > p.
+#' EigenPrismFull procedure integrating the \eqn{n\le p} and \eqn{n>p} cases
 #'
-#' @param y outcome
-#' @param x covariates
-#' @param alpha significance level
+#' @param y outcome: a vector of length n.
+#' @param x covariates: a matrix of nxp dimension.
+#' @param alpha significance level: a vector.
 #'
-#' @details For n > p, confidence intervals are obtained using least-square estimates.
+#' @details For \eqn{n\le p}, the estimate and confidence interval are obtained by EigenPrism approach.
+#' For \eqn{n>p}, the estimate is obtained by least-square approach, and the confidence intervals
+#' are obtained by inverting the chisquare test.
 #'
-#' @return Output includes estimate of the proportion of the explained variation and the confidence intervals
+#' @return Estimate of the proportion of the explained variation and confidence intervals for the proportion.
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in
 #' high-dimensional linear model with dense effects. arXiv:2201.08723

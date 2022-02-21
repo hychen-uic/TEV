@@ -7,26 +7,30 @@
 R2eels(y, x)
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n.}
 
-\item{x}{covariates}
+\item{x}{covariates: a matrix of nxp dimension.}
 }
 \value{
-Output includes estimate of proportion of the explained variation, variance estimates
-under normality and non-normality error, and the corresponding confidence intervals.
+Estimate of proportion of the explained variation, variance estimates under normality
+and non-normality error, and the corresponding confidence intervals.
 }
 \description{
 This function uses least-square estimates in computing the proportion of the explained variation.
 }
 \details{
-This functions uses the least square approach and works only for n > p. But covariates are
-not required to be independent.
+This method works only for the case n>p. It uses the least-square approach
+for the estimation. Covariates are allowed to be correlated.
 }
 \examples{
-\dontrun{R2eels(y, x)}
+\dontrun{R2eels(y,x)}
 
 }
 \references{
 Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
 linear model with dense effects. arXiv:2201.08723
+
+Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+of Environmental Research and Public Health.
 }

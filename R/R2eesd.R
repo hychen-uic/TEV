@@ -1,40 +1,29 @@
-#' Estimating equation approach to proportion of the explained variation with supplementary covariate data
+#' Estimating equation approach to the proportion of the explained variation with supplementary covariate data
 #'
-#' This function estimates the proportion of the explained variation using the estimating
-#' equation approach incorporating supplementary covariate data.
+#' This function computes the proportion of the explained variation adjusting for the correlation in covariates.
 #'
-#' @param y outcome
-#' @param x covariates
-#' @param X supplementary covariate data
-#' @param lam parameter adjusting the format of the weighting matrix. Default is 0.2
-#' @param niter number of iterations for updating lambda. Default is 3
-#' @param V \code{V[1:3] == V[1]=VA}, \code{V[2]=VAB}, \code{V[3]=VB}, pre-calculated variance components.
-#' @param E \code{E[1:3] == E[1]=EC}, \code{E[2]=ED}, \code{E[3]=EF}, pre-calculated variance components.
-#' @param know if V and E are known, options include "yes" and "no". Default is "yes"
-#' @param nrep Monte Carlo sample size for updating V and E
+#' @param y outcome: a vector of length n.
+#' @param x covariates: a matrix of nxp dimension.
+#' @param X supplementary covariates: a matrix of Nxp dimension.
+#' @param lam parameter for altering the weighting matrix.
+#' @param niter number of iterations for updating lam.
+#' @param V \code{V[1:3] == V[1]=VA, V[2]=VAB, V[3]=VB}
+#' @param E \code{E[1:3] == E[1]=EC, E[2]=ED, E[3]=EF}
+#' @param know if VA and EB are known, options include "yes" and "no". Default is "yes" Default is "yes" (usually for simulation only).
+#' @param nrep Monte Carlo sample size for computing V and E.
 #'
-#' @details The estimation approach does not assume independent covariates and can
-#' deal with the case n <= p.
+#' @details The estimation approach does not assume independent covariates and can deal
+#' with the case \eqn{n\le p}. But require the sample sizes of x and X combined be greater than p.
 #'
-#' @return The output includes estimate of the proportion of explained variation,
-#' variance estimates under normality and non-normality assumptions,
-#' and confidence intervals under normality and non-normality assumptions.
+#' @return Estimate of the proportion of explained variation, variance estimates under normality
+#' and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
 #'
-#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
-#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#' Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
-#' @references An additional reference is to be added.
+#' @references Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+#' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+#' of Environmental Research and Public Health.
+#' @references reference 2 to be added.
 #'
-#' @examples \dontrun{R2eesd(y,
-#'                    x,
-#'                    X,
-#'                    lam = 0.2,
-#'                    niter = 3,
-#'                    V = rep(0, 3),
-#'                    E = rep(0, 3),
-#'                    know = "yes",
-#'                    nrep = 1000)}
-#'
+#' @examples \dontrun{R2eesd(y,x,X,lam=0.2,niter=3,V=rep(0,3),E=rep(0,3),know="no",nrep=1000)}
 #'
 #' @export
 R2eesd=function(y, x, X, lam = 0.2, niter = 3, V = rep(0, 3), E = rep(0, 3), know = "yes", nrep = 1000){

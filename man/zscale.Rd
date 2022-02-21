@@ -2,17 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{zscale}
 \alias{zscale}
-\title{Transformation function}
+\title{Rescale data matrix}
 \usage{
 zscale(z)
 }
 \arguments{
-\item{z}{input argument}
+\item{z}{input matrix of nxp dimension}
 }
 \value{
-Output is the rescale data matrix.
+rescaled data matrix of nxp dimension.
 }
 \description{
-This function rescales each variable in the data by subtracting mean and
-divided by standard deviation estimates
+Rescale data matrix by subtracting mean and divide the standard deviation for each variable.
 }

@@ -1,24 +1,28 @@
 #' @import stats
 NULL
-
-#' Proportion of the explained variation by the estimating equation approach
+#' Estimating equation approach to the proportion of the explained variation
 #'
-#' This function computes the estimator of the proportion of the explained variation assuming independent covariates.
+#' This approach estimates the proportion of the explained variation in a linear model
+#' assuming the covariates are independent.
 #'
-#' @param y outcome
-#' @param x covariates
-#' @param lam initial parameter value (>= 0) for the weighting matrix. Default is 0.1
-#' @param niter number of iterations for updating lam
+#' @param y outcome: a vector of length n.
+#' @param x covariates: a matrix of nxp dimension.
+#' @param lam parameter for altering the weighting matrix.
+#' @param niter number of iterations for updating the lam parameter
 #'
-#' @details The computation uses the singular value decomposition and asymptotic variance formula.
+#' @details  Both point estimate and confidence intervals
+#' are computed. Two set of confidence intervals under normal or non-normal error are computed.
 #'
-#' @return The output includes estimate of the proportion of explained variation, variance estimates
-#' under normality and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
+#' @return Estimate of the proportion of explained variation, variance estimates under normality
+#' and non-normality assumptions, and confidence intervals under normality and non-normality assumptions.
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
-#' linear model with dense effects. arXiv:2201.08723
+#'  linear model with dense effects. arXiv:2201.08723
+#' @references Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+#' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+#' of Environmental Research and Public Health.
 #'
-#' @examples \dontrun{R2ee(y, x, lam = 0.1,niter = 3)}
+#' @examples \dontrun{R2ee(y,x,lam=0.1,niter=3)}
 #'
 #'@export
 R2ee=function(y, x, lam = 0.1, niter = 3){

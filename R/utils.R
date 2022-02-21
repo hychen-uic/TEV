@@ -4,11 +4,15 @@
 
 #' Decorrelation transformation
 #'
-#' Decorrelation transformation
+#' This function performs a decorrelation transformation of a data set.
 #'
-#' @param x input
+#' @param x a matrix of nxp dimension
 #'
-#' @return Output is the decorrelation matrix for x.
+#' @details This function use the input data to estimate the covariance matrix,
+#' and then use the estimated covariate matrix to decorrelate
+#' the input data matrix. require n>p.
+#'
+#' @return decorrelation data matrix.
 #'
 #' @export
 transf=function(x){
@@ -20,14 +24,18 @@ transf=function(x){
   list(z)
 }
 
-#' Decorrelation transformation with supplementary data
+#' Decorrelation
 #'
 #' Decorrelation with the aid of supplementary data
 #'
-#' @param x input 1
-#' @param X input 2
+#' @param x a matrix of nxp dimension. Input matrix to be transformed
+#' @param X a matrix of Nxp dimension. Supplementary data for covariance matrix estimation
 #'
-#' @return Output is the decorrelation matrix for x.
+#' @details This function use both the input data and the supplementary data to estimate
+#' the covariance matrix, and then use the estimated covariate matrix to decorrelate
+#' the input data matrix. require (n+N)>p.
+#'
+#' @return decorrelation data matrix.
 #'
 #' @export
 transfsd=function(x,X){
@@ -40,6 +48,13 @@ transfsd=function(x,X){
 }
 
 ### projection when n>p ###
+#' Compute projection matrix
+#'
+#' @param x input matrix of nxp dimension
+#'
+#' @return projection matrix of nxn.
+#'
+#' @export
 proj1=function(x){ # without supplementary data
 
   n=dim(x)[1]
@@ -56,6 +71,14 @@ proj1=function(x){ # without supplementary data
   list(proj)
 }
 
+#' Compute projection matrices
+#'
+#' @param x input matrix of nxp dimension
+#' @param X input matrix of Nxp dimension
+#'
+#' @return projection matrix of nxn and projection matrix of NxN based on (x, X).
+#'
+#' @export
 proj2=function(x,X){ # with supplementary data
 
   n=dim(x)[1]
@@ -75,14 +98,13 @@ proj2=function(x,X){ # with supplementary data
   list(projx,projX)
 }
 
-#' Transformation function
+#' Rescale data matrix
 #'
-#' This function rescales each variable in the data by subtracting mean and
-#' divided by standard deviation estimates
+#' Rescale data matrix by subtracting mean and divide the standard deviation for each variable.
 #'
-#' @param z input argument
+#' @param z input matrix of nxp dimension
 #'
-#' @return Output is the rescale data matrix.
+#' @return rescaled data matrix of nxp dimension.
 #'
 #' @export
 zscale=function(z){

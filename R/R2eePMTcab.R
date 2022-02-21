@@ -1,26 +1,29 @@
-#' Conditional permutation test adjusting for covariates for estimating equation approach
+#' Conditional permutation test for no extra variation explained using the estimating equation approach
 #'
-#' This function performs test of no extra variation explained by the additional covariates by
-#' permuting the additional covariates using the estimating equation approach.
+#' This method performs permutation test by permuting the second part of the covariates and can be computationally slow.
 #'
-#' @param y outcome
-#' @param x covariates
-#' @param pa dimension of covariates to be adjusted
-#' @param lam parameter adjusting the format of the weighting matrix. Default is 0.2
+#' @param y outcome: a vector of length n.
+#' @param x covariates: a matrix of nxp dimension.
+#' @param pa length of the covariates to be adjusted.
+#' @param lam parameter adjusting the formation of the weighting matrix. Default is 0.12
 #' @param niter number of iterations for updating lambda. Default is 3
-#' @param npm Monte Carlo sample size for permutation. Default is 1000
+#' @param npm permutation sample size for simulation computation of p-value.
 #'
-#' @details The computation permutes the second part of the covariates and can be computationally slow.
-#' It differs from \code{R2eePMTca} in the way of matrix computation.
+#' @details This method tests no extra variation explained by the second part of covariates
+#' given that the first part of covariates in the model by permuting the second part of
+#' covariates and estimating using the estimating equation approach. P-value is computed
+#' using simulation approach. This function differs from \code{R2eePMTca} in the way the matrix operation is handled.
 #'
-#' @return Output includes the p-values (estimate and bound) of the test,
-#' estimate of proportion of the extra explained variation, and simulation results.
+#' @return The p-values (estimate and bound) of the test, estimate of proportion of
+#' the explained variation for both parts together, the first part alone, and the second part
+#' given the first part, and simulation results.
 #'
-#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
-#'  Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#'  Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' @references Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+#' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+#' of Environmental Research and Public Health.
+#' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eePMTcab(y, x, pa, lam = 0.2, niter = 3, npm = 1000)}
+#' @examples \dontrun{R2eePMTcab(y,x,pa,lam=0.12,niter=3,npm=1000)}
 #'
 #' @export
 R2eePMTcab=function(y, x, pa, lam = 0.2, niter = 3, npm = 1000){

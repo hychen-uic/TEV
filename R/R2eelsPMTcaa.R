@@ -1,24 +1,27 @@
-#' Conditional permutation test for no explained variation using the least-square approach
+#' Conditional permutation test for no extra variation explained using the least-square approach
 #'
-#' This function performs conditional tests of no variation explained by the additional
-#' covariates when adjusted for the one set of covariates.
+#' This method performs permutation test by permuting the second part of the covariates and can be computationally slow.
 #'
-#' @param y outcome
-#' @param x all the covariates
-#' @param pa dimension of the first part of covariates to be adjusted
-#' @param npm permutation sample size. Default is 1000
+#' @param y outcome: a vector of length n.
+#' @param x covariates: a matrix of nxp dimension.
+#' @param pa length of the covariates to be adjusted.
+#' @param npm permutation sample size for simulation computation of p-value.
 #'
-#' @details The conditional permutation test needs to perform the second part of the covariates
-#' and can be computationally slow. This function differs from \code{R2eelsPMTca} in the way the matrix operation is used.
+#' @details This method tests no extra variation explained by the second part of covariates
+#' given that the first part of covariates in the model by permuting the second part of
+#' covariates and estimating using the estimating equation approach. P-value is computed
+#' using simulation approach. This approach differs from \code{R2eelsPMTca} in the way the matrix operation is handled.
 #'
-#' @return Output includes the p-values (estimate and bound) of the test,
-#' estimate of proportion of the extra explained variation, and simulation results.
+#' @return The p-values (estimate and bound) of the test, estimate of proportion of
+#' the explained variation for both parts together, the first part alone, and the second part
+#' given the first part, and simulation results.
 #'
-#' @references Chen, H.Y.; Li, H.; Argos, M.; Persky, V.; Turyk, M.
-#' Statistical methods for assessing explained variations of a health outcome by mixtures of exposures.
-#' Under review for Prep. Spec. Issue Int. J. Environ. Res. Public Health 2022.
+#' @references Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
+#' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
+#' of Environmental Research and Public Health.
+#' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eelsPMTcaa(y, x, pa, npm = 1000)}
+#' @examples \dontrun{R2eelsPMTcaa(y,x,pa,lam=0.12,niter=3,npm=1000)}
 #'
 #' @export
 R2eelsPMTcaa=function(y, x, pa, npm = 1000){

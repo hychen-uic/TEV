@@ -2,26 +2,27 @@
 % Please edit documentation in R/EigenPrismFull.R
 \name{EigenPrismFull}
 \alias{EigenPrismFull}
-\title{Extended EigenPrism approach}
+\title{Estimating proportion of explained variation using the least-square approach or the EigenPrism approach}
 \usage{
 EigenPrismFull(y, x, alpha = c(0.01, 0.05, 0.1))
 }
 \arguments{
-\item{y}{outcome}
+\item{y}{outcome: a vector of length n.}
 
-\item{x}{covariates}
+\item{x}{covariates: a matrix of nxp dimension.}
 
-\item{alpha}{significance level}
+\item{alpha}{significance level: a vector.}
 }
 \value{
-Output includes estimate of the proportion of the explained variation and the confidence intervals
+Estimate of the proportion of the explained variation and confidence intervals for the proportion.
 }
 \description{
-This function combines the function from Jensen for n <= p and a chi-square inversion for confidence interval under
-error variance for n > p.
+EigenPrismFull procedure integrating the \eqn{n\le p} and \eqn{n>p} cases
 }
 \details{
-For n > p, confidence intervals are obtained using least-square estimates.
+For \eqn{n\le p}, the estimate and confidence interval are obtained by EigenPrism approach.
+For \eqn{n>p}, the estimate is obtained by least-square approach, and the confidence intervals
+are obtained by inverting the chisquare test.
 }
 \examples{
 \dontrun{EigenPrismFull(y, x)}
