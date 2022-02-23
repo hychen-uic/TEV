@@ -1,4 +1,5 @@
-#' Conditional permutation test for no extra variation explained using the least-square approach
+#' Conditional permutation test for no extra variation explained using the estimating equation approach with supplemental
+#' data
 #'
 #' This method performs permutation test by permuting the second part of the covariates and can be computationally slow.
 #'

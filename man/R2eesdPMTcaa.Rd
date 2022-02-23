@@ -2,7 +2,8 @@
 % Please edit documentation in R/R2eesdPMTcaa.R
 \name{R2eesdPMTcaa}
 \alias{R2eesdPMTcaa}
-\title{Conditional permutation test for no extra variation explained using the least-square approach}
+\title{Conditional permutation test for no extra variation explained using the estimating equation approach with supplemental
+data}
 \usage{
 R2eesdPMTcaa(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eelsPMT.R
 \name{R2eelsPMT}
 \alias{R2eelsPMT}
-\title{Conditional permutation test for no extra variation explained using the estimating equation approach}
+\title{Conditional permutation test for no extra variation explained using the least-square approach}
 \usage{
 R2eelsPMT(y, x, npm = 1000)
 }
