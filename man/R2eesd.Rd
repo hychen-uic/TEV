@@ -8,10 +8,10 @@ R2eesd(
   y,
   x,
   X,
-  lam = 0.2,
-  niter = 3,
-  V = rep(0, 3),
-  E = rep(0, 3),
+  lam = 1,
+  niter = 1,
+  VA = rep(0, 3),
+  EB = rep(0, 3),
   know = "yes",
   nrep = 1000
 )
@@ -27,13 +27,13 @@ R2eesd(
 
 \item{niter}{number of iterations for updating lam.}
 
-\item{V}{\code{V[1:3] == V[1]=VA, V[2]=VAB, V[3]=VB}}
+\item{VA}{a 3-dimensional vector for V1,V2,V3}
 
-\item{E}{\code{E[1:3] == E[1]=EC, E[2]=ED, E[3]=EF}}
+\item{EB}{a 3-dimensional vector for D3,D4,D5}
 
-\item{know}{if VA and EB are known, options include "yes" and "no". Default is "yes" Default is "yes" (usually for simulation only).}
+\item{know}{if (VA, EB) are known, options include "yes" and "no". Default is "yes" (usually for simulation only).}
 
-\item{nrep}{Monte Carlo sample size for computing V and E.}
+\item{nrep}{Monte Carlo sample size for computing VA and EB.}
 }
 \value{
 Estimate of the proportion of explained variation, variance estimates under normality
@@ -47,7 +47,7 @@ The estimation approach does not assume independent covariates and can deal
 with the case \eqn{n\le p}. But require the sample sizes of x and X combined be greater than p.
 }
 \examples{
-\dontrun{R2eesd(y,x,X,lam=0.2,niter=3,V=rep(0,3),E=rep(0,3),know="no",nrep=1000)}
+\dontrun{R2eesd(y,x,X,lam=1,niter=1,V=rep(0,3),B=rep(0,3),know="no",nrep=1000)}
 
 }
 \references{

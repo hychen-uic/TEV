@@ -25,10 +25,11 @@
 #' of Environmental Research and Public Health.
 #' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eesdPMTca(y,x,X,pa,lam=0.12,niter=3,npm=1000)}
+#' @examples \dontrun{R2eesdPMTcaa(y,x,X,pa,lam=0.1,niter=1,npm=100)}
 #'
 #' @export
-R2eesdPMTcaa=function(y,x,X,pa,lam=0.2,niter=3,npm=1000){
+
+R2eesdPMTcaa=function(y,x,X,pa,lam=0.1,niter=1,npm=100){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -98,16 +99,17 @@ R2eesdPMTcaa=function(y,x,X,pa,lam=0.2,niter=3,npm=1000){
     den=sum(diag(W%*%(M-diag(rep(1,n)))))
     num=t(y)%*%W%*%y-sum(diag(W))
     r2p=as.numeric(num/den)
-    r2p=min(1,max(0,r2p))
+    result[ii]=r2p-r2a
 
-    result[ii]=max(0,r2p-r2a)
+    # r2p=min(1,max(0,r2p))
+    # result[ii]=max(0,r2p-r2a)
   }
+  predpvalue=1-pnorm((r2ba-mean(result))/sd(result))
 
   pvalueEST=mean(1.0*(result>r2ba))
   acc=2*sqrt(pvalueEST*(1-pvalueEST)/npm)
   crt=2*sqrt(0.05*0.95/npm) # if truth p-value=0.05, how accurate the estimation is
   pvalueBOUND=max(pvalueEST+acc,pvalueEST+crt)
 
-  list(c(pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
-
+  list(c(predpvalue,pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
 }

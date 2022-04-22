@@ -19,10 +19,10 @@
 #' of Environmental Research and Public Health.
 #' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eePMT(y,x,lam=0.12,niter=3,npm=1000)}
+#' @examples \dontrun{R2eePMT(y,x,lam=0.1,niter=1,npm=1000)}
 #'
 #' @export
-R2eePMT=function(y, x, lam = 0.12, niter = 3, npm = 1000){
+R2eePMT=function(y, x, lam =0.1, niter = 1, npm = 1000){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -78,11 +78,12 @@ R2eePMT=function(y, x, lam = 0.12, niter = 3, npm = 1000){
     result[ii]=(num+com)/(den+com)
     result[ii]=min(1,max(result[ii],0))
   }
+  predpvalue=1-pnorm((r2-mean(result))/sd(result))
+
   pvalueEST=mean(1.0*(result>r2))
   acc=2*sqrt(pvalueEST*(1-pvalueEST)/npm)
   crt=2*sqrt(0.05*0.95/npm) # if truth p-value=0.05, how accurate the estimation is
   pvalueBOUND=max(pvalueEST+acc,pvalueEST+crt)
 
-  list(c(pvalueEST,pvalueBOUND),r2,result)
-
+  list(c(predpvalue,pvalueEST,pvalueBOUND),r2,result)
 }

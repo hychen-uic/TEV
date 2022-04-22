@@ -21,10 +21,10 @@
 #' of Environmental Research and Public Health.
 #' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eelsPMTcaa(y,x,pa,lam=0.12,niter=3,npm=1000)}
+#' @examples \dontrun{R2eelsPMTcaa(y,x,pa,npm=100)}
 #'
 #' @export
-R2eelsPMTcaa=function(y, x, pa, npm = 1000){
+R2eelsPMTcaa=function(y, x, pa, npm = 100){
 
   # y==outcome
   # x==covariates
@@ -72,16 +72,18 @@ R2eelsPMTcaa=function(y, x, pa, npm = 1000){
     delta=chol2inv(chol(t(xx)%*%xx))
     xy=t(xx)%*%y
     r2p=1-(n-1-t(xy)%*%delta%*%xy)/(n-p)
-    r2p=min(1,max(r2p,0))
 
-    result[jj]=max(0,r2p-r2a)
+    result[jj]=r2p-r2a
+
+    # r2p=min(1,max(r2p,0))
+    # result[jj]=max(0,r2p-r2a)
   }
+  predpvalue=1-pnorm((r2ba-mean(result))/sd(result))
 
   pvalueEST=mean(1.0*(result>r2ba))
   acc=2*sqrt(pvalueEST*(1-pvalueEST)/npm)
   crt=2*sqrt(0.05*0.95/npm) # if truth p-value=0.05, how accurate the estimation is
   pvalueBOUND=max(pvalueEST+acc,pvalueEST+crt)
 
-  list(c(pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
-
+  list(c(predpvalue,pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
 }

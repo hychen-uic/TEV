@@ -12,7 +12,7 @@
 #' covariates and estimating using the estimating equation approach. P-value is computed
 #' using simulation approach.
 #'
-#' @return The p-values (estimate and bound) of the test, estimate of proportion of
+#' @return The p-values (normal approximation, empirical estimate, and bound) of the test, estimate of proportion of
 #' the explained variation for both parts together, the first part alone, and the second part
 #' given the first part, and simulation results.
 #'
@@ -21,12 +21,12 @@
 #' of Environmental Research and Public Health.
 #' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eelsPMTca(y,x,pa,lam=0.12,niter=3,npm=1000)}
+#' @examples \dontrun{R2eelsPMTca(y,x,pa,npm=200)}
 #'
-#' @examples \dontrun{R2eelsPMTca(y, x, pa, npm = 1000)}
+#' @examples \dontrun{R2eelsPMTca(y, x, pa, npm = 100)}
 #'
 #' @export
-R2eelsPMTca=function(y, x, pa, npm = 1000){
+R2eelsPMTca=function(y, x, pa, npm = 100){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -64,16 +64,17 @@ R2eelsPMTca=function(y, x, pa, npm = 1000){
     svdxx=svd(xx)
     r2p=1-(n-1-sum((t(y)%*%svdxx$u)^2))/(n-p)
 
-    r2p=min(1,max(r2p,0))
+    result[jj]=r2p-r2a
 
-    result[jj]=max(0,r2p-r2a)
+    #r2p=min(1,max(r2p,0))
+    #result[jj]=max(0,r2p-r2a)
   }
+  predpvalue=1-pnorm((r2ba-mean(result))/sd(result))
 
   pvalueEST=mean(1.0*(result>r2ba))
   acc=2*sqrt(pvalueEST*(1-pvalueEST)/npm)
   crt=2*sqrt(0.05*0.95/npm) # if truth p-value=0.05, how accurate the estimation is
   pvalueBOUND=max(pvalueEST+acc,pvalueEST+crt)
 
-  list(c(pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
-
+  list(c(predpvalue,pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
 }

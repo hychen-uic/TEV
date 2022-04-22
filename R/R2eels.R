@@ -31,12 +31,9 @@ R2eels=function(y, x){
   #1. Standardization
 
   for(j in 1:p){
-    mu=mean(x[,j])
-    sdx=sd(x[,j])
-    x[,j]=(x[,j]-mu)/sdx
+    x[,j]=(x[,j]-mean(x[,j]))/sd(x[,j])
   }
-  sdy=sd(y)
-  y=(y-mean(y))/sdy
+  y=(y-mean(y))/sd(y)
 
   #2. Compute the estimator
   xsvd=svd(x)
@@ -45,9 +42,7 @@ R2eels=function(y, x){
 
   #3. estimate variance
   # Assuming normal random error
-  #vest=2*n*(1-r2)^2/(n-p)
-  vest=2*(1-r2)^2*(2*r2^2-1)+2*(1-r2)^2*n/(n-p)
-
+  vest=2*(1-r2)^2*(2*r2+p/(n-p))
 
   # Not assuming normal random error
 
@@ -55,13 +50,13 @@ R2eels=function(y, x){
   svdzext=svd(zext)
   #Find the remaining orthogonal matrix in svd(x)$u
   U=svdzext$u[1:n,(p+1):n]
-  #residual error terms
-  eps=t(U)%*%y
+  eps=t(U)%*%y  #residual error terms
+
   # variance estimate without normality for random error
-  veps2=(sum(eps^4)-3*(n-p)*(1-r2)^2)/sum(U^4)+2*(1-r2)^2
-  #vest1=2*p*(1-r2)^2/(n-p)+max(veps2,0)
-  Delta=diag(xsvd$u%*%t(xsvd$u))
-  vest1=vest+(max(veps2,0)-2)*sum(((1-r2)^2-(1-r2)*(1-Delta)*n/(n-p))^2)/n
+  veps2=max(0,(sum(eps^4)-3*(n-p)*(1-r2)^2)/sum(U^4)+2*(1-r2)^2)
+
+  vest1=vest+(veps2-2*(1-r2)^2)*r2^2
+  #vest1=max(0,vest1)
 
   vest=vest/n
   vest1=vest1/n

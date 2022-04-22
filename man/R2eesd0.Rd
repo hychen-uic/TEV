@@ -2,19 +2,10 @@
 % Please edit documentation in R/R2eesd0.R
 \name{R2eesd0}
 \alias{R2eesd0}
-\title{Estimating equation approach to the proportion of the explained variation with supplementary covariate data}
+\title{Estimating equation approach to the proportion of the explained variation with supplementary covariate data
+(assume known Y variance))}
 \usage{
-R2eesd0(
-  y,
-  x,
-  X,
-  lam = 0.2,
-  niter = 3,
-  VA = 0,
-  EB = 0,
-  know = "yes",
-  nrep = 1000
-)
+R2eesd0(y, x, X, lam = 1, niter = 1, VA = 0, EB = 0, know = "yes", nrep = 1000)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
@@ -48,7 +39,7 @@ with the case \eqn{n\le p}. But require the sample sizes of x and X combined be 
 This approach defers from \code{R2eesd} only in the way the variance of the estimator is estimated.
 }
 \examples{
-\dontrun{R2eesd(y,x,X,lam=0.2,niter=3,VA=0,EB=0,know="no",nrep=1000)}
+\dontrun{R2eesd(y,x,X,lam=1,niter=1,VA=0,EB=0,know="no",nrep=1000)}
 
 }
 \references{

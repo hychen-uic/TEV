@@ -5,7 +5,7 @@
 \title{Conditional permutation test for no extra variation explained using the estimating equation approach with supplemental
 data}
 \usage{
-R2eesdPMTcaa(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
+R2eesdPMTcaa(y, x, X, pa, lam = 0.1, niter = 1, npm = 100)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
@@ -37,7 +37,7 @@ covariates and estimating using the estimating equation approach. P-value is com
 using simulation approach. This approach differs from \code{R2eesdPMTca} in the way the matrix operation is handled.
 }
 \examples{
-\dontrun{R2eesdPMTca(y,x,X,pa,lam=0.12,niter=3,npm=1000)}
+\dontrun{R2eesdPMTcaa(y,x,X,pa,lam=0.1,niter=1,npm=100)}
 
 }
 \references{

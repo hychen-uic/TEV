@@ -4,7 +4,7 @@
 \alias{R2eePMT}
 \title{Permutation test for no explained variation using the estimating equation approach}
 \usage{
-R2eePMT(y, x, lam = 0.12, niter = 3, npm = 1000)
+R2eePMT(y, x, lam = 0.1, niter = 1, npm = 1000)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
@@ -29,7 +29,7 @@ This method tests no explained variation by permuting the outcome and estimating
 using the estimating equation approach. P-value is computed using simulation approach.
 }
 \examples{
-\dontrun{R2eePMT(y,x,lam=0.12,niter=3,npm=1000)}
+\dontrun{R2eePMT(y,x,lam=0.1,niter=1,npm=1000)}
 
 }
 \references{

@@ -5,7 +5,7 @@
 \title{Conditional permutation test for no extra variation explained using the estimating equation approach with supplemental
 data}
 \usage{
-R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
+R2eesdPMTca(y, x, X, pa, lam = 0.1, niter = 1, npm = 1000)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
@@ -23,7 +23,7 @@ R2eesdPMTca(y, x, X, pa, lam = 0.2, niter = 3, npm = 1000)
 \item{npm}{permutation sample size for simulation computation of p-value.}
 }
 \value{
-The p-values (estimate and bound) of the test, estimate of proportion of
+The p-values (normal approximation, empirical estimate, and bound) of the test, estimate of proportion of
 the explained variation for both parts together, the first part alone, and the second part
 given the first part, and simulation results.
 }
@@ -37,7 +37,7 @@ covariates and estimating using the estimating equation approach. P-value is com
 using simulation approach.
 }
 \examples{
-\dontrun{R2eesdPMTca(y,x,X,pa,lam=0.12,niter=3,npm=1000)}
+\dontrun{R2eesdPMTca(y,x,X,pa,lam=0.1,niter=1,npm=1000)}
 
 }
 \references{

@@ -7,10 +7,10 @@
 #' @param X supplementary covariates: a matrix of Nxp dimension.
 #' @param lam parameter for altering the weighting matrix.
 #' @param niter number of iterations for updating lam.
-#' @param V \code{V[1:3] == V[1]=VA, V[2]=VAB, V[3]=VB}
-#' @param E \code{E[1:3] == E[1]=EC, E[2]=ED, E[3]=EF}
-#' @param know if VA and EB are known, options include "yes" and "no". Default is "yes" Default is "yes" (usually for simulation only).
-#' @param nrep Monte Carlo sample size for computing V and E.
+#' @param VA a 3-dimensional vector for V1,V2,V3
+#' @param EB a 3-dimensional vector for D3,D4,D5
+#' @param know if (VA, EB) are known, options include "yes" and "no". Default is "yes" (usually for simulation only).
+#' @param nrep Monte Carlo sample size for computing VA and EB.
 #'
 #' @details The estimation approach does not assume independent covariates and can deal
 #' with the case \eqn{n\le p}. But require the sample sizes of x and X combined be greater than p.
@@ -23,10 +23,10 @@
 #' of Environmental Research and Public Health.
 #' @references reference 2 to be added.
 #'
-#' @examples \dontrun{R2eesd(y,x,X,lam=0.2,niter=3,V=rep(0,3),E=rep(0,3),know="no",nrep=1000)}
+#' @examples \dontrun{R2eesd(y,x,X,lam=1,niter=1,V=rep(0,3),B=rep(0,3),know="no",nrep=1000)}
 #'
 #' @export
-R2eesd=function(y, x, X, lam = 0.2, niter = 3, V = rep(0, 3), E = rep(0, 3), know = "yes", nrep = 1000){
+R2eesd=function(y, x, X, lam =1, niter = 1, VA= rep(0, 3),EB=rep(0,3), know = "yes", nrep = 1000){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -38,18 +38,15 @@ R2eesd=function(y, x, X, lam = 0.2, niter = 3, V = rep(0, 3), E = rep(0, 3), kno
   }
   #1. Standardization
 
-  XX=t(cbind(t(x),t(X))) #combine existing and supplement data on covariates
+  XX=rbind(x,X) #combine existing and supplement data on covariates
   for(j in 1:p){
-    mu=mean(c(XX[,j]))
-    sdx=sd(c(XX[,j]))
-    X[,j]=(X[,j]-mu)/sdx
-    x[,j]=(x[,j]-mu)/sdx
+    XX[,j]=(XX[,j]-mean(c(XX[,j])))/sd(c(XX[,j]))
+    x[,j]=XX[1:n,j] #(x[,j]-mean(c(x[,j])))/sd(c(x[,j]))
   }
-  sdy=sd(y)
-  y=(y-mean(y))/sdy
+  y=(y-mean(y))/sd(y)
 
-  #2. Sigular value decomposition
-  M=x%*%chol2inv(chol(t(x)%*%x+t(X)%*%X))%*%t(x)*(n+N)/p
+  #2. compute the estimate
+  M=x%*%chol2inv(chol(t(XX)%*%XX/(n+N)))%*%t(x)/p
 
   r2=lam/(1+lam) #initial value
   for(ii in 1:niter){
@@ -58,8 +55,10 @@ R2eesd=function(y, x, X, lam = 0.2, niter = 3, V = rep(0, 3), E = rep(0, 3), kno
     IM=chol2inv(chol(diag(rep(1,n))+lam*M))
     W=IM%*%(M-diag(rep(1,n)))%*%IM
     #3. Compute the estimators
-    den=sum(diag(W%*%(M-diag(rep(1,n)))))
-    num=t(y)%*%W%*%y-sum(diag(W))
+    D1=sum(diag(W%*%M))
+    D2=sum(diag(W))
+    den=D1-D2
+    num=t(y)%*%W%*%y-D2
 
     r2=as.numeric(num/den)
     r2=min(1,max(0,r2))
@@ -71,15 +70,15 @@ R2eesd=function(y, x, X, lam = 0.2, niter = 3, V = rep(0, 3), E = rep(0, 3), kno
     SUZWZU=rep(0,nrep)
     SUZWWZU=rep(0,nrep)
     SUZZU=rep(0,nrep)
-    STRW=rep(0,nrep)
     STRWM=rep(0,nrep)
     for(j in 1:nrep){
       z=matrix(rnorm(n*p),ncol=p)
-      z=zscale(z)[[1]]
-      zu=z%*%u
       Z=matrix(rnorm(N*p),ncol=p)
-      Z=zscale(Z)[[1]]
-      SM=z%*%chol2inv(chol(t(z)%*%z+t(Z)%*%Z))%*%t(z)*(n+N)/p
+      ZZ=zscale(rbind(z,Z))[[1]]
+      z=zscale(z)[[1]] #ZZ[1:n,]
+      zu=z%*%u
+
+      SM=z%*%chol2inv(chol(t(ZZ)%*%ZZ/(n+N)))%*%t(z)/p
       ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
       SW=ISM%*%(SM-diag(rep(1,n)))%*%ISM
       SWzu=SW%*%zu
@@ -87,48 +86,46 @@ R2eesd=function(y, x, X, lam = 0.2, niter = 3, V = rep(0, 3), E = rep(0, 3), kno
       SUZZU[j]=sum(zu^2)
       SUZWZU[j]=t(zu)%*%SW%*%zu
       SUZWWZU[j]=t(SWzu)%*%SWzu
-      STRW[j]=sum(diag(SW))/n
-      STRWM[j]=sum(diag(SW%*%SM))/n
+      STRWM[j]=sum(diag(SW%*%SM))
     }
-    VA=var(SUZWZU-SUZZU*STRWM)
-    VB=var(SUZWZU-SUZZU*STRW)
-    VAB=var(SUZWZU-SUZZU*STRWM,SUZWZU-SUZZU*STRW)
-    EC=mean(SUZWWZU)+mean(SUZZU)*mean(STRW)^2-mean(SUZWZU)*mean(STRW)
-    ED=2*mean(STRW)*mean(STRWM-STRW)*mean(SUZZU)-mean(STRWM-STRW)*mean(SUZWZU)
-    EF=mean(STRWM-STRW)^2*mean(SUZZU)
+    B1=mean(SUZWWZU)/n  # keep these with known limits to have positive var.
+    B2=mean(SUZWZU)/n
+    B3=mean(SUZZU)/n
+    A1=mean((SUZWZU-STRWM)^2)/n
+    A2=mean((SUZWZU-STRWM)*(SUZZU-n))/n
+    A3=mean((SUZZU-n)^2)/n
+
+    EB=c(B1,B2,B3)
+    VA=c(A1,A2,A3)
   }else{
-    VA=V[1];VAB=V[2];VB=V[3]
-    EC=E[1];ED=E[2];EF=E[3]
+    B1=EB[1];B2=EB[2];B3=EB[3]
+    A1=VA[1];A2=VA[2];A3=VA[3]
   }
 
   # Variance under normal random error
   #1# are original variance estimates
-  #1# S=sum(diag(W%*%W))
-  #1# vest=(r2^2*VA+4*r2*(1-r2)*EB+2*(1-r2)^2*S)
+  D1=D1/n; D2=D2/n
+  A=A1-2*(r2*D1+(1-r2)*D2)*A2+(r2*D1+(1-r2)*D2)^2*A3
+  B=B1-2*(r2*D1+(1-r2)*D2)*B2+(r2*D1+(1-r2)*D2)^2*B3
+  ST=r2^2*(D1-D2)^2-D2^2
+  S=sum(diag(W%*%W))/n+ST
+  T=sum(diag(W)^2)/n+ST
 
-  S0=sum(diag(W))/n
-  S1=sum(diag(W%*%M))/n
-  S2=sum(diag(W%*%W))
-  T0=sum(diag(W)^2)
-  vest=r2^2*(r2^2*VA+2*r2*(1-r2)*VAB+(1-r2)^2*VB)
-  vest=vest+4*r2*(1-r2)*(EC+ED*r2+EF*r2^2)
-  vest=vest+2*(1-r2)^2*(S2+n*(r2*S1-(1-r2)*S0)^2+2*n*(r2*S1-(1-r2)*S0)*S0)
+  vest=r2^2*A+4*r2*(1-r2)*B+2*(1-r2)^2*S
 
   # Variance without normal random error assumption
-  #1# T=sum(diag(W)^2)
   #1# veps2=mean((y^2-1-(diag(M)-1)*r2)^2)-4*r2*(1-r2)-2*r2^2
   #1# veps2=max(0,veps2)
-  #1# vest1=vest+(T*(veps2-2*(1-r2)^2))
   veps2=mean((y^2-1-(diag(M)-1)*r2)^2)-4*r2*(1-r2)-2*r2^2
   veps2=max(0,veps2)
-  vest1=vest+(veps2-2*(1-r2)^2)*(T0+n*(r2*S1-(1-r2)*S0)^2+2*n*(r2*S1-(1-r2)*S0)*S0)
+  vest1=vest+(veps2-2*(1-r2)^2)*T
 
-  vest=vest/den^2
+  vest=n*vest/den^2
   ci=r2+sqrt(vest)*qnorm(c(0.005,0.995,0.025,0.975,0.05,0.95))
   ci[2*c(1:3)-1]=ci[2*c(1:3)-1]*(ci[2*c(1:3)-1]>0)
   ci[2*c(1:3)]=ci[2*c(1:3)]*(ci[2*c(1:3)]<1)+1.0*(ci[2*c(1:3)]>=1)
 
-  vest1=vest1/den^2
+  vest1=n*vest1/den^2
   ci1=r2+sqrt(vest1)*qnorm(c(0.005,0.995,0.025,0.975,0.05,0.95))
   ci1[2*c(1:3)-1]=ci1[2*c(1:3)-1]*(ci1[2*c(1:3)-1]>0)
   ci1[2*c(1:3)]=ci1[2*c(1:3)]*(ci1[2*c(1:3)]<1)+1.0*(ci1[2*c(1:3)]>=1)

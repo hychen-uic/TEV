@@ -23,10 +23,10 @@
 #' of Environmental Research and Public Health.
 #' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eePMTcaa(y,x,pa,lam=0.12,niter=3,npm=1000)}
+#' @examples \dontrun{R2eePMTcaa(y,x,pa,lam=0.1,niter=1,npm=1000)}
 #'
 #' @export
-R2eePMTcaa=function(y,x,pa,lam=0.2,niter=3,npm=1000){
+R2eePMTcaa=function(y,x,pa,lam=0.1,niter=1,npm=100){
 
   #1. Standardization
 
@@ -43,7 +43,7 @@ R2eePMTcaa=function(y,x,pa,lam=0.2,niter=3,npm=1000){
   #2. Compute initial estimator
   r2a=lam/(1+lam)
   for(ii in 1:niter){ #iteration to update lambda
-    if(ii>1 & r2<1){lam=r2/(1-r2)}
+    if(ii>1 & r2a<1){lam=r2a/(1-r2a)}
     delta=chol2inv(chol(diag(rep(1,n))+lam*x[,1:pa]%*%t(x[,1:pa])/pa))
     sd1=sum(diag(delta))
     delta2=delta%*%delta
@@ -89,17 +89,18 @@ R2eePMTcaa=function(y,x,pa,lam=0.2,niter=3,npm=1000){
     den=n-2*(1+lam)*sd1+(1+lam)^2*sd2
     num=lam*(t(y)%*%delta%*%y-sd1)-lam*(1+lam)*(t(y)%*%delta2%*%y-sd2)
     r2p=num/den
-    r2p=min(1,max(0,r2p))
-    #  }
+    result[jj]=r2p-r2a
 
-    result[jj]=max(0,r2p-r2a)
+    #r2p=min(1,max(0,r2p))
+    #result[jj]=max(0,r2p-r2a)
   }
+  predpvalue=1-pnorm((r2ba-mean(result))/sd(result))
 
   pvalueEST=mean(1.0*(result>r2ba))
   acc=2*sqrt(pvalueEST*(1-pvalueEST)/npm)
   crt=2*sqrt(0.05*0.95/npm) # if truth p-value=0.05, how accurate the estimation is
   pvalueBOUND=max(pvalueEST+acc,pvalueEST+crt)
 
-  list(c(pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
+  list(c(predpvalue,pvalueEST,pvalueBOUND),c(r2,r2a,r2ba),result)
 
 }

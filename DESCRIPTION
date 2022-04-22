@@ -19,6 +19,7 @@ Collate:
     'EigenPrismFull.R'
     'R2GCTA.R'
     'R2ee.R'
+    'R2ee0.R'
     'R2eePMT.R'
     'R2eePMTca.R'
     'R2eePMTcaa.R'

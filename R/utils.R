@@ -66,7 +66,7 @@ proj1=function(x){ # without supplementary data
     x[,j]=(x[,j]-mux)/sdx
   }
 
-  proj=diag(rep(1,n))-x%*%solve(t(x)%*%x)%*%t(x)
+  proj=diag(rep(1,n))-x%*%chol2inv(chol(t(x)%*%x))%*%t(x)
 
   list(proj)
 }
@@ -92,10 +92,38 @@ proj2=function(x,X){ # with supplementary data
     xx[,j]=(xx[,j]-muxx)/sdxx
   }
 
-  projx=diag(rep(1,n))-xx[1:n,]%*%solve(t(xx)%*%xx)%*%t(xx[1:n,])*(n+N)/n
-  projX=diag(rep(1:N))-xx[(n+1):(n+N),]%*%solve(t(xx)%*%xx)%*%t(xx[(n+1):(n+N),])*(n+N)/N
+  projx=diag(rep(1,n))-xx[1:n,]%*%chol2inv(chol(t(xx)%*%xx))%*%t(xx[1:n,])*(n+N)/n
+  projX=diag(rep(1:N))-xx[(n+1):(n+N),]%*%chol2inv(chol(t(xx)%*%xx))%*%t(xx[(n+1):(n+N),])*(n+N)/N
 
   list(projx,projX)
+}
+
+#' Compute projection of x on the orthogonal complement of z
+#'
+#' @param x input matrix of nxp dimension
+#' @param z input matrix of nxq dimension
+#'
+#' @return a nxp matrix, the projection of x on the orthogonal complement of z.
+#'
+#' @export
+projed=function(x,z){ # with supplementary data
+
+  n=dim(x)[1]
+  p=dim(x)[2]
+  q=dim(z)[2]
+
+  for(j in 1:p){
+    xx[,j]=(x[,j]-mean(c(x[,j])))/sd(c(x[,j]))
+  }
+  for(j in 1:q){
+    zz[,j]=(z[,j]-mean(c(z[,j])))/sd(c(z[,j]))
+  }
+
+  projz=diag(rep(1,n))-zz%*%chol2inv(chol((t(zz)%*%zz)))%*%t(zz)
+
+  projedx=projz%*%xx
+
+  list(projedx)
 }
 
 #' Rescale data matrix

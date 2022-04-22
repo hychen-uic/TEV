@@ -1,6 +1,6 @@
 #' @import stats
 NULL
-#' Estimating equation approach to the proportion of the explained variation
+#' Estimating equation approach to the proportion of the explained variation (assume know Y variance)
 #'
 #' This approach estimates the proportion of the explained variation in a linear model
 #' assuming the covariates are independent.
@@ -22,10 +22,10 @@ NULL
 #' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
 #' of Environmental Research and Public Health.
 #'
-#' @examples \dontrun{R2ee(y,x,lam=1.0,niter=1)}
+#' @examples \dontrun{R2ee(y,x,lam=1.0,niter=3)}
 #'
 #'@export
-R2ee=function(y, x, lam = 1.0, niter = 1){
+R2ee0=function(y, x, lam = 0.1, niter = 1){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -45,7 +45,6 @@ R2ee=function(y, x, lam = 1.0, niter = 1){
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
   Mev=Xsvd$d^2/p #Vector of eigenvalues of matrix XX'/p.
-
   r2=lam/(1+lam) # initial value
   for(ii in 1:niter){ #iteration to update lambda
     if(ii>1 & r2<1){lam=r2/(1-r2)}
@@ -70,34 +69,26 @@ R2ee=function(y, x, lam = 1.0, niter = 1){
   #4(a). With normal random error assumption
 
   WMev=Wev*Mev
-  D1=sum(WMev)/n
   if(n>=p){
     W=Xsvd$u%*%diag(Wev+1)%*%t(Xsvd$u)-diag(rep(1,n))
-    D2=sum(Wev)/n-1+p/n
     S=sum(Wev^2)+n-p
   }else{
     W=Xsvd$u%*%diag(Wev)%*%t(Xsvd$u)
-    D2=sum(Wev)/n
     S=sum(Wev^2)
   }
-  tau1=sum(WMev^2)/p-(sum(WMev))^2/p^2
-  tau01=sum(WMev*Mev)/p-sum(WMev)*sum(Mev)/p^2
-  tau0=sum(Mev^2)/p-(sum(Mev))^2/p^2
-  A=2*p*(tau1-2*(r2*D1+(1-r2)*D2)*tau01+(r2*D1+(1-r2)*D2)^2*tau0)
-
-  B=sum((Wev-(r2*D1+(1-r2)*D2))^2*Mev)
-  S=S-n*D2^2+n*r2^2*(D1-D2)^2
-
+  A=2*p*(sum(WMev^2)/p-(sum(WMev))^2/p^2)
+  B=sum(Wev^2*Mev)
   vest=r2^2*A+4*r2*(1-r2)*B+2*(1-r2)^2*S
 
   #4(b). Without normal random error assumption
 
   M=Xsvd$u%*%diag(Mev)%*%t(Xsvd$u)
-  T=sum(diag(W)^2)-n*D2^2+n*r2^2*(D1-D2)^2
-  veps2=mean((y^2-1-(diag(M)-1)*r2)^2)-4*r2*(1-r2)-2*r2^2
-  vest1=vest+(max(veps2,0)-2*(1-r2)^2)*T
+  T=sum(diag(W)^2)
 
-  #print(c((max(veps2,0)-2*(1-r2)^2)*T/den^2,den,T,veps2))
+  veps2=mean((y^2-1-(diag(M)-1)*r2)^2)-4*r2*(1-r2)-2.0*r2^2
+  vest1=vest+T*(max(veps2,0)-2*(1-r2)^2)
+
+  #print(c(A,B,S,T,r2,vest,vest1,den,com,veps2))
 
   vest1=vest1/den^2 #(den+com)^2
   vest=vest/den^2 #(den+com)^2

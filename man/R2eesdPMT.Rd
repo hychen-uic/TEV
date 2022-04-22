@@ -4,7 +4,7 @@
 \alias{R2eesdPMT}
 \title{Permutation test for no explained variation using the estimating equation approach with supplementary covariate data}
 \usage{
-R2eesdPMT(y, x, X, lam, niter = 3, npm = 1000)
+R2eesdPMT(y, x, X, lam = 0.1, niter = 1, npm = 1000)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
@@ -20,7 +20,7 @@ R2eesdPMT(y, x, X, lam, niter = 3, npm = 1000)
 \item{npm}{permutation sample size for simulation computation of p-value.}
 }
 \value{
-The p-values (estimate and bound) of the test, estimate of proportion of
+The p-values (normal approximation, empirical estimate, and bound) of the test, estimate of proportion of
 the explained variation, and simulation results.
 }
 \description{
@@ -31,7 +31,7 @@ This method tests no explained variation by permuting the outcome and estimating
 using the estimating equation approach with supplementary data. P-value is computed using simulation approach.
 }
 \examples{
-\dontrun{R2eesdPMT(y,x,X,lam=0.12,niter=3,npm=1000)}
+\dontrun{R2eesdPMT(y,x,X,lam=0.1,niter=1,npm=1000)}
 
 }
 \references{

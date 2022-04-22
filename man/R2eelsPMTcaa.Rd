@@ -4,7 +4,7 @@
 \alias{R2eelsPMTcaa}
 \title{Conditional permutation test for no extra variation explained using the least-square approach}
 \usage{
-R2eelsPMTcaa(y, x, pa, npm = 1000)
+R2eelsPMTcaa(y, x, pa, npm = 100)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
@@ -30,7 +30,7 @@ covariates and estimating using the estimating equation approach. P-value is com
 using simulation approach. This approach differs from \code{R2eelsPMTca} in the way the matrix operation is handled.
 }
 \examples{
-\dontrun{R2eelsPMTcaa(y,x,pa,lam=0.12,niter=3,npm=1000)}
+\dontrun{R2eelsPMTcaa(y,x,pa,npm=100)}
 
 }
 \references{
