@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2eeadj.R
 \name{R2eeadj}
 \alias{R2eeadj}
-\title{Estimating equation approach to the proportion of the explained variation with two subgroups.}
+\title{Estimating equation approach to the proportion of the explained variation with two subgroups}
 \usage{
 R2eeadj(y, xa, xb, niter = 1)
 }
@@ -13,7 +13,7 @@ R2eeadj(y, xa, xb, niter = 1)
 
 \item{xb}{covariate effects to be computed: a matrix of nxpb dimension.}
 
-\item{niter}{number of iterations for updating lambda. Default is 1}
+\item{niter}{number of iterations for updating lambda. Default is 1.}
 }
 \value{
 Estimates of the proportions of explained variations for xa, xb, and x=(xa,xb) respectively.

@@ -1,4 +1,4 @@
-#' Estimating equation approach to the proportion of the explained variation with two subgroups.
+#' Estimating equation approach to the proportion of the explained variation with two subgroups
 #'
 #' This approach estimates the proportion of the explained variation in a linear model
 #' assuming the covariates are independent.
@@ -6,7 +6,7 @@
 #' @param y outcome: a vector of length n.
 #' @param xa covariates to be adjusted: a matrix of nxpa dimension.
 #' @param xb covariate effects to be computed: a matrix of nxpb dimension.
-#' @param niter number of iterations for updating lambda. Default is 1
+#' @param niter number of iterations for updating lambda. Default is 1.
 #'
 #' @details This method uses two estimating equations to estimate the variations of the outcome explained
 #' by the two parts of covariates simultaneously.
