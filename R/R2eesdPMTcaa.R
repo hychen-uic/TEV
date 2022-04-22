@@ -7,8 +7,8 @@
 #' @param x covariates: a matrix of nxp dimension.
 #' @param X supplementary covariates: a matrix of Nxp dimension.
 #' @param pa length of the covariates to be adjusted.
-#' @param lam parameter adjusting the formation of the weighting matrix. Default is 0.12
-#' @param niter number of iterations for updating lambda. Default is 3
+#' @param lam parameter adjusting the formation of the weighting matrix. Default is 0.12.
+#' @param niter number of iterations for updating lambda. Default is 3.
 #' @param npm permutation sample size for simulation computation of p-value.
 #'
 #' @details This method tests no extra variation explained by the second part of covariates

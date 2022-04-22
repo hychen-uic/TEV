@@ -13,9 +13,9 @@ R2eePMTcab(y, x, pa, lam = 0.2, niter = 3, npm = 1000)
 
 \item{pa}{length of the covariates to be adjusted.}
 
-\item{lam}{parameter adjusting the formation of the weighting matrix. Default is 0.12}
+\item{lam}{parameter adjusting the formation of the weighting matrix. Default is 0.12.}
 
-\item{niter}{number of iterations for updating lambda. Default is 3}
+\item{niter}{number of iterations for updating lambda. Default is 3.}
 
 \item{npm}{permutation sample size for simulation computation of p-value.}
 }

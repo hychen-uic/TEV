@@ -7,7 +7,7 @@
 transf(x)
 }
 \arguments{
-\item{x}{a matrix of nxp dimension}
+\item{x}{a matrix of nxp dimension.}
 }
 \value{
 decorrelation data matrix.

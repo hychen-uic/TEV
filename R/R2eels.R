@@ -12,7 +12,7 @@
 #'         and non-normality error, and the corresponding confidence intervals.
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
-#'  linear model with dense effects. arXiv:2201.08723
+#'  linear model with dense effects. arXiv:2201.08723.
 #' @references Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
 #' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
 #' of Environmental Research and Public Health.

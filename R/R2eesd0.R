@@ -11,7 +11,7 @@
 #' @param VA A variance term.
 #' @param EB Another component of the variance.
 #' @param know if VA and EB are known, options include "yes" and "no". Default is "yes" (usually for simulation only).
-#' @param nrep Monte Carlo sample size for computing VA and EB
+#' @param nrep Monte Carlo sample size for computing VA and EB.
 #'
 #' @details The estimation approach does not assume independent covariates and can deal
 #' with the case \eqn{n\le p}. But require the sample sizes of x and X combined be greater than p.

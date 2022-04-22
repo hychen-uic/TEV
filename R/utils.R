@@ -6,7 +6,7 @@
 #'
 #' This function performs a decorrelation transformation of a data set.
 #'
-#' @param x a matrix of nxp dimension
+#' @param x a matrix of nxp dimension.
 #'
 #' @details This function use the input data to estimate the covariance matrix,
 #' and then use the estimated covariate matrix to decorrelate
@@ -26,10 +26,10 @@ transf=function(x){
 
 #' Decorrelation
 #'
-#' Decorrelation with the aid of supplementary data
+#' Decorrelation with the aid of supplementary data.
 #'
-#' @param x a matrix of nxp dimension. Input matrix to be transformed
-#' @param X a matrix of Nxp dimension. Supplementary data for covariance matrix estimation
+#' @param x a matrix of nxp dimension. Input matrix to be transformed.
+#' @param X a matrix of Nxp dimension. Supplementary data for covariance matrix estimation.
 #'
 #' @details This function use both the input data and the supplementary data to estimate
 #' the covariance matrix, and then use the estimated covariate matrix to decorrelate
@@ -50,7 +50,7 @@ transfsd=function(x,X){
 ### projection when n>p ###
 #' Compute projection matrix
 #'
-#' @param x input matrix of nxp dimension
+#' @param x input matrix of nxp dimension.
 #'
 #' @return projection matrix of nxn.
 #'
@@ -73,8 +73,8 @@ proj1=function(x){ # without supplementary data
 
 #' Compute projection matrices
 #'
-#' @param x input matrix of nxp dimension
-#' @param X input matrix of Nxp dimension
+#' @param x input matrix of nxp dimension.
+#' @param X input matrix of Nxp dimension.
 #'
 #' @return projection matrix of nxn and projection matrix of NxN based on (x, X).
 #'
@@ -100,8 +100,8 @@ proj2=function(x,X){ # with supplementary data
 
 #' Compute projection of x on the orthogonal complement of z
 #'
-#' @param x input matrix of nxp dimension
-#' @param z input matrix of nxq dimension
+#' @param x input matrix of nxp dimension.
+#' @param z input matrix of nxq dimension.
 #'
 #' @return a nxp matrix, the projection of x on the orthogonal complement of z.
 #'
@@ -130,7 +130,7 @@ projed=function(x,z){ # with supplementary data
 #'
 #' Rescale data matrix by subtracting mean and divide the standard deviation for each variable.
 #'
-#' @param z input matrix of nxp dimension
+#' @param z input matrix of nxp dimension.
 #'
 #' @return rescaled data matrix of nxp dimension.
 #'

@@ -7,9 +7,9 @@
 proj2(x, X)
 }
 \arguments{
-\item{x}{input matrix of nxp dimension}
+\item{x}{input matrix of nxp dimension.}
 
-\item{X}{input matrix of Nxp dimension}
+\item{X}{input matrix of Nxp dimension.}
 }
 \value{
 projection matrix of nxn and projection matrix of NxN based on (x, X).

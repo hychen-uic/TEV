@@ -7,21 +7,21 @@
 R2GCTA(y, x, lam, niter = 10, bt = "T", btn)
 }
 \arguments{
-\item{y}{outcome: a vector of length n}
+\item{y}{outcome: a vector of length n.}
 
-\item{x}{covariates: a matrix of nxp dimension}
+\item{x}{covariates: a matrix of nxp dimension.}
 
-\item{lam}{parameter adjusting the format of the weighting matrix}
+\item{lam}{parameter adjusting the format of the weighting matrix.}
 
-\item{niter}{number of iterations for updating lambda}
+\item{niter}{number of iterations for updating lambda.}
 
-\item{bt}{variable specifying whether to compute bootstrap variance. Default is "T"}
+\item{bt}{variable specifying whether to compute bootstrap variance. Default is "T".}
 
-\item{btn}{bootstrap sample size}
+\item{btn}{bootstrap sample size.}
 }
 \value{
 Estimate of proportion of the explained variation, and bootstrap estimate and
-variance and confidence intervals if bt=T
+variance and confidence intervals if bt=T.
 }
 \description{
 This function implements the genetic complex trait

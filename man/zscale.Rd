@@ -7,7 +7,7 @@
 zscale(z)
 }
 \arguments{
-\item{z}{input matrix of nxp dimension}
+\item{z}{input matrix of nxp dimension.}
 }
 \value{
 rescaled data matrix of nxp dimension.

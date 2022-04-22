@@ -24,7 +24,7 @@ R2eesd0(y, x, X, lam = 1, niter = 1, VA = 0, EB = 0, know = "yes", nrep = 1000)
 
 \item{know}{if VA and EB are known, options include "yes" and "no". Default is "yes" (usually for simulation only).}
 
-\item{nrep}{Monte Carlo sample size for computing VA and EB}
+\item{nrep}{Monte Carlo sample size for computing VA and EB.}
 }
 \value{
 Estimate of the proportion of explained variation, variance estimates under normality

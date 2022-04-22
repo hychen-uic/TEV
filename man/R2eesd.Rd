@@ -27,9 +27,9 @@ R2eesd(
 
 \item{niter}{number of iterations for updating lam.}
 
-\item{VA}{a 3-dimensional vector for V1,V2,V3}
+\item{VA}{a 3-dimensional vector for V1,V2,V3.}
 
-\item{EB}{a 3-dimensional vector for D3,D4,D5}
+\item{EB}{a 3-dimensional vector for D3,D4,D5.}
 
 \item{know}{if (VA, EB) are known, options include "yes" and "no". Default is "yes" (usually for simulation only).}
 

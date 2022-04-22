@@ -20,7 +20,7 @@
 #' of Environmental Research and Public Health.
 #' @references Reference 2 to be added.
 #'
-#' @examples \dontrun{R2eelsPMTca(y,x,npm=1000)}
+#' @examples \dontrun{R2eelsPMT(y,x,npm=1000)}
 #'
 #' @export
 R2eelsPMT=function(y, x, npm = 1000){

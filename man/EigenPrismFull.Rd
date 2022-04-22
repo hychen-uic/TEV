@@ -17,7 +17,7 @@ EigenPrismFull(y, x, alpha = c(0.01, 0.05, 0.1))
 Estimate of the proportion of the explained variation and confidence intervals for the proportion.
 }
 \description{
-EigenPrismFull procedure integrating the \eqn{n\le p} and \eqn{n>p} cases
+EigenPrismFull procedure integrates the \eqn{n\le p} and \eqn{n>p} cases.
 }
 \details{
 For \eqn{n\le p}, the estimate and confidence interval are obtained by EigenPrism approach.
@@ -30,11 +30,11 @@ are obtained by inverting the chisquare test.
 }
 \references{
 Chen, H.Y. (2022). Statistical inference on explained variation in
-high-dimensional linear model with dense effects. arXiv:2201.08723
+high-dimensional linear model with dense effects. arXiv:2201.08723.
 
 Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference
 for high-dimensional signal-to-noise ratios.
 \emph{Journal of Royal Statistical Society, Ser. B.}, \strong{79}, 1037-1065.
 
-Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}
+Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}.
 }

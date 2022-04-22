@@ -4,8 +4,8 @@
 #'
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
-#' @param lam parameter adjusting the formation of the weighting matrix. Default is 0.12
-#' @param niter number of iterations for updating lambda. Default is 3
+#' @param lam parameter adjusting the formation of the weighting matrix. Default is 0.12.
+#' @param niter number of iterations for updating lambda. Default is 3.
 #' @param npm permutation sample size for simulation computation of p-value.
 #'
 #' @details This method tests no explained variation by permuting the outcome and estimating

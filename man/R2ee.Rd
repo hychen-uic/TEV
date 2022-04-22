@@ -13,7 +13,7 @@ R2ee(y, x, lam = 1, niter = 1)
 
 \item{lam}{parameter for altering the weighting matrix.}
 
-\item{niter}{number of iterations for updating the lam parameter}
+\item{niter}{number of iterations for updating the lam parameter.}
 }
 \value{
 Estimate of the proportion of explained variation, variance estimates under normality
@@ -33,7 +33,7 @@ are computed. Two set of confidence intervals under normal or non-normal error a
 }
 \references{
 Chen, H.Y. (2022). Statistical inference on explained variation in high-dimensional
-linear model with dense effects. arXiv:2201.08723
+linear model with dense effects. arXiv:2201.08723.
 
 Chen, H. Y., Li, H., Argos, M., Persky, V. W., and Turyk, M. (2022). Statistical Methods
 for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal

@@ -28,7 +28,7 @@ covariates and estimating using the estimating equation approach. P-value is com
 using simulation approach.
 }
 \examples{
-\dontrun{R2eelsPMTca(y,x,npm=1000)}
+\dontrun{R2eelsPMT(y,x,npm=1000)}
 
 }
 \references{

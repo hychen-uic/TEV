@@ -7,7 +7,7 @@
 proj1(x)
 }
 \arguments{
-\item{x}{input matrix of nxp dimension}
+\item{x}{input matrix of nxp dimension.}
 }
 \value{
 projection matrix of nxn.

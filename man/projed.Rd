@@ -7,9 +7,9 @@
 projed(x, z)
 }
 \arguments{
-\item{x}{input matrix of nxp dimension}
+\item{x}{input matrix of nxp dimension.}
 
-\item{z}{input matrix of nxq dimension}
+\item{z}{input matrix of nxq dimension.}
 }
 \value{
 a nxp matrix, the projection of x on the orthogonal complement of z.

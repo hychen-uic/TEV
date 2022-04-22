@@ -7,15 +7,15 @@
 transfsd(x, X)
 }
 \arguments{
-\item{x}{a matrix of nxp dimension. Input matrix to be transformed}
+\item{x}{a matrix of nxp dimension. Input matrix to be transformed.}
 
-\item{X}{a matrix of Nxp dimension. Supplementary data for covariance matrix estimation}
+\item{X}{a matrix of Nxp dimension. Supplementary data for covariance matrix estimation.}
 }
 \value{
 decorrelation data matrix.
 }
 \description{
-Decorrelation with the aid of supplementary data
+Decorrelation with the aid of supplementary data.
 }
 \details{
 This function use both the input data and the supplementary data to estimate

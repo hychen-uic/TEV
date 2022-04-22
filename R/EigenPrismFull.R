@@ -2,7 +2,7 @@
 NULL
 #' Estimating proportion of explained variation using the least-square approach or the EigenPrism approach
 #'
-#' EigenPrismFull procedure integrating the \eqn{n\le p} and \eqn{n>p} cases
+#' EigenPrismFull procedure integrates the \eqn{n\le p} and \eqn{n>p} cases.
 #'
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
@@ -15,13 +15,13 @@ NULL
 #' @return Estimate of the proportion of the explained variation and confidence intervals for the proportion.
 #'
 #' @references Chen, H.Y. (2022). Statistical inference on explained variation in
-#' high-dimensional linear model with dense effects. arXiv:2201.08723
+#' high-dimensional linear model with dense effects. arXiv:2201.08723.
 #'
 #' @references Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference
 #' for high-dimensional signal-to-noise ratios.
 #' *Journal of Royal Statistical Society, Ser. B.*, **79**, 1037-1065.
 #'
-#' @references Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}
+#' @references Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}.
 #'
 #' @examples \dontrun{EigenPrismFull(y, x)}
 #'

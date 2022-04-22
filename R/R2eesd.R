@@ -7,8 +7,8 @@
 #' @param X supplementary covariates: a matrix of Nxp dimension.
 #' @param lam parameter for altering the weighting matrix.
 #' @param niter number of iterations for updating lam.
-#' @param VA a 3-dimensional vector for V1,V2,V3
-#' @param EB a 3-dimensional vector for D3,D4,D5
+#' @param VA a 3-dimensional vector for V1,V2,V3.
+#' @param EB a 3-dimensional vector for D3,D4,D5.
 #' @param know if (VA, EB) are known, options include "yes" and "no". Default is "yes" (usually for simulation only).
 #' @param nrep Monte Carlo sample size for computing VA and EB.
 #'
