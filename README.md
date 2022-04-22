@@ -28,4 +28,4 @@ devtools::install_github("hychen-uic/TEV")
 ## Acknowlegements
 
 This package is based on the work supported by the National Institute of
-Environmental Health Sciences under grant 1R01ES028790-01.
+Environmental Health Sciences (NIEHS) under grant 1R01ES028790-01.
