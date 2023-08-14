@@ -7,10 +7,10 @@
 transf(x)
 }
 \arguments{
-\item{x}{a matrix of nxp dimension.}
+\item{x}{a matrix of nxp dimension}
 }
 \value{
-decorrelation data matrix.
+Decorrelated data matrix.
 }
 \description{
 This function performs a decorrelation transformation of a data set.

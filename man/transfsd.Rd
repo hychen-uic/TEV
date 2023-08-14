@@ -12,10 +12,10 @@ transfsd(x, X)
 \item{X}{a matrix of Nxp dimension. Supplementary data for covariance matrix estimation.}
 }
 \value{
-decorrelation data matrix.
+Decorrelated data matrix.
 }
 \description{
-Decorrelation with the aid of supplementary data.
+Decorrelation
 }
 \details{
 This function use both the input data and the supplementary data to estimate

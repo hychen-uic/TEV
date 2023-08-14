@@ -1,35 +1,34 @@
 #' @import graphics
 #' @import cccp
 NULL
-#' EigenPrism approach
+#' EigenPrism procedure for estimating and generating confidence intervals
 #'
-#' This function implements the EigenPrism procedure for estimating and generating
-#' confidence intervals for variance components in high-dimensional linear model.
+#' This function implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
 #'
-#' @param y response vector of length n.
+#' @param y response vector of length n
 #' @param X n by p design matrix. Columns are automatically centered and scaled to variance 1, and they cannot include
 #'          one for the intercept terms.
-#' @param invsqrtSig if columns of X are not independent, p by p positive definite matrix which is the square-root
-#'                   of the inverse of Sig, where Sig is the *correlation* matrix of the X. Default is identity.
-#' @param alpha significance level for confidence interval. Default is 0.05.
-#' @param target target of estimation/inference: options include "beta2", "sigma2", or "heritability".
-#' @param zero.ind vector of which indices of the weight vector w to constrain to zero. Default is none.
-#' @param diagnostics boolean variable indicating whether to generate the diagnostic plots for V_i,
-#' lambda_i, and w_i. Default is \code{TRUE}.
+#' @param invsqrtSig if columns of X  are not independent, p by p positive definite matrix which is the square-root
+#'                   of the inverse of Sig, where Sig is the *correlation* matrix of the X. Default is identity
+#' @param alpha significance level for confidence interval. Default is 0.05
+#' @param target target of estimation/inference: options include "beta2", "sigma2", or "heritability"
+#' @param zero.ind vector of which indices of the weight vector w to constrain to zero. Default is none
+#' @param diagnostics Boolean variable indicating whether to generate the diagnostic plots for V_i, lambda_i, and w_i. Default is \code{TRUE}.
 #'
 #' @details This function is a copy of Jansen's R program.
+#'          It implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
 #'
-#' @return estimate: unbiased estimate of the target (for heritability, only approximately unbiased);
-#'         CI: 100*(1-alpha)% confidence interval for target.
+#' @return Estimate of the proportion of explained variation and
+#'         100*(1-alpha)\% confidence interval for the proportion.
+#' @references Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference for high-dimensional signal-to-noise ratios. Journal of Royal Statistical Society, Ser. B., 79, 1037-1065.
 #'
-#' @references Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference for high-dimensional signal-to-noise ratios.
-#' *Journal of Royal Statistical Society, Ser. B.*, **79**, 1037-1065.
 #' @references Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}.
 #'
-#' @examples \dontrun{EigenPrism(y, x)}
+#' @examples \dontrun{EigenPrism(y,x)}
 #'
 #' @export
-EigenPrism <- function(y, X, invsqrtSig = NULL,alpha = c(0.01, 0.05, 0.10),target = 'beta2', zero.ind = c(), diagnostics = T){
+#'
+EigenPrism <- function(y,X,invsqrtSig=NULL,alpha=c(0.01,0.05,0.10),target='beta2',zero.ind=c(),diagnostics=T){
   # Author: Lucas Janson (statweb.stanford.edu/~ljanson)
   # Runs EigenPrism procedure for estimating and generating confidence
   #  intervals for variance components in high-dimensional linear model:
@@ -82,9 +81,10 @@ EigenPrism <- function(y, X, invsqrtSig = NULL,alpha = c(0.01, 0.05, 0.10),targe
     b = c(b,rep(0,length(zero.ind)))
   }
   # Define second-order cone constraints
-  soc1 = socc(diag(c(1/4,rep(1,n))),c(-1/2,rep(0,n)),c(1/4,rep(0,n)),1/2)
-  soc2 = socc(diag(c(1/4,lambda)),c(-1/2,rep(0,n)),c(1/4,rep(0,n)),1/2)
-  prob = dlp(as.vector(q),A,as.vector(b),list(soc1,soc2))
+
+  soc1 = cccp::socc(diag(c(1/4,rep(1,n))),c(-1/2,rep(0,n)),c(1/4,rep(0,n)),1/2)
+  soc2 = cccp::socc(diag(c(1/4,lambda)),c(-1/2,rep(0,n)),c(1/4,rep(0,n)),1/2)
+  prob = cccp::dlp(as.vector(q),A,as.vector(b),list(soc1,soc2))
 
   # Solve optimization problem and extract variables
   opt = cps(prob,ctrl(trace=F))
@@ -141,3 +141,7 @@ EigenPrism <- function(y, X, invsqrtSig = NULL,alpha = c(0.01, 0.05, 0.10),targe
 
   return(result)
 }
+
+
+
+
