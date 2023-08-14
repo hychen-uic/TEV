@@ -2,7 +2,7 @@
 % Please edit documentation in R/EigenPrism.R
 \name{EigenPrism}
 \alias{EigenPrism}
-\title{EigenPrism approach}
+\title{EigenPrism procedure for estimating and generating confidence intervals}
 \usage{
 EigenPrism(
   y,
@@ -15,41 +15,39 @@ EigenPrism(
 )
 }
 \arguments{
-\item{y}{response vector of length n.}
+\item{y}{response vector of length n}
 
 \item{X}{n by p design matrix. Columns are automatically centered and scaled to variance 1, and they cannot include
 one for the intercept terms.}
 
-\item{invsqrtSig}{if columns of X are not independent, p by p positive definite matrix which is the square-root
-of the inverse of Sig, where Sig is the \emph{correlation} matrix of the X. Default is identity.}
+\item{invsqrtSig}{if columns of X  are not independent, p by p positive definite matrix which is the square-root
+of the inverse of Sig, where Sig is the \emph{correlation} matrix of the X. Default is identity}
 
-\item{alpha}{significance level for confidence interval. Default is 0.05.}
+\item{alpha}{significance level for confidence interval. Default is 0.05}
 
-\item{target}{target of estimation/inference: options include "beta2", "sigma2", or "heritability".}
+\item{target}{target of estimation/inference: options include "beta2", "sigma2", or "heritability"}
 
-\item{zero.ind}{vector of which indices of the weight vector w to constrain to zero. Default is none.}
+\item{zero.ind}{vector of which indices of the weight vector w to constrain to zero. Default is none}
 
-\item{diagnostics}{boolean variable indicating whether to generate the diagnostic plots for V_i,
-lambda_i, and w_i. Default is \code{TRUE}.}
+\item{diagnostics}{Boolean variable indicating whether to generate the diagnostic plots for V_i, lambda_i, and w_i. Default is \code{TRUE}.}
 }
 \value{
-estimate: unbiased estimate of the target (for heritability, only approximately unbiased);
-CI: 100*(1-alpha)\% confidence interval for target.
+Estimate of the proportion of explained variation and
+100*(1-alpha)\\% confidence interval for the proportion.
 }
 \description{
-This function implements the EigenPrism procedure for estimating and generating
-confidence intervals for variance components in high-dimensional linear model.
+This function implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
 }
 \details{
 This function is a copy of Jansen's R program.
+It implements the EigenPrism procedure for estimating and generating confidence intervals for variance components in high-dimensional linear model.
 }
 \examples{
-\dontrun{EigenPrism(y, x)}
+\dontrun{EigenPrism(y,x)}
 
 }
 \references{
-Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference for high-dimensional signal-to-noise ratios.
-\emph{Journal of Royal Statistical Society, Ser. B.}, \strong{79}, 1037-1065.
+Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference for high-dimensional signal-to-noise ratios. Journal of Royal Statistical Society, Ser. B., 79, 1037-1065.
 
 Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}.
 }

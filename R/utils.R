@@ -1,18 +1,54 @@
+#-----------------------------------------------------------------------
+# Project exposure to the orthogonal complement of confounders  space
+#-----------------------------------------------------------------------
+#' @import stats
+NULL
+#' Project x to the orthogonal complement of c.
+#'
+#' This function project exposures x to the orthogonal complement of confounders c.
+#'
+#' @param x a matrix of nxp dimensional exposures
+#' @param cfd a matrix of nxq dimensional confounders
+#'
+#' @details This function uses c to form projection P=I-c(c'c)^(-)c'
+#' and then compute projection z=Px
+#'
+#' @return projtocorth, the projected x.
+#'
+#' @export
+#'
+project=function(cfd,x){
+
+  n=dim(cfd)[1]
+  q=dim(cfd)[2]
+  for(j in 1:q){
+    muc=mean(cfd[,j])
+    sdc=sd(cfd[,j])
+
+    cfd[,j]=(cfd[,j]-muc)/sdc
+  }
+
+  csvd=svd(cfd,nv=0)
+  projxtocorth=x-csvd$u%*%diag(1/csvd$d^2)%*%t(csvd$u)%*%x
+    #project x to the orthogonal linear space of cfd column vectors.
+
+  list(projxtocorth)
+}
+
 #----------------------------------------#
 #    decorrelation transformation        #
 #----------------------------------------#
-
 #' Decorrelation transformation
 #'
 #' This function performs a decorrelation transformation of a data set.
 #'
-#' @param x a matrix of nxp dimension.
+#' @param x a matrix of nxp dimension
 #'
 #' @details This function use the input data to estimate the covariance matrix,
 #' and then use the estimated covariate matrix to decorrelate
 #' the input data matrix. require n>p.
 #'
-#' @return decorrelation data matrix.
+#' @return Decorrelated data matrix.
 #'
 #' @export
 transf=function(x){
@@ -26,8 +62,6 @@ transf=function(x){
 
 #' Decorrelation
 #'
-#' Decorrelation with the aid of supplementary data.
-#'
 #' @param x a matrix of nxp dimension. Input matrix to be transformed.
 #' @param X a matrix of Nxp dimension. Supplementary data for covariance matrix estimation.
 #'
@@ -35,7 +69,7 @@ transf=function(x){
 #' the covariance matrix, and then use the estimated covariate matrix to decorrelate
 #' the input data matrix. require (n+N)>p.
 #'
-#' @return decorrelation data matrix.
+#' @return Decorrelated data matrix.
 #'
 #' @export
 transfsd=function(x,X){
@@ -47,92 +81,14 @@ transfsd=function(x,X){
   list(z)
 }
 
-### projection when n>p ###
-#' Compute projection matrix
-#'
-#' @param x input matrix of nxp dimension.
-#'
-#' @return projection matrix of nxn.
-#'
-#' @export
-proj1=function(x){ # without supplementary data
-
-  n=dim(x)[1]
-  p=dim(x)[2]
-  for(j in 1:p){
-    mux=mean(c(x[,j]))
-    sdx=sd(c(x[,j]))
-
-    x[,j]=(x[,j]-mux)/sdx
-  }
-
-  proj=diag(rep(1,n))-x%*%chol2inv(chol(t(x)%*%x))%*%t(x)
-
-  list(proj)
-}
-
-#' Compute projection matrices
-#'
-#' @param x input matrix of nxp dimension.
-#' @param X input matrix of Nxp dimension.
-#'
-#' @return projection matrix of nxn and projection matrix of NxN based on (x, X).
-#'
-#' @export
-proj2=function(x,X){ # with supplementary data
-
-  n=dim(x)[1]
-  p=dim(x)[2]
-  N=dim(X)[1]
-  xx=rbind(x,X)
-  for(j in 1:p){
-    muxx=mean(c(xx[,j]))
-    sdxx=sd(c(xx[,j]))
-
-    xx[,j]=(xx[,j]-muxx)/sdxx
-  }
-
-  projx=diag(rep(1,n))-xx[1:n,]%*%chol2inv(chol(t(xx)%*%xx))%*%t(xx[1:n,])*(n+N)/n
-  projX=diag(rep(1:N))-xx[(n+1):(n+N),]%*%chol2inv(chol(t(xx)%*%xx))%*%t(xx[(n+1):(n+N),])*(n+N)/N
-
-  list(projx,projX)
-}
-
-#' Compute projection of x on the orthogonal complement of z
-#'
-#' @param x input matrix of nxp dimension.
-#' @param z input matrix of nxq dimension.
-#'
-#' @return a nxp matrix, the projection of x on the orthogonal complement of z.
-#'
-#' @export
-projed=function(x,z){ # with supplementary data
-
-  n=dim(x)[1]
-  p=dim(x)[2]
-  q=dim(z)[2]
-
-  for(j in 1:p){
-    xx[,j]=(x[,j]-mean(c(x[,j])))/sd(c(x[,j]))
-  }
-  for(j in 1:q){
-    zz[,j]=(z[,j]-mean(c(z[,j])))/sd(c(z[,j]))
-  }
-
-  projz=diag(rep(1,n))-zz%*%chol2inv(chol((t(zz)%*%zz)))%*%t(zz)
-
-  projedx=projz%*%xx
-
-  list(projedx)
-}
 
 #' Rescale data matrix
 #'
 #' Rescale data matrix by subtracting mean and divide the standard deviation for each variable.
 #'
-#' @param z input matrix of nxp dimension.
+#' @param z input matrix of nxp dimension
 #'
-#' @return rescaled data matrix of nxp dimension.
+#' @return rescaled data matrix of nxp dimension
 #'
 #' @export
 zscale=function(z){
@@ -145,3 +101,5 @@ zscale=function(z){
   }
   list(z)
 }
+
+

@@ -1,37 +1,29 @@
 Package: TEV
-Type: Package
 Title: Total Explained Variation
-Version: 0.1.0
-Author: Hua Yun Chen
-Maintainer: Hua Yun Chen <hychen@uic.edu>
-Description: Statistical Methods for Assessing the proportion of the variation of an outcome explained by a set of covariates.
-License: GPL-2 | GPL-3
+Version: 0.0.0.9001
+Authors@R: 
+    person("Hua Yun", "Chen", , "hychen@uic.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-6791-6425"))
+Description:This package estimates and infers both the proportion of the total 
+    explained variation and the total explained variation.
+License: MIT+non
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
-Imports: 
-    cccp,
-    graphics,
-    stats
+RoxygenNote: 7.2.3
 Collate: 
+    'DataGen.R'
     'EigenPrism.R'
     'EigenPrismFull.R'
-    'R2GCTA.R'
-    'R2ee.R'
-    'R2ee0.R'
-    'R2eePMT.R'
-    'R2eePMTca.R'
-    'R2eePMTcaa.R'
-    'R2eePMTcab.R'
-    'R2eeadj.R'
-    'R2eels.R'
-    'R2eelsPMT.R'
-    'R2eelsPMTca.R'
-    'R2eelsPMTcaa.R'
-    'R2eesd.R'
-    'R2eesd0.R'
-    'R2eesdPMT.R'
-    'R2eesdPMTca.R'
-    'R2eesdPMTcaa.R'
+    'RVee.R'
+    'RVeels.R'
+    'RVeesd.R'
+    'Simulation.R'
     'utils.R'
+    'soutput.R'
+    'example.R'
+Depends: 
+    R (>= 2.10)
+Imports:
+    cccp,
+    graphics
+LazyData: true
