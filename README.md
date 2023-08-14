@@ -24,6 +24,10 @@ You can install the development version of TEV from
 devtools::install_github("hychen-uic/TEV")
 ```
 
+## Instructions
+
+See [vignette](https://github.com/hychen-uic/TEV/blob/master/TEVvignette.pdf) for usage examples.
+
 ## Acknowlegements
 
 This package is based on the work supported by the National Institute of
