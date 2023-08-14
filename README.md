@@ -31,4 +31,4 @@ See [vignette](https://github.com/hychen-uic/TEV/blob/master/TEVvignette.pdf) fo
 ## Acknowlegements
 
 This package is based on the work supported by the National Institute of
-Environmental Health Sciences (NIEHS) under grant 1R01ES028790-01.
+Environmental Health Sciences (NIEHS) under grant 1R01ES028790.
