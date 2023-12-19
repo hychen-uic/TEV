@@ -102,4 +102,26 @@ zscale=function(z){
   list(z)
 }
 
+#' Output simulation results.
+#'
+#' This function summarize the simulation results with the input of simulation results.
+#'
+#' @param result a vector of simulation results
+#' @param pa length of alpha (type I error vector)
+#' @param truth  true (proportion of) the explained variation
+#' @param rept the number of simulations
+#'
+#' @return  empirical confidence interval length and coverage.
+#'
+#' @export
+#'
+Soutput=function(result,pa,truth,rept){
+  print(apply(result,2,mean))
+  print(apply(result,2,var))
+
+  for(k in 1:(2*pa)){
+    print(mean(result[,3+2*k]-result[,2+2*k]))
+    print(mean(100*(result[,2+2*k]<=rep(truth,rept))*(result[,3+2*k]>=rep(truth,rept))))
+  }
+}
 

@@ -1,3 +1,20 @@
+#' Generate data for simulation studies.
+#'
+#' This function generate data follows linear model based on parameter input.
+#'
+#' @param n sample size
+#' @param p number of covariates
+#' @param beta regression coefficients
+#' @param xsig standard deviation of x variables
+#' @param errsig residual standard deviation
+#' @param powx power for x variable transformation
+#' @param powy power of y variable transformation
+#' @param sqrtsig square root decomposition of correlation matrix
+#'
+#' @return  x covariates.
+#'          y outcome variable
+#' @export
+#'
 datgen=function(n,p,beta,xsig,errsig,powx,powy,sqrtsig){
   #generate data from linear model
   # powx, powy parameters making non-normal x and random error
@@ -34,45 +51,59 @@ datgen=function(n,p,beta,xsig,errsig,powx,powy,sqrtsig){
   list(x,y)
 }
 
+
+#' generate a square root of a correlation matrix
+#'
+#' This function generate data follows linear model based on parameter input.
+#'
+#' @param amply parameter controlling the correlation
+#' @param tilt parameter controlling the correlation
+#' @param shrink parameter(>=0) controlling the correlation
+#' @param p dimensional of the matrix
+#'
+#' @return  sqrtsig square root of a covariance matrix
+#'
+#' @export
+#'
 sdgen=function(amply,tilt,shrink,p){
-   # generate a square root of a correlation matrix
-   # amply,tilt,and shrink(>=0) are means of controling the correlation
-   # p is the dimension of the matrix
 
-   x=matrix(rnorm(p*p,mean=amply,sd=1),ncol=p)
-   y=matrix(runif(p*p),ncol=p)-0.5+tilt
-   xy=x%*%y
-   covar=t(xy)%*%xy
-   covar=covar+diag(shrink*diag(covar))
-   covar=abs(covar)
-   corr=diag(1/sqrt(diag(covar)))%*%covar%*%diag(1/sqrt(diag(covar)))
-            # generate correlation matrix
-   if(1==2){
-     for(i in 1:(p-1)){ #select correlation to keep
-       for(j in (i+1):p){
-         corr[i,j]=0.5
-         if(j>i+1){
-           corr[i,j]=0
-          }
-         corr[j,i]=corr[i,j]
-        }
-       }
-   }
-   svdcorr=svd(corr) # singular value decomposition
-   sqrtsig=svdcorr$u%*%diag(sqrt(svdcorr$d))%*%t(svdcorr$v)# square-root a matrix
+  x=matrix(rnorm(p*p,mean=amply,sd=1),ncol=p)
+  y=matrix(runif(p*p),ncol=p)-0.5+tilt
+  xy=x%*%y
+  covar=t(xy)%*%xy
+  covar=covar+diag(shrink*diag(covar))
+  covar=abs(covar)
+  corr=diag(1/sqrt(diag(covar)))%*%covar%*%diag(1/sqrt(diag(covar)))
 
-   list(sqrtsig)
+  svdcorr=svd(corr) # singular value decomposition
+  sqrtsig=svdcorr$u%*%diag(sqrt(svdcorr$d))%*%t(svdcorr$v)# square-root a matrix
+
+  list(sqrtsig)
 }
 
+#' Calculation of the true r2 and explained variance v2 by simulation
+#'
+#' @param nrep simulation sample size
+#' @param p number of covariates
+#' @param beta regression coefficients
+#' @param xsig standard deviation of x variables
+#' @param errsig residual standard deviation
+#' @param powx power for x variable transformation
+#' @param powy power of y variable transformation
+#' @param sd square root decomposition of correlation matrix
+#'
+#' @return  x covariates.
+#'          y outcome variable
+#' @export
+#'
 trueR2=function(nrep,p,beta,xsig,errsig,powx,powy,sd){
-  # generate data from linear model to calculate R2
-  # powx, powy parameters making non-normal x and random error
-  # sd, square-root of correlation matrix, making correlated x.
 
   xy=datgen(nrep,p,beta,xsig,errsig,powx,powy,sd)
   s2=var(xy[[1]]%*%beta)
   r2=s2/var(xy[[2]])
 
-  list(c(r2,s2))
+  list(r2,s2)
 }
+
+
 
