@@ -16,6 +16,7 @@ Collate:
     'EigenPrismFull.R'
     'RVee.R'
     'RVeels.R'
+    'RVeelsa.R'
     'RVeesd.R'
     'Simulation.R'
     'utils.R'

@@ -11,7 +11,7 @@
 #' @param lam parameter for altering the weighting matrix.
 #' @param niter number of iterations for updating lam.
 #' @param KV, the first component of the vector KV=kappa_1, the second=kappa_2, the third=kappa_3
-#' @param know if KV and D are known, options include "yes" and "no". Default is "no".
+#' @param know if KV is known, options include "yes" and "no". Default is "no".
 #' @param nrep Monte Carlo sample size for computinging KV.
 #' @param alpha a vector of type I errors used to generate (1-alpha)confidence intervals.
 #'
