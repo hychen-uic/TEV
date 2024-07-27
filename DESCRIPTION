@@ -4,12 +4,12 @@ Version: 0.0.0.9001
 Authors@R: 
     person("Hua Yun", "Chen", , "hychen@uic.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6791-6425"))
-Description:This package estimates and infers both the proportion of the total 
+Description: This package estimates and infers both the proportion of the total 
     explained variation and the total explained variation.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Collate: 
     'DataGen.R'
     'EigenPrism.R'

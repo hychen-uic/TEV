@@ -21,6 +21,7 @@
 #' @examples \dontrun{GRE(y,x)}
 #'
 #' @export
+#'
 
 GRE=function(y,x, alpha=0.05){
   n=length(y)

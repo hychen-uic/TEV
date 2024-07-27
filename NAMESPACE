@@ -2,6 +2,7 @@
 
 export(EigenPrism)
 export(EigenPrismFull)
+export(GRE)
 export(RVee)
 export(RVeels)
 export(RVeelsa)
