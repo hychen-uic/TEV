@@ -24,7 +24,7 @@
 #'
 
 DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
-  n=length(y)
+
   n = dim(x)[1]
   p = dim(x)[2]
   for (j in 1:p) {
@@ -38,14 +38,22 @@ DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
   xsvd=svd(x,nv=0)
   temp=t(xsvd$u)%*%y
   eta2=1.0 # initial value
+  if(n>=p){ #when n>p, y^t[(I+eta2 XX^t/p)^(-1)-I]y=sum_{k=1}^p (U_k^t y)^2((1+eta2*xsvd$d^2/p)^{-1}-1)
+            # This means y^t(I+eta2 XX^t/p)^(-1)y=sum_{k=1}^p (U_k^t y)^2(1+eta2*xsvd$d^2/p)^{-1}
+            #                                      +y^ty-sum_{k=1}^p (U_k^t y)^2
+    add=sum(y^2)-sum(temp^2)
+  }else{ #No additional terms if n<=p
+    add=0
+  }
   for(iter in 1: niter){
     eta2old=eta2
     fact=1/(1+eta2*xsvd$d^2/p)
-    num=sum(xsvd$d^2*fact^2*temp^2)/p-(sum(xsvd$d^2*fact)/p)*sum(temp^2*fact)/n
+
+    num=sum(xsvd$d^2*fact^2*temp^2)/p-(sum(xsvd$d^2*fact)/p)*(sum(temp^2*fact)+add)/n
     den=-2*sum(xsvd$d^4*fact^3*temp^2)/p^2+(sum(xsvd$d^2*fact^2*temp^2)/p/n)*sum(xsvd$d^2*fact)/p
-        +(sum(fact*temp^2)/n)*sum(temp^4*fact^2)/p^2
+        +((sum(fact*temp^2)+add)/n)*sum(temp^4*fact^2)/p^2
     eta2=eta2-num/den
-    #print(c(iter,eta2,abs(num/den)))
+    print(c(iter,eta2,abs(num/den)))
     if(abs(num/den)<eps){break}
   }
 
