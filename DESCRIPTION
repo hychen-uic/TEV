@@ -22,6 +22,7 @@ Collate:
     'utils.R'
     'example.R'
     'GRE.R'
+    'DEMLE.R'
 Depends: 
     R (>= 2.10)
 Imports:

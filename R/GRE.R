@@ -35,13 +35,10 @@ GRE=function(y,x, alpha=0.05){
   sdy = sd(y)
   y = (y - mean(y))/sdy
 
-  beta=t(x)%*%y/n
-  xsvd=svd(x)
+  xsvd=svd(x,nv=0)
   q=sum(1.0*(xsvd$d!=0))
-  temp=t(xsvd$v)%*%beta
-  #xxginv=xsvd$v%*%diag(1/xsvd$d^2)%*%t(xsvd$v)
-  #r2=(n*t(beta)%*%xxginv%*%beta-q)/(n-q)
-  r2=(n^2*sum(temp^2/xsvd$d^2)-q)/(n-q)
+  temp=t(xsvd$u)%*%y/n
+  r2=(n^2*sum(temp^2)-q)/(n-q)
   ev=(1-r2)^2*2*q/(n-q)^2+4*r2*(1-r2)*n/(n-q)^2
   lowci=r2-qnorm(1-alpha/2)*sqrt(ev)
   uppci=r2+qnorm(1-alpha/2)*sqrt(ev)
