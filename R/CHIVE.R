@@ -26,7 +26,7 @@ NULL
 #' @examples \dontrun{CHIVE(y,x,lam=0.05)}
 #'
 #'@export
-CHIVE=function(y,x,xext=NULL,alpha=0.05){
+CHIVE=function(y,x,xext=NULL,alpha=c(0.05)){
 
   n=dim(x)[1]
   p=dim(x)[2]

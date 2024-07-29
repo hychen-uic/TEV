@@ -4,7 +4,7 @@
 \alias{GRE}
 \title{This function implement the generalized random effects model approach.}
 \usage{
-GRE(y, x, alpha = 0.05)
+GRE(y, x, alpha = c(0.05))
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}

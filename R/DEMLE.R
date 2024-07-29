@@ -23,7 +23,7 @@
 #' @export
 #'
 
-DEMLE=function(y,x, alpha=0.05,niter=100,eps=1e-5){
+DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
   n=length(y)
   n = dim(x)[1]
   p = dim(x)[2]

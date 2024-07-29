@@ -22,7 +22,7 @@ NULL
 #'
 #' @export
 #'
-EigenPrismFull=function(y,x,alpha=c(0.01,0.05,0.1)){
+EigenPrismFull=function(y,x,alpha=c(0.05)){
 
   n=dim(x)[1]
   p=dim(x)[2]

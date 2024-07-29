@@ -5,7 +5,7 @@
 \title{Estimate the explained variation in high-dimensional linear model using the method CHIVE proposed
 by Cai and Guo (2020)}
 \usage{
-CHIVE(y, x, xext = NULL, alpha = 0.05)
+CHIVE(y, x, xext = NULL, alpha = c(0.05))
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}

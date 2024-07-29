@@ -10,7 +10,7 @@ RVeelsa(
   x,
   lam = 0.2,
   niter = 1,
-  alpha = 0.05,
+  alpha = c(0.05),
   KV = rep(0, 3),
   know = "no",
   nrep = 1000

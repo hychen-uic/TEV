@@ -8,7 +8,7 @@ EigenPrism(
   y,
   X,
   invsqrtSig = NULL,
-  alpha = c(0.01, 0.05, 0.1),
+  alpha = c(0.05),
   target = "beta2",
   zero.ind = c(),
   diagnostics = T

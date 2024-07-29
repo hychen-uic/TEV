@@ -4,7 +4,7 @@
 \alias{EigenPrismFull}
 \title{Estimating proportion of explained variation using the least-square approach or the EigenPrism approach}
 \usage{
-EigenPrismFull(y, x, alpha = c(0.01, 0.05, 0.1))
+EigenPrismFull(y, x, alpha = c(0.05))
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}

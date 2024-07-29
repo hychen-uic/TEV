@@ -4,7 +4,7 @@
 \alias{DEMLE}
 \title{This function implement the maximum likelihood approach of Dicker and Erdogdu (2016).}
 \usage{
-DEMLE(y, x, alpha = 0.05, niter = 100, eps = 1e-05)
+DEMLE(y, x, alpha = c(0.05), niter = 100, eps = 1e-05)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}

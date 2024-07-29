@@ -31,7 +31,7 @@
 #'
 #'
 #' @export
-RVeesd=function(y,x,X,lam=0.2,niter=1,alpha=0.05,KV=rep(0,3),know="no",nrep=1000){
+RVeesd=function(y,x,X,lam=0.2,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]

@@ -28,7 +28,7 @@ NULL
 #'
 #' @export
 #'
-EigenPrism <- function(y,X,invsqrtSig=NULL,alpha=c(0.01,0.05,0.10),target='beta2',zero.ind=c(),diagnostics=T){
+EigenPrism <- function(y,X,invsqrtSig=NULL,alpha=c(0.05),target='beta2',zero.ind=c(),diagnostics=T){
   # Author: Lucas Janson (statweb.stanford.edu/~ljanson)
   # Runs EigenPrism procedure for estimating and generating confidence
   #  intervals for variance components in high-dimensional linear model:

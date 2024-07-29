@@ -23,7 +23,7 @@
 #' @export
 #'
 
-GRE=function(y,x, alpha=0.05){
+GRE=function(y,x, alpha=c(0.05)){
   n=length(y)
   n = dim(x)[1]
   p = dim(x)[2]
