@@ -31,7 +31,7 @@
 #'
 #'
 #' @export
-RVeelsa=function(y,x,lam=0.2,niter=1,alpha=c(0.1,0.05,0.01),KV=rep(0,3),know="no",nrep=1000){
+RVeelsa=function(y,x,lam=0.2,niter=1,alpha=0.05,KV=rep(0,3),know="no",nrep=1000){
   n=dim(x)[1]
   p=dim(x)[2]
   if(n<=p){print("n<=p, least-square approach is not applicable.")}

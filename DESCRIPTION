@@ -23,9 +23,12 @@ Collate:
     'example.R'
     'GRE.R'
     'DEMLE.R'
+    'CHIVE.R'
 Depends: 
     R (>= 2.10)
 Imports:
     cccp,
-    graphics
+    graphics,
+    scalreg,
+    lars
 LazyData: true

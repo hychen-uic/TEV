@@ -49,15 +49,39 @@ DEMLE=function(y,x, alpha=0.05,niter=100,eps=1e-5){
     if(abs(num/den)<eps){break}
   }
 
+  eta2=max(0,eta2)
   r2=eta2/(1+eta2)
   rho=p/n
-  z=1/eta2
-  A=(1-rho*z-rho+sqrt((1-rho*z-rho)^2+4*rho*z))/(2*z)
-  B=-A/z-(1+(1+rho+rho*z)/sqrt((1-rho*z-rho)^2+4*rho*z))*rho/z
-  ev=r2^4*(1/(A^2+B)+z/rho)
+  if(eta2>0){
+    z=1/eta2
+    A=(1-rho*z-rho+sqrt((1-rho*z-rho)^2+4*rho*z))/(2*z)
+    B=-A/z-(1+(1+rho+rho*z)/sqrt((1-rho*z-rho)^2+4*rho*z))*rho/z
+    evr2=r2^4*(1/(A^2+B)+z/rho)
+  }else{
+    evr2=0
+  }
 
-  lowci=r2-qnorm(1-alpha/2)*sqrt(ev)
-  uppci=r2+qnorm(1-alpha/2)*sqrt(ev)
+  vy=var(y)
+  s2=vy*r2
+  evs2=vy^2*evr2+r2^2*var(y^2)/n # This variance estimator is not consistent
 
-  list(r2,ev,c(lowci,uppci))
+  len=length(alpha)
+  cir2=r2+sqrt(evr2)*qnorm(c(alpha/2,1-alpha/2))
+  cir2[c(1:len)]=cir2[c(1:len)]*(cir2[c(1:len)]>0)
+  cir2[len+c(1:len)]=cir2[len+c(1:len)]*(cir2[len+c(1:len)]<1)+1.0*(cir2[len+c(1:len)]>=1)
+
+  cis2=s2+sqrt(evs2)*qnorm(c(alpha/2,1-alpha/2))
+  cis2[c(1:len)]=cis2[c(1:len)]*(cis2[c(1:len)]>0)
+
+  #6. output result
+
+  ind=rep(0,2*len)
+  ind[2*c(1:len)-1]=c(1:len)
+  ind[2*c(1:len)]=len+c(1:len)
+  list(c(r2,evr2),cir2[ind],
+       c(s2,evs2),cis2[ind])
+#  lowci=r2-qnorm(1-alpha/2)*sqrt(ev)
+#  uppci=r2+qnorm(1-alpha/2)*sqrt(ev)
+
+#  list(r2,ev,c(lowci,uppci))
 }

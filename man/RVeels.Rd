@@ -4,7 +4,7 @@
 \alias{RVeels}
 \title{Least-square approach to proportion of the explained variation}
 \usage{
-RVeels(y, x, lam = 0.1, alpha = c(0.1, 0.05, 0.01))
+RVeels(y, x, lam = 0.1, alpha = 0.05)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
