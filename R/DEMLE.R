@@ -37,7 +37,7 @@ DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
 
   xsvd=svd(x,nv=0)
   temp=t(xsvd$u)%*%y
-  eta2=1 # initial value
+  eta2=1.0 # initial value
   for(iter in 1: niter){
     eta2old=eta2
     fact=1/(1+eta2*xsvd$d^2/p)
@@ -61,9 +61,9 @@ DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
     evr2=0
   }
 
-  vy=var(y)
+  vy=as.numeric(var(y))
   s2=vy*r2
-  evs2=vy^2*evr2+r2^2*var(y^2)/n # This variance estimator is not consistent
+  evs2=vy^2*evr2+r2^2*as.numeric(var(y^2))/n # This variance estimator is not consistent
 
   len=length(alpha)
   cir2=r2+sqrt(evr2)*qnorm(c(alpha/2,1-alpha/2))

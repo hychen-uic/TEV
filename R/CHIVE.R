@@ -53,12 +53,12 @@ CHIVE=function(y,x,xext=NULL,alpha=c(0.05)){
   #3. Calibration
   pred=x%*%beta
   Q=as.numeric(t(beta)%*%xsig%*%beta)+2*sum((y-pred)*pred)/n
-  vy=var(y)
+  vy=as.numeric(var(y))
   r2=Q/vy
 
   #4. variance estimate
   evQ=4*sigma2*Q/n+sum((pred^2-Q)^2)/(n+N)^2
-  evr2=(evQ+Q^2*var(y^2)/n)/vy^2 #This is not a consistent variance estimator
+  evr2=(evQ+Q^2*as.numeric(var(y^2))/n)/vy^2 #This is not a consistent variance estimator
 
   #5 confidence interval
   len=length(alpha)
