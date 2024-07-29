@@ -53,7 +53,7 @@ DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
     den=-2*sum(xsvd$d^4*fact^3*temp^2)/p^2+(sum(xsvd$d^2*fact^2*temp^2)/p/n)*sum(xsvd$d^2*fact)/p
         +((sum(fact*temp^2)+add)/n)*sum(temp^4*fact^2)/p^2
     eta2=eta2-num/den
-    print(c(iter,eta2,abs(num/den)))
+    #print(c(iter,eta2,abs(num/den)))
     if(abs(num/den)<eps){break}
   }
 

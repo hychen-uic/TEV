@@ -32,7 +32,7 @@ NULL
 #' @examples \dontrun{R2ee(y,x,lam=0.1,niter=3)}
 #'
 #'@export
-RVee=function(y,x,lam=0.1,niter=1,alpha=c(0.05)){
+RVee=function(y,x,lam=0.1,niter=0,alpha=c(0.05)){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -51,14 +51,24 @@ RVee=function(y,x,lam=0.1,niter=1,alpha=c(0.05)){
   Xsvd=svd(x,nv=0) #nv=0 means not computing v matrix
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
+  uy=t(Xsvd$u)%*%y
   Mev=Xsvd$d^2/p #Vector of eigenvalues of matrix XX'/p.
+  if(n>p){
+    num=sum(uy^2*(Mev-1)/(1+lam*Mev)^2)-sum(y*y)+sum(uy^2)
+    num=num-sum((Mev-1)/(1+lam*Mev)^2)+n-p
+    den=sum((Mev-1)^2/(1+lam*Mev)^2)+n-p
+  }else{
+    num=sum(uy^2*(Mev-1)/(1+lam*Mev)^2)
+    num=num-sum((Mev-1)/(1+lam*Mev)^2)
+    den=sum((Mev-1)^2/(1+lam*Mev)^2)
+  }
+  r2=num/den # initial value
 
-  r2=lam/(1+lam) # initial value
   for(ii in 1:niter){ #iteration to update lambda
-    if(ii>1 & r2<1){lam=r2/(1-r2)}
+    if(ii>0 & r2<1){lam=r2/(1-r2)}
     Wev=(Mev-1)/(1+lam*Mev)^2  #vector of eigenvalues of weight matrix
     #3. Compute the estimators
-    uy=t(Xsvd$u)%*%y
+
     u1=t(Xsvd$u)%*%rep(1,n)
     if(n>=p){
       com=sum(u1^2*(Wev+1))/n-1
