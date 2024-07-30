@@ -7,7 +7,7 @@
 RVeesd(
   y,
   x,
-  X,
+  xsup = NULL,
   lam = 0.2,
   niter = 1,
   alpha = c(0.05),
@@ -21,7 +21,7 @@ RVeesd(
 
 \item{x}{covariates: a matrix of nxp dimension.}
 
-\item{X}{supplementary covariates: a matrix of Nxp dimension.}
+\item{xsup}{supplementary covariates: a matrix of Nxp dimension.}
 
 \item{lam}{parameter for altering the weighting matrix.}
 

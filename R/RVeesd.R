@@ -7,7 +7,7 @@
 #'
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
-#' @param X supplementary covariates: a matrix of Nxp dimension.
+#' @param xsup supplementary covariates: a matrix of Nxp dimension.
 #' @param lam parameter for altering the weighting matrix.
 #' @param niter number of iterations for updating lam.
 #' @param KV, the first component of the vector KV=kappa_1, the second=kappa_2, the third=kappa_3
@@ -31,32 +31,39 @@
 #'
 #'
 #' @export
-RVeesd=function(y,x,X,lam=0.2,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nrep=1000){
+RVeesd=function(y,x,xsup=NULL,lam=0.2,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]
-  N=dim(X)[1]
-  if(dim(X)[2]!=p){
+  if(is.null(xsup)){
+    N=0
+    XX=x
+  }else{
+    N=dim(xsup)[1]
+    XX=rbind(x,xsup) #combine existing and supplement data on covariates
+
+    if(dim(xsup)[2]!=p){
     # print("Stop: supplement data dimension does not match")
     # break
     stop("Supplement data dimension does not match!")
+    }
   }
   #1. Standardization
 
-  XX=rbind(x,X) #combine existing and supplement data on covariates
+
   for(j in 1:p){
     mu=mean(XX[,j])
     sdx=sd(XX[,j])
-    X[,j]=(X[,j]-mu)/sdx
+    XX[,j]=(XX[,j]-mu)/sdx
     x[,j]=(x[,j]-mu)/sdx
   }
   sdy=sd(y)
   y=(y-mean(y))/sdy
 
   #2. Sigular value decomposition
-  x=as.matrix(x)
-  X=as.matrix(X)
-  M=x%*%chol2inv(chol(t(x)%*%x+t(X)%*%X))%*%t(x)*(n+N)/p
+  #x=as.matrix(x)
+  #X=as.matrix(X)
+  M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
   r2=lam/(1+lam) #initial value
   for(ii in 1:niter){
     if(ii>1 & r2<1){lam=r2/(1-r2)}
