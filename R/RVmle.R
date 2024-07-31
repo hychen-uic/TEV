@@ -23,7 +23,7 @@
 #' @export
 #'
 
-DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
+RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -88,8 +88,4 @@ DEMLE=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
   ind[2*c(1:len)]=len+c(1:len)
   list(c(r2,evr2),cir2[ind],
        c(s2,evs2),cis2[ind])
-#  lowci=r2-qnorm(1-alpha/2)*sqrt(ev)
-#  uppci=r2+qnorm(1-alpha/2)*sqrt(ev)
-
-#  list(r2,ev,c(lowci,uppci))
 }

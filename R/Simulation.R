@@ -51,7 +51,8 @@ simulation=function(p=200, n=400, Nsd=200, rept=1000,nrep=1000,
 if(cindep=="T"){
    sqrtsig=diag(rep(1,p))      # independent covariates
   }else{
-   sqrtsig=sdgen(2,0,0,p)[[1]] # dependent covariates
+   corr=makecora(2,0,0,p)[[1]] # dependent covariates
+   sqrtsig=sqrtpdm(corr)
    #max(sqrtsig%*%sqrtsig-diag(rep(1,p)))
    #min(sqrtsig%*%sqrtsig)
   }
@@ -86,7 +87,7 @@ resultTS=array(0,c(rept,30)) #Transformed data estimating equation approach
 for(i in 1:rept){
   print(c(i,i,i))
 
-  xy=datgen(n,p,beta,xsig,errsig,powx,powy,sqrtsig)
+  xy=makedat(n,p,beta,xsig,errsig,powx,powy,sqrtsig)
   x=xy[[1]]
   y=xy[[2]]
 
@@ -97,7 +98,7 @@ for(i in 1:rept){
     }
 
 #3.1. EigenPrism approach
-    aa=EigenPrismFull(y,x,alpha=c(0.01,0.05,0.1))
+    aa=RVep(y,x,alpha=c(0.01,0.05,0.1))
     resultEP[i,1]=aa[[1]]   # estimator
     resultEP[i,2:7]=aa[[2]] # 99%, 95%, 90% confidence intervals
 
@@ -113,7 +114,7 @@ for(i in 1:rept){
 
 #3.3. least-square approach
    if(n>p){ # compute only when n>p
-     aa=RVeels(y,x)
+     aa=RVls(y,x)
      resultLS[i,1:3]=aa[[1]]   # estimator, variance estimate under normal, variance estimate
      resultLS[i,4:9]=aa[[2]]   # 99%, 95%, 90% confidence intervals under normal
      resultLS[i,10:15]=aa[[3]] # 99%, 95%, 90% confidence intervals in general
@@ -154,10 +155,10 @@ for(i in 1:rept){
     KV[3]=var(SUZZU-n)
     }
 
-    xy=datgen(Nsd,p,beta,xsig,errsig,powx,powy,sqrtsig)
-    X=xy[[1]]
+    xy=makedat(Nsd,p,beta,xsig,errsig,powx,powy,sqrtsig)
+    xsup=xy[[1]]
 
-    aa=RVeesd(y,x,X,lam=ilam,niter=iiter,KV=KV,know="yes",nrep=10000)
+    aa=RVsd(y,x,xsup,lam=ilam,niter=iiter,KV=KV,know="yes",nrep=10000)
     resultES[i,1:3]=aa[[1]]    #  estimator, variance estimate under normal, variance estimate
     resultES[i,4:9]=aa[[2]]    # 99%, 95%, 90% confidence intervals under normal
     resultES[i,10:15]=aa[[3]]  # 99%, 95%, 90% confidence intervals in general
@@ -169,7 +170,7 @@ for(i in 1:rept){
 #3.5. Transformation approach with supplementary covariates
     #transform correlated covariates before applying estimating equation approach
     if(Nsd>0){
-        z=transf(rbind(x,X))[[1]][1:n,]
+        z=transf(rbind(x,xsup))[[1]][1:n,]
      }else{
         z=transf(x)[[1]]
      }

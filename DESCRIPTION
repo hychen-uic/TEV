@@ -11,19 +11,18 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Collate: 
+    'CHIVE.R'
     'DataGen.R'
     'EigenPrism.R'
-    'EigenPrismFull.R'
-    'RVee.R'
-    'RVeels.R'
-    'RVeelsa.R'
-    'RVeesd.R'
-    'Simulation.R'
-    'utils.R'
     'example.R'
     'GRE.R'
-    'DEMLE.R'
-    'CHIVE.R'
+    'RVee.R'
+    'RVep.R'
+    'RVls.R'
+    'RVmle.R'
+    'RVsd.R'
+    'Simulation.R'
+    'utils.R'
 Depends: 
     R (>= 2.10)
 Imports:

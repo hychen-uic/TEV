@@ -15,7 +15,7 @@
 #'          y outcome variable
 #' @export
 #'
-datgen=function(n,p,beta,xsig,errsig,powx,powy,sqrtsig){
+makedat=function(n,p,beta,xsig,errsig,powx,powy,sqrtsig){
   #generate data from linear model
   # powx, powy parameters making non-normal x and random error
   # sd, square-root of correlation matrix, making correlated x.
@@ -36,7 +36,6 @@ datgen=function(n,p,beta,xsig,errsig,powx,powy,sqrtsig){
 
    x=x%*%sqrtsig  # create correlated covariates
    x=x*(x<200)+200*(x>=200)
-
 
    err=rnorm(n,mean=0,sd=errsig)
    err=sign(err)*abs(err)^powy
@@ -61,11 +60,11 @@ datgen=function(n,p,beta,xsig,errsig,powx,powy,sqrtsig){
 #' @param shrink parameter(>=0) controlling the correlation
 #' @param p dimensional of the matrix
 #'
-#' @return  sqrtsig square root of a covariance matrix
+#' @return  corr correlaation matrix
 #'
 #' @export
 #'
-sdgen=function(amply,tilt,shrink,p){
+makecora=function(amply,tilt,shrink,p){
 
   x=matrix(rnorm(p*p,mean=amply,sd=1),ncol=p)
   y=matrix(runif(p*p),ncol=p)-0.5+tilt
@@ -74,6 +73,52 @@ sdgen=function(amply,tilt,shrink,p){
   covar=covar+diag(shrink*diag(covar))
   covar=abs(covar)
   corr=diag(1/sqrt(diag(covar)))%*%covar%*%diag(1/sqrt(diag(covar)))
+
+  list(corr)
+}
+
+#' generate a square root of a correlation matrix by specifying correlation matrix
+#'
+#' This function generate data follows linear model based on parameter input.
+#'
+#' @param rho parameter controlling the correlation
+#' @param fix the correlation is a constant if fix=TRUE, Otherwise, it is rho^|i-j|
+#' @param p dimensional of the matrix
+#'
+#' @return  corr correlation matrix
+#'
+#' @export
+#'
+makecorb=function(rho,p,fix=TRUE){
+
+  corr=matrix(0,ncol=p,nrow=p)
+
+  corr[1,1]=1
+  for(i in 2:p){
+    corr[i,i]=1
+    for(j in 1:(i-1)){
+      if(fix==TRUE){
+        corr[i,j]=rho
+      }else{
+        corr[i,j]=rho^(i-j)
+      }
+      corr[j,i]=corr[i,j]
+    }
+  }
+  list(corr)
+}
+
+#' Find the square root of a positive definite matrix
+#'
+#' This function find a square root of the positive definite matrix by single value decomposition.
+#'
+#' @param corr correlation or covariance matrix
+#'
+#' @return  sqrtsig square root of a covariance matrix
+#'
+#' @export
+#'
+sqrtpdm=function(corr){
 
   svdcorr=svd(corr) # singular value decomposition
   sqrtsig=svdcorr$u%*%diag(sqrt(svdcorr$d))%*%t(svdcorr$v)# square-root a matrix
@@ -98,7 +143,7 @@ sdgen=function(amply,tilt,shrink,p){
 #'
 trueR2=function(nrep,p,beta,xsig,errsig,powx,powy,sd){
 
-  xy=datgen(nrep,p,beta,xsig,errsig,powx,powy,sd)
+  xy=makedat(nrep,p,beta,xsig,errsig,powx,powy,sd)
   s2=var(xy[[1]]%*%beta)
   r2=s2/var(xy[[2]])
 

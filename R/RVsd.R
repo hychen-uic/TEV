@@ -8,6 +8,7 @@
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
 #' @param xsup supplementary covariates: a matrix of Nxp dimension.
+#'             when xsup=NULL and n>p, it performs least-square with the simulation variance estimate
 #' @param lam parameter for altering the weighting matrix.
 #' @param niter number of iterations for updating lam.
 #' @param KV, the first component of the vector KV=kappa_1, the second=kappa_2, the third=kappa_3
@@ -27,11 +28,11 @@
 #' @references Chen H. Y, Zhang, B. and Pan, G.(2023).Estimation and inference on explained variation
 #'with possible supplementary data, Manuscript.
 #'
-#' @examples \dontrun{R2eesd(y,x,X,lam=0.2,niter=3,alpha=c(0.1,0.05,0.01),KV=rep(0,3),know="no",nrep=1000)}
+#' @examples \dontrun{R2eesd(y,x,xsup,lam=0.2,niter=3,alpha=c(0.1,0.05,0.01),KV=rep(0,3),know="no",nrep=1000)}
 #'
 #'
 #' @export
-RVeesd=function(y,x,xsup=NULL,lam=0.2,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nrep=1000){
+RVsd=function(y,x,xsup=NULL,lam=0.2,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]

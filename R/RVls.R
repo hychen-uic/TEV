@@ -23,7 +23,7 @@
 #' @examples \dontrun{R2eels(y,x)}
 #'
 #' @export
-RVeels=function(y,x,lam=0.1, alpha=c(0.05) ){
+RVls=function(y,x,lam=0.1, alpha=c(0.05) ){
 
   # y==outcome
   # x==covariates

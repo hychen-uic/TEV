@@ -22,7 +22,7 @@ NULL
 #'
 #' @export
 #'
-EigenPrismFull=function(y,x,alpha=c(0.05)){
+RVep=function(y,x,alpha=c(0.05)){
 
   n=dim(x)[1]
   p=dim(x)[2]
