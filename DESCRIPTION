@@ -20,6 +20,7 @@ Collate:
     'RVep.R'
     'RVls.R'
     'RVmle.R'
+    'RVmlea.R'
     'RVsd.R'
     'RVsda.R'
     'Simulation.R'

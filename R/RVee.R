@@ -53,17 +53,22 @@ RVee=function(y,x,lam=0.1,niter=0,alpha=c(0.05)){
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
   uy=t(Xsvd$u)%*%y
   Mev=Xsvd$d^2/p #Vector of eigenvalues of matrix XX'/p.
-  if(n>p){
-    num=sum(uy^2*(Mev-1)/(1+lam*Mev)^2)-sum(y*y)+sum(uy^2)
-    num=num-sum((Mev-1)/(1+lam*Mev)^2)+n-p
-    den=sum((Mev-1)^2/(1+lam*Mev)^2)+n-p
-  }else{
-    num=sum(uy^2*(Mev-1)/(1+lam*Mev)^2)
-    num=num-sum((Mev-1)/(1+lam*Mev)^2)
-    den=sum((Mev-1)^2/(1+lam*Mev)^2)
-  }
-  r2=num/den # initial value
+  Wev=(Mev-1)/(1+lam*Mev)^2  #vector of eigenvalues of weight matrix
 
+  u1=t(Xsvd$u)%*%rep(1,n)
+  if(n>p){
+    com=sum(u1^2*(Wev+1))/n-1 #negligible
+    num=sum(uy^2*(Wev+1))-sum(y^2)-sum(Wev)+n-p
+    den=sum(Wev*(Mev-1))+n-p
+  }else{
+    com=sum(u1^2*Wev)/n #negligible
+    num=sum(uy^2*Wev)-sum(Wev)
+    den=sum(Wev*(Mev-1))
+  }
+  r2=min(1,max(0,(num+com)/(den+com))) # initial value
+  #print(c(r2,num/den))
+
+  if(niter>0){
   for(ii in 1:niter){ #iteration to update lambda
     if(ii>0 & r2<1){lam=r2/(1-r2)}
     Wev=(Mev-1)/(1+lam*Mev)^2  #vector of eigenvalues of weight matrix
@@ -71,18 +76,18 @@ RVee=function(y,x,lam=0.1,niter=0,alpha=c(0.05)){
 
     u1=t(Xsvd$u)%*%rep(1,n)
     if(n>=p){
-      com=sum(u1^2*(Wev+1))/n-1
+      #com=sum(u1^2*(Wev+1))/n-1
       num=sum(uy^2*(Wev+1))-sum(y^2)-sum(Wev)+n-p
       den=sum(Wev*(Mev-1))+n-p
     }else{
-      com=sum(u1^2*Wev)/n
+      #com=sum(u1^2*Wev)/n
       num=sum(uy^2*Wev)-sum(Wev)
       den=sum(Wev*(Mev-1))
     }
 
     r2=(num+com)/(den+com)
     r2=min(1,max(0,r2)) #The proportion of explained variation
-  }
+  }}
 
   vy=sdy*sdy
   s2=vy*r2  #The explained variation

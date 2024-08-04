@@ -23,7 +23,7 @@
 #' @export
 #'
 
-RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
+RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-5){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -35,7 +35,7 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
   sdy = sd(y)
   y = (y - mean(y))/sdy
 
-  lam=0.1
+  lam=0
   xsvd=svd(x,nv=0) #nv=0 means not computing v matrix
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
@@ -54,32 +54,26 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
     den=sum(Wev*(Mev-1))
   }
   r2=min(1,max(0,(num+com)/(den+com))) # initial value
+  sy2=sum(uy^2*(1/(r2*Mev+(1-r2))-1))/n+(sum(y^2)-sum(uy^2))/(1-r2)/n
 
-  eta2=1.0 # initial value
-  if(n>=p){ #when n>p, y^t[(I+eta2*XX^t/p)^(-1)-I]y=sum_{k=1}^p (U_k^t y)^2((1+eta2*xsvd$d^2/p)^{-1}-1)
-            # This means y^t(I+eta2*XX^t/p)^(-1)y=sum_{k=1}^p (U_k^t y)^2(1+eta2*xsvd$d^2/p)^{-1}
-            #                                      +y^ty-sum_{k=1}^p (U_k^t y)^2
-    add=sum(y^2)-sum(uy^2)
-  }else{ #No additional terms if n<=p
-    add=0
-  }
   for(iter in 1: niter){
-    eta2old=eta2
-    fact=1/(1+eta2*xsvd$d^2/p)
-
-    num=sum(xsvd$d^2*fact^2*uy^2)/p-(sum(xsvd$d^2*fact)/p)*(sum(uy^2*fact)+add)/n
-    den=-2*sum(xsvd$d^4*fact^3*uy^2)/p^2+(sum(xsvd$d^2*fact^2*uy^2)/p/n)*sum(xsvd$d^2*fact)/p
-        +((sum(fact*uy^2)+add)/n)*sum(uy^4*fact^2)/p^2
-    eta2=eta2-num/den
-    #print(c(iter,eta2,abs(num/den)))
-    if(abs(num/den)<eps){break}
+    if(n>p){
+      com=sum(u1^2*(Wev+1))/n-1 #negligible
+      num=sum(uy^2*(Wev+1))-sum(y^2)-sum(Wev)+n-p
+      den=sum(Wev*(Mev-1))+n-p
+    }else{
+      com=sum(u1^2*Wev)/n #negligible
+      num=sum(uy^2*Wev)-sum(Wev)
+      den=sum(Wev*(Mev-1))
+    }
+    r2=min(1,max(0,(num+com)/(den+com))) # initial value
+    sy2=sum(uy^2*(1/(r2*Mev+(1-r2))-1))/n+(sum(y^2)-sum(uy^2))/(1-r2)/n
+    #print(c(iter, r2,sy2))
   }
 
-  eta2=max(0,eta2)
-  r2=eta2/(1+eta2)
   rho=p/n
-  if(eta2>0){
-    z=1/eta2
+  if(r2>0){
+    z=(1-r2)/r2
     A=(1-rho*z-rho+sqrt((1-rho*z-rho)^2+4*rho*z))/(2*z)
     B=-A/z-(1+(1+rho+rho*z)/sqrt((1-rho*z-rho)^2+4*rho*z))*rho/z
     evr2=r2^4*(1/(A^2+B)+z/rho)

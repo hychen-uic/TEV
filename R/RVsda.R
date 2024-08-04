@@ -47,23 +47,22 @@ RVsda=function(y,x,xsup,lam=0.2){
 
   #2. Sigular value decomposition
 
-  xsvd=svd(x,nv=0) #nv=0 means not computing v matrix
+  xsvd=svd(x) #nv=0 means not computing v matrix
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
   uy=t(xsvd$u)%*%y
 
   Mev=xsvd$d^2/p #Vector of eigenvalues of matrix XX'/p.
-  atemp=xsup%*%t(xsvd$v)%*%diag(1/xsvd$d)
   num=sum(uy^2*(Mev-1)/(1+lam*Mev)^2)-sum((Mev-1)/(1+lam*Mev)^2)
-  den=sum(xsvd$d*(xsvd$d^2/p-1)/(1+lam*xsvd$d^2/p)^2
-          *diag(chol2inv(chol(diag(rep(1,p))+t(atemp)%*%atemp))))*(n+N)/p
+  den=sum(xsvd$d^2*(Mev-1)/(1+lam*Mev)^2
+          *diag(t(xsvd$v)%*%chol2inv(chol(t(x)%*%x+t(xsup)%*%xsup))%*%xsvd$v))*(n+N)/p
+  den=den-sum((Mev-1)/(1+lam*Mev)^2)
   if(n>p){
-    num=num-sum(y*y)+sum(uy^2)
-    num=num+n-p
-    den=den-sum((Mev-1)/(1+lam*Mev)^2)+n-p
+    num=num-sum(y*y)+sum(uy^2)+n-p
+    den=den+n-p
   }
 
-  r2=num/den # initial value
+  r2=max(0,min(num/den,1)) # initial value
 
   list(r2)
 
