@@ -4,7 +4,7 @@
 \alias{RVmlea}
 \title{This function implement the maximum likelihood approach of Dicker and Erdogdu (2016).}
 \usage{
-RVmlea(y, x, alpha = c(0.05), niter = 50, eps = 1e-05)
+RVmlea(y, x, alpha = c(0.05), niter = 10, eps = 1e-05)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
