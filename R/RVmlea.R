@@ -23,7 +23,7 @@
 #' @export
 #'
 
-RVmlea=function(y,x, alpha=c(0.05),niter=10,eps=1e-5){
+RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-5){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -54,8 +54,9 @@ RVmlea=function(y,x, alpha=c(0.05),niter=10,eps=1e-5){
     den=sum(Wev*(Mev-1))
   }
   r2=min(1,max(0,(num+com)/(den+com))) # initial value
-  sy2=t(y)%*%chol2inv(chol(x%*%t(x)/p+(r2/(1-r2))*diag(rep(1,n))))%*%y/(1-r2)/n
+  sy2=t(y)%*%chol2inv(chol((r2/(1-r2))*x%*%t(x)/p+diag(rep(1,n))))%*%y/(1-r2)/n
   sy2=as.numeric(sy2)
+  #print(c(r2,sy2))
 
   for(iter in 1: niter){
     uy=t(xsvd$u)%*%y/sqrt(sy2)
@@ -69,7 +70,7 @@ RVmlea=function(y,x, alpha=c(0.05),niter=10,eps=1e-5){
       den=sum(Wev*(Mev-1))
     }
     r2=min(1,max(0,(num+com)/(den+com))) # initial value
-    sy2=t(y)%*%chol2inv(chol(x%*%t(x)/p+(r2/(1-r2))*diag(rep(1,n))))%*%y/(1-r2)/n
+    sy2=t(y)%*%chol2inv(chol((r2/(1-r2))*x%*%t(x)/p+diag(rep(1,n))))%*%y/(1-r2)/n
     sy2=as.numeric(sy2)
     #print(c(iter,r2,sy2))
   }
