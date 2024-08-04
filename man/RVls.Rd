@@ -27,7 +27,7 @@ This method works only for the case n>p. It uses the least-square approach
 for the estimation. Covariates are allowed to be correlated.
 }
 \examples{
-\dontrun{R2eels(y,x)}
+\dontrun{RVls(y,x)}
 
 }
 \references{

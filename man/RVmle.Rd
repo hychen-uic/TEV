@@ -29,7 +29,7 @@ This method assume the independent covariates with fixed effects but can be
 equivalently treated as random effects
 }
 \examples{
-\dontrun{DEMLE(y,x)}
+\dontrun{RVMLE(y,x)}
 
 }
 \references{

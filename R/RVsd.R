@@ -28,7 +28,7 @@
 #' @references Chen H. Y, Zhang, B. and Pan, G.(2023).Estimation and inference on explained variation
 #'with possible supplementary data, Manuscript.
 #'
-#' @examples \dontrun{R2eesd(y,x,xsup,lam=0.2,niter=3,alpha=c(0.1,0.05,0.01),KV=rep(0,3),know="no",nrep=1000)}
+#' @examples \dontrun{RVsd(y,x,xsup,lam=0.2,niter=3,alpha=c(0.1,0.05,0.01),KV=rep(0,3),know="no",nrep=1000)}
 #'
 #'
 #' @export

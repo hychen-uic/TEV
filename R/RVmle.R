@@ -18,7 +18,7 @@
 #'           variance estimation in high-dimensional linear models.
 #'  Proceedings of the 19th International Conference on Articial Intelligence and Statistics
 #'
-#' @examples \dontrun{DEMLE(y,x)}
+#' @examples \dontrun{RVMLE(y,x)}
 #'
 #' @export
 #'
@@ -34,6 +34,24 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
   }
   sdy = sd(y)
   y = (y - mean(y))/sdy
+
+  lam=0.1
+  Xsvd=svd(x,nv=0) #nv=0 means not computing v matrix
+  # singular value decomposition
+  # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
+  uy=t(Xsvd$u)%*%y
+  Mev=Xsvd$d^2/p #Vector of eigenvalues of matrix XX'/p.
+  if(n>p){
+    num=sum(uy^2*(Mev-1)/(1+lam*Mev)^2)-sum(y*y)+sum(uy^2)
+    num=num-sum((Mev-1)/(1+lam*Mev)^2)+n-p
+    den=sum((Mev-1)^2/(1+lam*Mev)^2)+n-p
+  }else{
+    num=sum(uy^2*(Mev-1)/(1+lam*Mev)^2)
+    num=num-sum((Mev-1)/(1+lam*Mev)^2)
+    den=sum((Mev-1)^2/(1+lam*Mev)^2)
+  }
+  r2=num/den # initial value
+
 
   xsvd=svd(x,nv=0)
   temp=t(xsvd$u)%*%y

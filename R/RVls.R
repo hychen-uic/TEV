@@ -20,7 +20,7 @@
 #' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
 #' of Environmental Research and Public Health.
 #'
-#' @examples \dontrun{R2eels(y,x)}
+#' @examples \dontrun{RVls(y,x)}
 #'
 #' @export
 RVls=function(y,x,lam=0.1, alpha=c(0.05) ){

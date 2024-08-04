@@ -36,7 +36,7 @@ Both point estimate and confidence intervals
 are computed. Two set of confidence intervals under normal or non-normal error are computed.
 }
 \examples{
-\dontrun{R2ee(y,x,lam=0.1,niter=3)}
+\dontrun{RVee(y,x,lam=0.1,niter=3)}
 
 }
 \references{

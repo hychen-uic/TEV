@@ -18,7 +18,7 @@ NULL
 #' @references Janson, L., Barber, R. F., Candes, E. (2017). EigenPrism: inference for high-dimensional signal-to-noise ratios. Journal of Royal Statistical Society, Ser. B., 79, 1037-1065.
 #' @references Lucas Janson. \url{http://lucasjanson.fas.harvard.edu/code/EigenPrism.R}.
 #'
-#' @examples \dontrun{EigenPrismFull(y,x)}
+#' @examples \dontrun{RVep(y,x)}
 #'
 #' @export
 #'

@@ -21,6 +21,7 @@ Collate:
     'RVls.R'
     'RVmle.R'
     'RVsd.R'
+    'RVsda.R'
     'Simulation.R'
     'utils.R'
 Depends: 

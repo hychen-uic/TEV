@@ -25,7 +25,7 @@ For \eqn{n>p}, the estimate is obtained by least-square approach, and the confid
 are obtained by inverting the chisquare test.
 }
 \examples{
-\dontrun{EigenPrismFull(y,x)}
+\dontrun{RVep(y,x)}
 
 }
 \references{
