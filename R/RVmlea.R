@@ -23,7 +23,7 @@
 #' @export
 #'
 
-RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-5){
+RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -54,25 +54,26 @@ RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-5){
     den=sum(Wev*(Mev-1))
   }
   r2=min(1,max(0,(num+com)/(den+com))) # initial value
-  sy2=t(y)%*%chol2inv(chol((r2/(1-r2))*x%*%t(x)/p+diag(rep(1,n))))%*%y/(1-r2)/n
-  sy2=as.numeric(sy2)
-  #print(c(r2,sy2))
 
+  tau=xsvd$d^2/p-1
+  dif=sum(y^2)-sum(uy^2)
   for(iter in 1: niter){
-    uy=t(xsvd$u)%*%y/sqrt(sy2)
-    if(n>p){
-      com=sum(u1^2*(Wev+1))/n-1 #negligible
-      num=sum(uy^2*(Wev+1))-sum(y^2/sy2)-sum(Wev)+n-p
-      den=sum(Wev*(Mev-1))+n-p
-    }else{
-      com=sum(u1^2*Wev)/n #negligible
-      num=sum(uy^2*Wev)-sum(Wev)
-      den=sum(Wev*(Mev-1))
+    if(n>=p){
+      num=sum(tau*uy^2/(1+r2*tau)^2)-dif/(1-r2)^2
+      num=num-((sum(uy^2/(1+r2*tau))+dif/(1-r2))/n)*(sum(tau/(1+r2*tau))-(n-p)/(1-r2))
+      den=-2*(sum(tau^2*uy^2/(1+r2*tau)^3)+dif/(1-r2)^3)
+      den=den+((sum(tau^2*uy^2/(1+r2*tau)^2)+dif/(1-r2)^2)/n)*(sum(tau/(1+r2*tau))-(n-p)/(1-r2))
+      den=den+((sum(uy^2/(1+r2*tau))+dif/(1-r2))/n)*(sum(tau^2/(1+r2*tau)^2)+(n-p)/(1-r2))
+    }else{ #No additional terms if n<=p
+      num=sum(tau*uy^2/(1+r2*tau)^2)
+      num=num-(sum(uy^2/(1+r2*tau))/n)*sum(tau/(1+r2*tau))
+      den=-2*sum(tau^2*uy^2/(1+r2*tau)^3)
+      den=den+(sum(tau^2*uy^2/(1+r2*tau)^2)/n)*sum(tau/(1+r2*tau))
+      den=den+(sum(uy^2/(1+r2*tau))/n)*sum(tau^2/(1+r2*tau)^2)
     }
-    r2=min(1,max(0,(num+com)/(den+com))) # initial value
-    sy2=t(y)%*%chol2inv(chol((r2/(1-r2))*x%*%t(x)/p+diag(rep(1,n))))%*%y/(1-r2)/n
-    sy2=as.numeric(sy2)
-    #print(c(iter,r2,sy2))
+    r2=r2-num/den
+    #print(c(iter,r2,abs(num/den)))
+    if(abs(num/den)<eps){break}
   }
 
   rho=p/n
@@ -85,9 +86,8 @@ RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-5){
     evr2=0
   }
 
-  vy=as.numeric(var(y))
-  s2=vy*r2
-  evs2=vy^2*evr2+r2^2*as.numeric(var(y^2))/n # This variance estimator is not consistent
+  s2=sdy^2*r2
+  evs2=sdy^4*evr2+r2^2*sdy^2/n # This variance estimator is not consistent
 
   len=length(alpha)
   cir2=r2+sqrt(evr2)*qnorm(c(alpha/2,1-alpha/2))

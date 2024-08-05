@@ -63,7 +63,8 @@ RVsda=function(y,x,xsup,lam=0.2){
   }
 
   r2=max(0,min(num/den,1)) # initial value
+  s2=sdy^2*r2
 
-  list(r2)
+  list(r2,s2)
 
 }

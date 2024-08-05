@@ -23,7 +23,7 @@
 #' @export
 #'
 
-RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
+RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -55,7 +55,7 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
   }
   r2=min(1,max(0,(num+com)/(den+com))) # initial value
 
-  eta2=1.0 # initial value
+  eta2=r2/(1-r2) # initial value
   if(n>=p){ #when n>p, y^t[(I+eta2*XX^t/p)^(-1)-I]y=sum_{k=1}^p (U_k^t y)^2((1+eta2*xsvd$d^2/p)^{-1}-1)
             # This means y^t(I+eta2*XX^t/p)^(-1)y=sum_{k=1}^p (U_k^t y)^2(1+eta2*xsvd$d^2/p)^{-1}
             #                                      +y^ty-sum_{k=1}^p (U_k^t y)^2
@@ -64,7 +64,6 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
     add=0
   }
   for(iter in 1: niter){
-    eta2old=eta2
     fact=1/(1+eta2*xsvd$d^2/p)
 
     num=sum(xsvd$d^2*fact^2*uy^2)/p-(sum(xsvd$d^2*fact)/p)*(sum(uy^2*fact)+add)/n
@@ -87,9 +86,8 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-5){
     evr2=0
   }
 
-  vy=as.numeric(var(y))
-  s2=vy*r2
-  evs2=vy^2*evr2+r2^2*as.numeric(var(y^2))/n # This variance estimator is not consistent
+  s2=sdy^2*r2
+  evs2=sdy^4*evr2+r2^2*sdy^2/n # This variance estimator is not consistent
 
   len=length(alpha)
   cir2=r2+sqrt(evr2)*qnorm(c(alpha/2,1-alpha/2))

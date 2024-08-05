@@ -4,7 +4,7 @@
 \alias{RVmle}
 \title{This function implement the maximum likelihood approach of Dicker and Erdogdu (2016).}
 \usage{
-RVmle(y, x, alpha = c(0.05), niter = 100, eps = 1e-05)
+RVmle(y, x, alpha = c(0.05), niter = 100, eps = 1e-06)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
