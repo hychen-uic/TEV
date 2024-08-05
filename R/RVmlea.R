@@ -77,7 +77,7 @@ RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-6){
     }
     r2=r2-factor*num/den
 
-    print(c(iter,r2,abs(num/den)))
+    print(c(iter,r2,factor,abs(num/den)))
     if(abs(num/den)<eps){break}
   }
 
