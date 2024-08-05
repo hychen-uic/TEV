@@ -35,14 +35,14 @@ RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-6){
   sdy = sd(y)
   y = (y - mean(y))/sdy
 
-  lam=0
+  r2=0.1
   xsvd=svd(x,nv=0) #nv=0 means not computing v matrix
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
   uy=t(xsvd$u)%*%y
   tau=xsvd$d^2/p-1
   dif=sum(y^2)-sum(uy^2)
-  Wev=tau/(1+lam*(tau+1))^2  #vector of eigenvalues of weight matrix
+  Wev=tau/(1+(r2/(1-r2))*(tau+1))^2  #vector of eigenvalues of weight matrix
 
   u1=t(xsvd$u)%*%rep(1,n)
   if(n>p){
