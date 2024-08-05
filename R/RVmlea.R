@@ -40,23 +40,22 @@ RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-6){
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
   uy=t(xsvd$u)%*%y
-  Mev=xsvd$d^2/p #Vector of eigenvalues of matrix XX'/p.
-  Wev=(Mev-1)/(1+lam*Mev)^2  #vector of eigenvalues of weight matrix
+  tau=xsvd$d^2/p-1
+  dif=sum(y^2)-sum(uy^2)
+  Wev=tau/(1+lam*(tau+1))^2  #vector of eigenvalues of weight matrix
 
   u1=t(xsvd$u)%*%rep(1,n)
   if(n>p){
     com=sum(u1^2*(Wev+1))/n-1 #negligible
     num=sum(uy^2*(Wev+1))-sum(y^2)-sum(Wev)+n-p
-    den=sum(Wev*(Mev-1))+n-p
+    den=sum(Wev*tau)+n-p
   }else{
     com=sum(u1^2*Wev)/n #negligible
     num=sum(uy^2*Wev)-sum(Wev)
-    den=sum(Wev*(Mev-1))
+    den=sum(Wev*tau)
   }
   r2=min(1,max(0,(num+com)/(den+com))) # initial value
 
-  tau=xsvd$d^2/p-1
-  dif=sum(y^2)-sum(uy^2)
   for(iter in 1: niter){
     if(n>=p){
       num=sum(tau*uy^2/(1+r2*tau)^2)-dif/(1-r2)^2
@@ -71,8 +70,14 @@ RVmlea=function(y,x, alpha=c(0.05),niter=50,eps=1e-6){
       den=den+(sum(tau^2*uy^2/(1+r2*tau)^2)/n)*sum(tau/(1+r2*tau))
       den=den+(sum(uy^2/(1+r2*tau))/n)*sum(tau^2/(1+r2*tau)^2)
     }
-    r2=r2-num/den
-    #print(c(iter,r2,abs(num/den)))
+
+    factor=1
+    while(r2-factor*num/den<0 | r2-factor*num/den>=1 ){
+      factor=factor/2
+    }
+    r2=r2-factor*num/den
+
+    print(c(iter,r2,abs(num/den)))
     if(abs(num/den)<eps){break}
   }
 
