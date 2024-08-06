@@ -80,7 +80,7 @@ RVmlea=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
     if(abs(num/den)<eps){break}
   }
   print("MLEa")
-  print(c(iter,factor,abs(num/den)),r2)
+  print(c(iter,factor,abs(num/den),r2))
 
   rho=p/n
   if(r2>0){
