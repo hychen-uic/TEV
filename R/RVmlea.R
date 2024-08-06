@@ -76,8 +76,8 @@ RVmlea=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
       factor=factor/2
     }
     r2=r2-factor*num/den
-
-    #print(c(iter,r2,factor,abs(num/den)))
+    print("MLEa")
+    print(c(iter,r2,factor,abs(num/den)))
     if(abs(num/den)<eps){break}
   }
 

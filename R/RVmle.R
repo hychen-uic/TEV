@@ -69,8 +69,14 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
     num=sum(xsvd$d^2*fact^2*uy^2)/p-(sum(xsvd$d^2*fact)/p)*(sum(uy^2*fact)+add)/n
     den=-2*sum(xsvd$d^4*fact^3*uy^2)/p^2+(sum(xsvd$d^2*fact^2*uy^2)/p/n)*sum(xsvd$d^2*fact)/p
         +((sum(fact*uy^2)+add)/n)*sum(uy^4*fact^2)/p^2
-    eta2=eta2-num/den
-    #print(c(iter,eta2,abs(num/den)))
+
+    factor=1
+    while(eta2-factor*num/den<0){
+      factor=factor/2
+    }
+    eta2=eta2-factor*num/den
+    print("MLE")
+    print(c(iter,eta2,abs(num/den)))
     if(abs(num/den)<eps){break}
   }
 
