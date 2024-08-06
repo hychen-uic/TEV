@@ -5,6 +5,7 @@
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
 #' @param alpha a vector of type I errors used to generate (1-alpha)confidence intervals.
+#' @param lam initial value
 #' @param niter the number of iterations for finding the signal noise ratio
 #' @param eps the convergence criterion for the iteration
 #'
@@ -23,7 +24,7 @@
 #' @export
 #'
 
-RVmlea=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
+RVmlea=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -35,14 +36,13 @@ RVmlea=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
   sdy = sd(y)
   y = (y - mean(y))/sdy
 
-  r2=0.1
   xsvd=svd(x,nv=0) #nv=0 means not computing v matrix
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
   uy=t(xsvd$u)%*%y
   tau=xsvd$d^2/p-1
   dif=sum(y^2)-sum(uy^2)
-  Wev=tau/(1+(r2/(1-r2))*(tau+1))^2  #vector of eigenvalues of weight matrix
+  Wev=tau/(1+lam*(tau+1))^2  #vector of eigenvalues of weight matrix
 
   u1=t(xsvd$u)%*%rep(1,n)
   if(n>p){
@@ -79,8 +79,8 @@ RVmlea=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
 
     if(abs(num/den)<eps){break}
   }
-  print("MLEa")
-  print(c(iter,factor,abs(num/den),r2))
+  #print("MLEa")
+  #print(c(iter,factor,abs(num/den),r2))
 
   rho=p/n
   if(r2>0){

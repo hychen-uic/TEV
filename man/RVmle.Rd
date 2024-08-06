@@ -4,7 +4,7 @@
 \alias{RVmle}
 \title{This function implement the maximum likelihood approach of Dicker and Erdogdu (2016).}
 \usage{
-RVmle(y, x, alpha = c(0.05), niter = 100, eps = 1e-06)
+RVmle(y, x, alpha = c(0.05), lam = 1, niter = 100, eps = 1e-06)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}
@@ -12,6 +12,8 @@ RVmle(y, x, alpha = c(0.05), niter = 100, eps = 1e-06)
 \item{x}{covariates: a matrix of nxp dimension.}
 
 \item{alpha}{a vector of type I errors used to generate (1-alpha)confidence intervals.}
+
+\item{lam}{initial value}
 
 \item{niter}{the number of iterations for finding the signal noise ratio}
 

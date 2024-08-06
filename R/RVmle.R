@@ -5,6 +5,7 @@
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
 #' @param alpha a vector of type I errors used to generate (1-alpha)confidence intervals.
+#' @param lam initial value
 #' @param niter the number of iterations for finding the signal noise ratio
 #' @param eps the convergence criterion for the iteration
 #'
@@ -23,7 +24,7 @@
 #' @export
 #'
 
-RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
+RVmle=function(y,x, alpha=c(0.05),lam=1.0,niter=100,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -35,7 +36,6 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
   sdy = sd(y)
   y = (y - mean(y))/sdy
 
-  lam=0.1
   xsvd=svd(x,nv=0) #nv=0 means not computing v matrix
   # singular value decomposition
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
@@ -79,8 +79,8 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
 
     if(abs(num/den)<eps){break}
   }
-  print("MLE")
-  print(c(iter,factor,abs(num/den),eta2))
+  #print("MLE")
+  #print(c(iter,factor,abs(num/den),eta2))
 
   eta2=max(0,eta2)
   r2=eta2/(1+eta2)
