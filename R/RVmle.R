@@ -63,6 +63,7 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
   }else{ #No additional terms if n<=p
     add=0
   }
+
   for(iter in 1: niter){
     fact=1/(1+eta2*xsvd$d^2/p)
 
@@ -75,10 +76,11 @@ RVmle=function(y,x, alpha=c(0.05),niter=100,eps=1e-6){
       factor=factor/2
     }
     eta2=eta2-factor*num/den
-    print("MLE")
-    print(c(iter,eta2,abs(num/den)))
+
     if(abs(num/den)<eps){break}
   }
+  print("MLE")
+  print(c(iter,factor,abs(num/den),eta2))
 
   eta2=max(0,eta2)
   r2=eta2/(1+eta2)
