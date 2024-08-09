@@ -66,8 +66,16 @@ RVsd=function(y,x,xsup=NULL,lam=0.2,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",
   #X=as.matrix(X)
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
   r2=lam/(1+lam) #initial value
+  IM=chol2inv(chol(diag(rep(1,n))+lam*M))
+  W=IM%*%(M-diag(rep(1,n)))%*%IM
+  den=sum(diag(W%*%(M-diag(rep(1,n)))))
+  num=t(y)%*%W%*%y-sum(diag(W))
+  r2=as.numeric(num/den)
+  r2=min(1,max(0,r2))
+
+  if(niter>0){
   for(ii in 1:niter){
-    if(ii>1 & r2<1){lam=r2/(1-r2)}
+    if(r2<1){lam=r2/(1-r2)}
 
     IM=chol2inv(chol(diag(rep(1,n))+lam*M))
     W=IM%*%(M-diag(rep(1,n)))%*%IM
@@ -77,7 +85,8 @@ RVsd=function(y,x,xsup=NULL,lam=0.2,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",
 
     r2=as.numeric(num/den)
     r2=min(1,max(0,r2))
-  }
+  }}
+
   vy=sdy*sdy
   s2=vy*r2  #explained variation
 
