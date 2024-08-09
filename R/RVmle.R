@@ -5,7 +5,7 @@
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
 #' @param alpha a vector of type I errors used to generate (1-alpha)confidence intervals.
-#' @param lam initial value
+#' @param eta2 initial value
 #' @param niter the number of iterations for finding the signal noise ratio
 #' @param eps the convergence criterion for the iteration
 #'
@@ -24,7 +24,7 @@
 #' @export
 #'
 
-RVmle=function(y,x, alpha=c(0.05),lam=1.0,niter=100,eps=1e-6){
+RVmle=function(y,x, alpha=c(0.05),eta2=1.0,niter=100,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -41,7 +41,7 @@ RVmle=function(y,x, alpha=c(0.05),lam=1.0,niter=100,eps=1e-6){
   # $u%*%diag($d)%*%t($v)=X, t($u)%*%$u=I, t($v)%*%$v=I
   uy=t(xsvd$u)%*%y
   Mev=xsvd$d^2/p #Vector of eigenvalues of matrix XX'/p.
-  Wev=(Mev-1)/(1+lam*Mev)^2  #vector of eigenvalues of weight matrix
+  Wev=(Mev-1)/(1+eta2*Mev)^2  #vector of eigenvalues of weight matrix
 
   u1=t(xsvd$u)%*%rep(1,n)
   if(n>p){

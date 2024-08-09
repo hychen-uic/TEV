@@ -65,8 +65,10 @@ RVee=function(y,x,lam=0.1,niter=0,alpha=c(0.05)){
     num=sum(uy^2*Wev)-sum(Wev)
     den=sum(Wev*(Mev-1))
   }
-  r2=min(1,max(0,(num+com)/(den+com))) # initial value
+  r2=(num+com)/(den+com)
+  #r2=min(1,max(0,r2)) # initial value
   #print(c(r2,num/den))
+
 
   if(niter>0){
   for(ii in 1:niter){ #iteration to update lambda
@@ -86,7 +88,7 @@ RVee=function(y,x,lam=0.1,niter=0,alpha=c(0.05)){
     }
 
     r2=(num+com)/(den+com)
-    r2=min(1,max(0,r2)) #The proportion of explained variation
+   # r2=min(1,max(0,r2)) #The proportion of explained variation
   }}
 
   vy=sdy*sdy
