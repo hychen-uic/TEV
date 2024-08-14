@@ -29,7 +29,7 @@ NULL
 #' for Assessing Explained Variation of a Health Outcome by Mixture of Exposures. International Journal
 #' of Environmental Research and Public Health.
 #'
-#' @examples \dontrun{RVee(y,x,lam=0.1,niter=3)}
+#' @examples \dontrun{RVee(y,x)}
 #'
 #'@export
 RVee=function(y,x,lam=0.1,niter=0,alpha=c(0.05)){

@@ -8,7 +8,7 @@ RVsd(
   y,
   x,
   xsup = NULL,
-  lam = 0.2,
+  lam = 0.1,
   niter = 1,
   alpha = c(0.05),
   KV = rep(0, 3),
@@ -51,7 +51,7 @@ The estimation approach does not assume independent covariates and can deal
 with the case \eqn{n\le p}. But require the sample sizes of x and X combined be greater than p.
 }
 \examples{
-\dontrun{RVsd(y,x,xsup,lam=0.2,niter=3,alpha=c(0.1,0.05,0.01),KV=rep(0,3),know="no",nrep=1000)}
+\dontrun{RVsd(y,x,xsup,lam=0.1,niter=3,alpha=c(0.1,0.05,0.01),KV=rep(0,3),know="no",nrep=1000)}
 
 
 }

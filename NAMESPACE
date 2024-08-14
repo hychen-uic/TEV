@@ -3,6 +3,7 @@
 export(CHIVE)
 export(EigenPrism)
 export(GRE)
+export(R2GCTA)
 export(RVee)
 export(RVep)
 export(RVls)

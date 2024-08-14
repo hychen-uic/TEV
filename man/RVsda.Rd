@@ -4,7 +4,7 @@
 \alias{RVsda}
 \title{Estimating equation approach to the proportion of the explained variation with supplementary covariate data}
 \usage{
-RVsda(y, x, xsup, lam = 0.2)
+RVsda(y, x, xsup, lam = 0.1)
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}

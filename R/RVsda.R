@@ -27,7 +27,7 @@
 #'
 #'
 #' @export
-RVsda=function(y,x,xsup,lam=0.2){
+RVsda=function(y,x,xsup,lam=0.1){
 
   n=dim(x)[1]
   p=dim(x)[2]
