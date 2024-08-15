@@ -8,7 +8,7 @@ RVsd(
   y,
   x,
   xsup = NULL,
-  lam = 0.1,
+  lam = 1,
   niter = 1,
   alpha = c(0.05),
   KV = rep(0, 3),

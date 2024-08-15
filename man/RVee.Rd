@@ -5,7 +5,7 @@
 \title{Estimating equation approach to the proportion of the explained variation,
 and the explained variation.}
 \usage{
-RVee(y, x, lam = 0.1, niter = 0, alpha = c(0.05))
+RVee(y, x, lam = 1, niter = 0, alpha = c(0.05))
 }
 \arguments{
 \item{y}{outcome: a vector of length n.}

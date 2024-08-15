@@ -23,8 +23,6 @@ Collate:
     'RVmle.R'
     'RVmlea.R'
     'RVsd.R'
-    'RVsda.R'
-    'RVsdb.R'
     'Simulation.R'
     'utils.R'
 Depends: 

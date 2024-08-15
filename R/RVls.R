@@ -23,7 +23,7 @@
 #' @examples \dontrun{RVls(y,x)}
 #'
 #' @export
-RVls=function(y,x,lam=0.1, alpha=c(0.05) ){
+RVls=function(y,x,lam=1, alpha=c(0.05) ){
 
   # y==outcome
   # x==covariates

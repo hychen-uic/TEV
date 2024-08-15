@@ -32,7 +32,7 @@ NULL
 #' @examples \dontrun{RVee(y,x)}
 #'
 #'@export
-RVee=function(y,x,lam=0.1,niter=0,alpha=c(0.05)){
+RVee=function(y,x,lam=1,niter=0,alpha=c(0.05)){
 
   n=dim(x)[1]
   p=dim(x)[2]
