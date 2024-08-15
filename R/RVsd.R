@@ -65,9 +65,10 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
   #x=as.matrix(x)
   #X=as.matrix(X)
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
+  Msvd=svd(M,nv=0)
   r2=lam/(1+lam) #initial value
 
-  IM=chol2inv(chol(diag(rep(1,n))+lam*M))
+  IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u) #chol2inv(chol(diag(rep(1,n))+lam*M))
   W=IM%*%(M-diag(rep(1,n)))%*%IM
   den=sum(diag(W%*%(M-diag(rep(1,n)))))
   num=t(y)%*%W%*%y-sum(diag(W))
@@ -78,7 +79,8 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
   for(ii in 1:niter){
     if(r2<1){lam=r2/(1-r2)}else{lam=1}
 
-    IM=chol2inv(chol(diag(rep(1,n))+lam*M))
+    #IM=chol2inv(chol(diag(rep(1,n))+lam*M))
+    IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u)
     W=IM%*%(M-diag(rep(1,n)))%*%IM
     den=sum(diag(W%*%(M-diag(rep(1,n)))))
     num=t(y)%*%W%*%y-sum(diag(W))
@@ -105,7 +107,9 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
       Z=matrix(rnorm(N*p),ncol=p)
       Z=zscale(Z)[[1]]
       SM=z%*%chol2inv(chol(t(z)%*%z+t(Z)%*%Z))%*%t(z)*(n+N)/p
-      ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
+      SMsvd=svd(SM,nv=0)
+      ISM=SMsvd$u%*%diag(1/(1+lam*SMsvd$d))%*%t(SMsvd$u)
+      #ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
       SW=ISM%*%(SM-diag(rep(1,n)))%*%ISM
       SWzu=SW%*%zu
 
