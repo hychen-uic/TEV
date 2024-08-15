@@ -56,7 +56,7 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
     mu=mean(XX[,j])
     sdx=sd(XX[,j])
     XX[,j]=(XX[,j]-mu)/sdx
-    x[,j]=(x[,j]-mean(x[,j]))/sd(x[,j])
+    x[,j]=(x[,j]-mu)/sdx
   }
   sdy=sd(y)
   y=(y-mean(y))/sdy
