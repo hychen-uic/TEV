@@ -11,7 +11,7 @@ RVsd(
   lam = 1,
   niter = 1,
   alpha = c(0.05),
-  KV = rep(0, 3),
+  VKV = array(0, c(3, 100)),
   know = "no",
   nrep = 1000
 )
@@ -30,7 +30,8 @@ when xsup=NULL and n>p, it performs least-square with the simulation variance es
 
 \item{alpha}{a vector of type I errors used to generate (1-alpha)confidence intervals.}
 
-\item{KV, }{the first component of the vector KV=kappa_1, the second=kappa_2, the third=kappa_3}
+\item{VKV, }{a matrix with 3 rows and 100 collums corresponding to different lambda values.
+the first component of the row vector KV=kappa_1, the second=kappa_2, the third=kappa_3}
 
 \item{know}{if KV is known, options include "yes" and "no". Default is "no".}
 
