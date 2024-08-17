@@ -112,18 +112,19 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(3,100)),kn
       Z=zscale(Z)[[1]]
       SM=z%*%chol2inv(chol(t(z)%*%z+t(Z)%*%Z))%*%t(z)*(n+N)/p
       SMsvd=svd(SM,nv=0)
+      QZU=t(SMsvd$u)%*%zu
 
       #ISM=SMsvd$u%*%diag(1/(1+lam*SMsvd$d))%*%t(SMsvd$u)
       #ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
       #SW=ISM%*%(SM-diag(rep(1,n)))%*%ISM
-      SW=SMsvd$u%*%diag((SMsvd$d-1)/(1+lam*SMsvd$d)^2)%*%t(SMsvd$u)
-      SWzu=SW%*%zu
+      #SW=SMsvd$u%*%diag((SMsvd$d-1)/(1+lam*SMsvd$d)^2)%*%t(SMsvd$u)
+      #SWzu=SW%*%zu
 
       SUZZU[j]=sum(zu^2)
-      SUZWZU[j]=t(zu)%*%SW%*%zu
-      SUZWWZU[j]=t(SWzu)%*%SWzu
+      SUZWZU[j]=sum(QZU^2*(SMsvd$d-1)/(1+lam*SMsvd$d)^2)#t(zu)%*%SW%*%zu
+      SUZWWZU[j]=sum(QZU^2*(SMsvd$d-1)^2/(1+lam*SMsvd$d)^4)#t(SWzu)%*%SWzu
       #STRW[j]=sum(diag(SW))/n
-      STRWM[j]=sum(diag(SW%*%SM))/n
+      STRWM[j]=sum((SMsvd$d-1)*SMsvd$d/(1+lam*SMsvd$d)^2)/n
       }
     K1=var(SUZWZU-STRWM)
     K2=cov(SUZWZU-STRWM,SUZZU-n)
