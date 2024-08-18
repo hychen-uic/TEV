@@ -23,6 +23,7 @@ Collate:
     'RVmle.R'
     'RVmlea.R'
     'RVsd.R'
+    'RVsda.R'
     'utils.R'
 Depends: 
     R (>= 2.10)
