@@ -33,7 +33,7 @@
 #'
 #'
 #' @export
-RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(3,100)),know="no",nrep=1000){
+RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(4,100)),know="no",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -129,10 +129,11 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(3,100)),kn
     K1=var(SUZWZU-STRWM)
     K2=cov(SUZWZU-STRWM,SUZZU-n)
     K3=var(SUZZU-n)
+    K4=sum(SUZWWZU)
   }else{
     kn=dim(VKV)[2]
     for(k in 1:kn){
-      if(r2<=(k-1)/kn){K1=VKV[1,k];K2=VKV[2,k];K3=VKV[3,k];break}
+      if(r2<=(k-1)/kn){K1=VKV[1,k];K2=VKV[2,k];K3=VKV[3,k];K4=VKV[4,k];break}
     } # determine from the pre-calculated sequence.
   }
 
@@ -142,12 +143,13 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(3,100)),kn
 
   #W2=W%*%W
   B=sum((Msvd$d-1)^2*Msvd$d/(1+lam*Msvd$d)^4) #sum(diag(W2%*%M))
-  S=sum((Msvd$d-1)/(1+lam*Msvd$d)^2) #sum(diag(W2))
+  S=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^4) #sum(diag(W2))
   T=sum(diag(Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u))^2) #sum(diag(W)^2)
 
   # Variance under normal random error
   vestr2n=r2^2*(K1-2*DELTA*K2+DELTA^2*K3)
-  vestr2n=vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
+  vestr2n=vestr2n+4*r2*(1-r2)*(K4-2*n*D1*DELTA+n*DELTA^2)
+           #vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
   vestr2n=vestr2n+2*(1-r2)^2*(S-2*DELTA*D2*n+n*DELTA^2)
 
   vests2n=r2^2*(K1-2*D2*K2+D2^2*K3)
