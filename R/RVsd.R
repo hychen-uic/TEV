@@ -71,7 +71,7 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
   uy=t(Msvd$u)%*%y
   #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u) #chol2inv(chol(diag(rep(1,n))+lam*M))
   #W=IM%*%(M-diag(rep(1,n)))%*%IM
-  #W= Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u)
+  W= Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u)
   den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
   num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
   r2=as.numeric(num/den)
