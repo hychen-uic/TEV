@@ -11,7 +11,7 @@
 #'             when xsup=NULL and n>p, it performs least-square with the simulation variance estimate
 #' @param lam parameter for altering the weighting matrix.
 #' @param niter number of iterations for updating lam.
-#' @param VKV, a matrix with 3 rows and 100 collums corresponding to different lambda values.
+#' @param KV, a matrix with 3 rows and 100 collums corresponding to different lambda values.
 #'             the first component of the row vector KV=kappa_1, the second=kappa_2, the third=kappa_3
 #' @param know if KV is known, options include "yes" and "no". Default is "no".
 #' @param nrep Monte Carlo sample size for computinging KV.
@@ -33,7 +33,7 @@
 #'
 #'
 #' @export
-RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(4,100)),know="no",nrep=1000){
+RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -81,13 +81,13 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(4,100)),kn
   for(ii in 1:niter){
     if(r2<1){lam=r2/(1-r2)}else{lam=1}
 
-    #IM=chol2inv(chol(diag(rep(1,n))+lam*M))
+    IM=chol2inv(chol(diag(rep(1,n))+lam*M))
     #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u)
-    #W=IM%*%(M-diag(rep(1,n)))%*%IM
-    #den=sum(diag(W%*%(M-diag(rep(1,n)))))
-    #num=t(y)%*%W%*%y-sum(diag(W))
-    den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
-    num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
+    W=IM%*%(M-diag(rep(1,n)))%*%IM
+    den=sum(diag(W%*%(M-diag(rep(1,n)))))
+    num=t(y)%*%W%*%y-sum(diag(W))
+    #den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
+    #num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
     r2=as.numeric(num/den)
     r2=min(1,max(0,r2))
   }}
@@ -111,44 +111,37 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),VKV=array(0,c(4,100)),kn
       Z=matrix(rnorm(N*p),ncol=p)
       Z=zscale(Z)[[1]]
       SM=z%*%chol2inv(chol(t(z)%*%z+t(Z)%*%Z))%*%t(z)*(n+N)/p
-      SMsvd=svd(SM,nv=0)
-      QZU=t(SMsvd$u)%*%zu
-
-      #ISM=SMsvd$u%*%diag(1/(1+lam*SMsvd$d))%*%t(SMsvd$u)
-      #ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
-      #SW=ISM%*%(SM-diag(rep(1,n)))%*%ISM
-      #SW=SMsvd$u%*%diag((SMsvd$d-1)/(1+lam*SMsvd$d)^2)%*%t(SMsvd$u)
-      #SWzu=SW%*%zu
+      ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
+      SW=ISM%*%(SM-diag(rep(1,n)))%*%ISM
+      SWzu=SW%*%zu
 
       SUZZU[j]=sum(zu^2)
-      SUZWZU[j]=sum(QZU^2*(SMsvd$d-1)/(1+lam*SMsvd$d)^2)#t(zu)%*%SW%*%zu
-      SUZWWZU[j]=sum(QZU^2*(SMsvd$d-1)^2/(1+lam*SMsvd$d)^4)#t(SWzu)%*%SWzu
+      SUZWZU[j]=t(zu)%*%SW%*%zu
+      SUZWWZU[j]=t(SWzu)%*%SWzu
       #STRW[j]=sum(diag(SW))/n
-      STRWM[j]=sum((SMsvd$d-1)*SMsvd$d/(1+lam*SMsvd$d)^2)/n
-      }
+      STRWM[j]=sum(diag(SW%*%SM))/n
+    }
     K1=var(SUZWZU-STRWM)
     K2=cov(SUZWZU-STRWM,SUZZU-n)
     K3=var(SUZZU-n)
-    K4=sum(SUZWWZU)
   }else{
-    kn=dim(VKV)[2]
-    for(k in 1:kn){
-      if(r2<=(k-1)/kn){K1=VKV[1,k];K2=VKV[2,k];K3=VKV[3,k];K4=VKV[4,k];break}
-    } # determine from the pre-calculated sequence.
+    K1=KV[1];K2=KV[2];K3=KV[3]
   }
 
-  D1=sum((Msvd$d-1)*Msvd$d/(1+lam*Msvd$d)^2) #sum(diag(W%*%M))/n
-  D2=sum((Msvd$d-1)/(1+lam*Msvd$d)^2) #sum(diag(W))/n
+  # Variance under normal random error
+
+  D1=sum(diag(W%*%M))/n
+  D2=sum(diag(W))/n
   DELTA=r2*D1+(1-r2)*D2
 
-  #W2=W%*%W
-  B=sum((Msvd$d-1)^2*Msvd$d/(1+lam*Msvd$d)^4) #sum(diag(W2%*%M))
-  S=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^4) #sum(diag(W2))
-  T=sum(diag(Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u))^2) #sum(diag(W)^2)
+  W2=W%*%W
+  B=sum(diag(W2%*%M))
+  S=sum(diag(W2))
+  T=sum(diag(W)^2)
 
   # Variance under normal random error
   vestr2n=r2^2*(K1-2*DELTA*K2+DELTA^2*K3)
-  vestr2n=vestr2n+4*r2*(1-r2)*(K4-2*n*D1*DELTA+n*DELTA^2)
+  vestr2n=vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
            #vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
   vestr2n=vestr2n+2*(1-r2)^2*(S-2*DELTA*D2*n+n*DELTA^2)
 
