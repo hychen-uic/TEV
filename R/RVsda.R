@@ -122,8 +122,10 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   }else{
     kn=dim(KV)[2]
     for(k in 1:kn){
+      if(lam>(kn-1)){K1=KV[1,kn];K2=KV[2,kn];K3=KV[3,kn];break} #very large lam
       if(lam<=(k-1)/(kn-k+1)){K1=KV[1,k];K2=KV[2,k];K3=KV[3,k];break}
     }
+
   }
 
   # Variance under normal random error
