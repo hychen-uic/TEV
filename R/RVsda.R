@@ -79,7 +79,6 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   if(niter>0){
   for(ii in 1:niter){
     if(r2<1){lam=r2/(1-r2)}else{lam=1}
-
     #IM=chol2inv(chol(diag(rep(1,n))+lam*M))
     #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u)
     #W=IM%*%(M-diag(rep(1,n)))%*%IM
@@ -130,7 +129,7 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   }else{
     kn=dim(KV)[2]
     for(k in 1:kn){
-      if(r2<=(k-1)/(kn-k+1)){K1=KV[1,k];K2=KV[2,k];K3=KV[3,k];break}
+      if(lam<=(k-1)/(kn-k+1)){K1=KV[1,k];K2=KV[2,k];K3=KV[3,k];break}
     }
   }
 

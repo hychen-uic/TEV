@@ -99,7 +99,7 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
   if(know!='yes'){ # calculating VA and EB by simulation
     u=rep(1,p)/sqrt(p)
     SUZWZU=rep(0,nrep)
-    SUZWWZU=rep(0,nrep)
+    #SUZWWZU=rep(0,nrep)
     SUZZU=rep(0,nrep)
     STRWM=rep(0,nrep)
     #STRW=rep(0,nrep)
@@ -117,7 +117,7 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
 
       SUZZU[j]=sum(zu^2)
       SUZWZU[j]=t(zu)%*%SW%*%zu
-      SUZWWZU[j]=t(SWzu)%*%SWzu
+      #SUZWWZU[j]=t(SWzu)%*%SWzu
       #STRW[j]=sum(diag(SW))/n
       STRWM[j]=sum(diag(SW%*%SM))/n
     }
