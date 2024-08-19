@@ -33,7 +33,7 @@
 #'
 #'
 #' @export
-RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),know="no",nrep=1000){
+RVsdold=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -63,12 +63,15 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   y=(y-mean(y))/sdy
 
   #2. Sigular value decomposition
+  #x=as.matrix(x)
+  #X=as.matrix(X)
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
   Msvd=svd(M,nv=0)
+  #r2=lam/(1+lam) #initial value
   uy=t(Msvd$u)%*%y
-
-  #den=sum(diag(W%*%(M-diag(rep(1,n)))))
-  #num=t(y)%*%W%*%y-sum(diag(W))
+  #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u) #chol2inv(chol(diag(rep(1,n))+lam*M))
+  #W=IM%*%(M-diag(rep(1,n)))%*%IM
+  W= Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u)
   den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
   num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
   r2=as.numeric(num/den)
@@ -77,8 +80,14 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   if(niter>0){
   for(ii in 1:niter){
     if(r2<1){lam=r2/(1-r2)}else{lam=1}
-    num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
-    den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
+
+    IM=chol2inv(chol(diag(rep(1,n))+lam*M))
+    #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u)
+    W=IM%*%(M-diag(rep(1,n)))%*%IM
+    den=sum(diag(W%*%(M-diag(rep(1,n)))))
+    num=t(y)%*%W%*%y-sum(diag(W))
+    #den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
+    #num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
     r2=as.numeric(num/den)
     r2=min(1,max(0,r2))
   }}
@@ -89,10 +98,10 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   #4. Estimate the variance
   if(know!='yes'){ # calculating VA and EB by simulation
     u=rep(1,p)/sqrt(p)
+    SUZWZU=rep(0,nrep)
+    #SUZWWZU=rep(0,nrep)
     SUZZU=rep(0,nrep)
-    SUZWZU= rep(0,nrep)
-    #SUZWWZU= rep(0,nrep)
-    STRWM= rep(0,nrep)
+    STRWM=rep(0,nrep)
 
     for(j in 1:nrep){
       z=matrix(rnorm(n*p),ncol=p)
@@ -101,51 +110,41 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
       Z=matrix(rnorm(N*p),ncol=p)
       Z=zscale(Z)[[1]]
       SM=z%*%chol2inv(chol(t(z)%*%z+t(Z)%*%Z))%*%t(z)*(n+N)/p
-      SMsvd=svd(SM,nv=0)
-      QZU=t(SMsvd$u)%*%zu
+      ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
+      SW=ISM%*%(SM-diag(rep(1,n)))%*%ISM
+      SWzu=SW%*%zu
 
-      SUZZU[j] = sum(zu^2)
-      nr2=dim(KV)[2]
-      for(k in 1:nr2){
-        lam=(k-1)/(nr2-k+1)
-        SUZWZU[j,k] =sum(QZU^2*(SMsvd$d-1)/(1+lam*SMsvd$d)^2)
-        #SUZWWZU[j,k] =sum(QZU^2*(SMsvd$d-1)^2/(1+lam*SMsvd$d)^4)
-        STRWM[j,k] = sum(SMsvd$d*(SMsvd$d-1)/(1+lam*SMsvd$d)^2)/n
-        # sum(diag(SW %*% SM))/n # is it M or ZZ^t/p?
-      }
+      SUZZU[j]=sum(zu^2)
+      SUZWZU[j]=t(zu)%*%SW%*%zu
+      #SUZWWZU[j]=t(SWzu)%*%SWzu
+      #STRW[j]=sum(diag(SW))/n
+      STRWM[j]=sum(diag(SW%*%SM))/n
     }
-
-    K1 = var(SUZZU - n)
-    K2 = var(SUZWZU - STRWM)
-    K3 = cov(SUZWZU - STRWM, SUZZU - n)
-
+    K1=var(SUZWZU-STRWM)
+    K2=cov(SUZWZU-STRWM,SUZZU-n)
+    K3=var(SUZZU-n)
   }else{
-    kn=dim(KV)[2]
-    K1=KV[1,kn];K2=KV[2,kn];K3=KV[3,kn] # set initial values at the maximum r2
-    for(k in 1:kn){
-      if(lam<=(k-1)/(kn-k+1)){K1=KV[1,k];K2=KV[2,k];K3=KV[3,k];break}
-    }
-
+    K1=KV[1];K2=KV[2];K3=KV[3]
   }
 
   # Variance under normal random error
 
-  D1=sum(Msvd$d*(Msvd$d-1)/(1+lam*Msvd$d)^2)/n #sum(diag(W%*%M))/n
-  D2=sum((Msvd$d-1)/(1+lam*Msvd$d)^2)/n #sum(diag(W))/n
+  D1=sum(diag(W%*%M))/n
+  D2=sum(diag(W))/n
   DELTA=r2*D1+(1-r2)*D2
 
-  W= Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u)
-  #W2=W%*%W
-  B=sum(Msvd$d*(Msvd$d-1)^2/(1+lam*Msvd$d)^4) #sum(diag(W2%*%M))
-  S=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^4) #sum(diag(W2))
+  W2=W%*%W
+  B=sum(diag(W2%*%M))
+  S=sum(diag(W2))
   T=sum(diag(W)^2)
 
   # Variance under normal random error
-  vestr2n=r2^2*(K2-2*DELTA*K3+DELTA^2*K1)
+  vestr2n=r2^2*(K1-2*DELTA*K2+DELTA^2*K3)
   vestr2n=vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
+           #vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
   vestr2n=vestr2n+2*(1-r2)^2*(S-2*DELTA*D2*n+n*DELTA^2)
 
-  vests2n=r2^2*(K2-2*D2*K3+D2^2*K1)
+  vests2n=r2^2*(K1-2*D2*K2+D2^2*K3)
   vests2n=vests2n+4*r2*(1-r2)*(B-2*n*D1*D2+n*D2^2)
   vests2n=vests2n+2*(1-r2)^2*(S-D2^2*n)
   vests2n=vests2n*vy^2

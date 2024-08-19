@@ -11,7 +11,7 @@ RVsd(
   lam = 1,
   niter = 1,
   alpha = c(0.05),
-  KV = rep(0, 3),
+  KV = array(0, c(3, 100)),
   know = "no",
   nrep = 1000
 )
