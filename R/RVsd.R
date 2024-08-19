@@ -67,7 +67,7 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
   #X=as.matrix(X)
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
   Msvd=svd(M,nv=0)
-  r2=lam/(1+lam) #initial value
+  #r2=lam/(1+lam) #initial value
   uy=t(Msvd$u)%*%y
   #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u) #chol2inv(chol(diag(rep(1,n))+lam*M))
   #W=IM%*%(M-diag(rep(1,n)))%*%IM

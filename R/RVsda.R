@@ -65,7 +65,7 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   #2. Sigular value decomposition
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
   Msvd=svd(M,nv=0)
-  r2=lam/(1+lam) #initial value
+  #r2=lam/(1+lam) #initial value
   uy=t(Msvd$u)%*%y
 
   #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u) #chol2inv(chol(diag(rep(1,n))+lam*M))
@@ -130,7 +130,7 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   }else{
     kn=dim(KV)[2]
     for(k in 1:kn){
-      if(r2<=(k-1)/(nr2-k+1)){K1=KV[1,k];K2=KV[2,k];K3=KV[3,k];break}
+      if(r2<=(k-1)/(kn-k+1)){K1=KV[1,k];K2=KV[2,k];K3=KV[3,k];break}
     }
   }
 
@@ -148,7 +148,6 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   # Variance under normal random error
   vestr2n=r2^2*(K2-2*DELTA*K3+DELTA^2*K1)
   vestr2n=vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
-           #vestr2n+4*r2*(1-r2)*(B-2*n*D1*DELTA+n*DELTA^2)
   vestr2n=vestr2n+2*(1-r2)^2*(S-2*DELTA*D2*n+n*DELTA^2)
 
   vests2n=r2^2*(K2-2*D2*K3+D2^2*K1)
