@@ -102,7 +102,6 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=rep(0,3),know="no",nr
     #SUZWWZU=rep(0,nrep)
     SUZZU=rep(0,nrep)
     STRWM=rep(0,nrep)
-    #STRW=rep(0,nrep)
 
     for(j in 1:nrep){
       z=matrix(rnorm(n*p),ncol=p)

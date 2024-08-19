@@ -65,12 +65,10 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   #2. Sigular value decomposition
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
   Msvd=svd(M,nv=0)
-  #r2=lam/(1+lam) #initial value
   uy=t(Msvd$u)%*%y
 
-  #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u) #chol2inv(chol(diag(rep(1,n))+lam*M))
-  #W=IM%*%(M-diag(rep(1,n)))%*%IM
-  W= Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u)
+  #den=sum(diag(W%*%(M-diag(rep(1,n)))))
+  #num=t(y)%*%W%*%y-sum(diag(W))
   den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
   num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
   r2=as.numeric(num/den)
@@ -79,11 +77,6 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
   if(niter>0){
   for(ii in 1:niter){
     if(r2<1){lam=r2/(1-r2)}else{lam=1}
-    #IM=chol2inv(chol(diag(rep(1,n))+lam*M))
-    #IM= Msvd$u%*%diag(1/(1+lam*Msvd$d))%*%t(Msvd$u)
-    #W=IM%*%(M-diag(rep(1,n)))%*%IM
-    #den=sum(diag(W%*%(M-diag(rep(1,n)))))
-    #num=t(y)%*%W%*%y-sum(diag(W))
     num=sum((uy^2-1)*(Msvd$d-1)/(1+lam*Msvd$d)^2)
     den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)
     r2=as.numeric(num/den)
@@ -135,10 +128,11 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
 
   # Variance under normal random error
 
-  D1=sum(Msvd$d*(Msvd$d-1)/(1+lam*Msvd$d)^2) #sum(diag(W%*%M))/n
-  D2=sum((Msvd$d-1)/(1+lam*Msvd$d)^2) #sum(diag(W))/n
+  D1=sum(Msvd$d*(Msvd$d-1)/(1+lam*Msvd$d)^2)/n #sum(diag(W%*%M))/n
+  D2=sum((Msvd$d-1)/(1+lam*Msvd$d)^2)/n #sum(diag(W))/n
   DELTA=r2*D1+(1-r2)*D2
 
+  W= Msvd$u%*%diag((Msvd$d-1)/(1+lam*Msvd$d)^2)%*%t(Msvd$u)
   #W2=W%*%W
   B=sum(Msvd$d*(Msvd$d-1)^2/(1+lam*Msvd$d)^4) #sum(diag(W2%*%M))
   S=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^4) #sum(diag(W2))
