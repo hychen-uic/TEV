@@ -64,9 +64,10 @@ RVsda=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kn
 
   #2. Sigular value decomposition
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
+print("here1")
   Msvd=svd(M,nv=0)
   uy=t(Msvd$u)%*%y
-
+print("here2")
   #den=sum(diag(W%*%(M-diag(rep(1,n)))))
   #num=t(y)%*%W%*%y-sum(diag(W))
   den=sum((Msvd$d-1)^2/(1+lam*Msvd$d)^2)

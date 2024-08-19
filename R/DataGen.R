@@ -199,8 +199,8 @@ sqrtpdm=function(corr){
 trueR2=function(nrep,p,beta,xsig,errsig,powx,powy,sd){
 
   xy=makedat(nrep,p,beta,xsig,errsig,powx,powy,sd)
-  s2=var(xy[[1]]%*%beta)
-  r2=s2/var(xy[[2]])
+  s2=as.numeric(var(xy[[1]]%*%beta))
+  r2=as.numeric(s2/var(xy[[2]]))
 
   list(r2,s2)
 }
