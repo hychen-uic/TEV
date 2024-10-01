@@ -10,6 +10,7 @@
 #' @param xsup supplementary covariates: a matrix of Nxp dimension.
 #'             when xsup=NULL and n>p, it performs least-square with the simulation variance estimate
 #' @param lam parameter for altering the weighting matrix.
+#' @param delta parameter controling the weight for the supplementary data in matrix inversion.
 #' @param niter number of iterations for updating lam.
 #' @param KV, a matrix with 3 rows and 100 collums corresponding to different lambda values.
 #'             the first component of the row vector KV=kappa_1, the second=kappa_2, the third=kappa_3
@@ -33,7 +34,7 @@
 #'
 #'
 #' @export
-RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),know="no",nrep=1000){
+RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),delta=1,KV=array(0,c(3,100)),know="no",nrep=1000){
 
   n=dim(x)[1]
   p=dim(x)[2]
@@ -59,11 +60,12 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kno
     XX[,j]=(XX[,j]-mu)/sdx
     x[,j]=(x[,j]-mu)/sdx
   }
+  XX[(n+1):(n+N),]=delta*XX[(n+1):(n+N),] # control the amount of supplementary data
   sdy=sd(y)
   y=(y-mean(y))/sdy
 
   #2. Sigular value decomposition
-  M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N)/p
+  M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N*delta)/p
   Msvd=svd(M,nv=0)
   uy=t(Msvd$u)%*%y
 
@@ -100,7 +102,7 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),KV=array(0,c(3,100)),kno
       zu=z%*%u
       Z=matrix(rnorm(N*p),ncol=p)
       Z=zscale(Z)[[1]]
-      SM=z%*%chol2inv(chol(t(z)%*%z+t(Z)%*%Z))%*%t(z)*(n+N)/p
+      SM=z%*%chol2inv(chol(t(z)%*%z+delta*t(Z)%*%Z))%*%t(z)*(n+N*delta)/p
       SMsvd=svd(SM,nv=0)
       QZU=t(SMsvd$u)%*%zu
 
