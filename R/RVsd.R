@@ -61,8 +61,10 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),delta=1,KV=array(0,c(3,1
     x[,j]=(x[,j]-mu)/sdx
   }
   XX[(n+1):(n+N),]=sqrt(delta)*XX[(n+1):(n+N),] # control the amount of supplementary data
+
   sdy=sd(y)
   y=(y-mean(y))/sdy
+
 
   #2. Sigular value decomposition
   M=x%*%chol2inv(chol(t(XX)%*%XX))%*%t(x)*(n+N*delta)/p
