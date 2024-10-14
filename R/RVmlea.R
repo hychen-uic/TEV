@@ -87,7 +87,7 @@ RVmlea=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
     z=(1-r2)/r2
     A=(1-rho*z-rho+sqrt((1-rho*z-rho)^2+4*rho*z))/(2*z)
     B=-A/z-(1-(1+rho+rho*z)/sqrt((1-rho*z-rho)^2+4*rho*z))*rho/z/2
-    evr2=r2^4*(1/(A^2+B)+z/rho)
+    evr2=-r2^4*(1/(A^2+B)+z/rho)
   }else{
     evr2=0
   }
