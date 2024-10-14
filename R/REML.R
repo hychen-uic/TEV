@@ -85,19 +85,20 @@ REML=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
   if(n>p){
     sigmay2=(sum(y^2)+sum(uy^2*xsvd$d^2/(p+lam*xsvd$d^2)))/n
     Iab=(-sum(y^2)+sum(uy^2)+sum(uy^2*(xsvd$d^2/p-1)/(1+lam*xsvd$d^2/p)^2))/(sigmay2^(3/2)*(1-r2)^2)
-    Ib=(sum((xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^2)+n-p)/(1-r2)^2
-    Ib=Ib-(sum(y^2)-sum(uy^2)+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3))/(sigmay2*(1-r2)^3)
+    Ib=-(sum((xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^2)+n-p)/(1-r2)^2
+    Ib=Ib+(sum(y^2)-sum(uy^2)+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3))/(sigmay2*(1-r2)^3)
   }else{
     sigmay2=sum(uy^2*p/(p+lam*xsvd$d^2))/n/(1-r2)
     Iab=sum(uy^2*(xsvd$d^2/p-1)/(1+lam*xsvd$d^2/p)^2)/(sigmay2^(3/2)*(1-r2)^2)
-    Ib=sum((xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^2)/(1-r2)^2
-    Ib=Ib-sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3)/(sigmay2*(1-r2)^3)
+    Ib=-sum((xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^2)/(1-r2)^2
+    Ib=Ib+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3)/(sigmay2*(1-r2)^3)
   }
-  Ia=2*n/sigmay2^2
+  Ia=2*n/sigmay2
 
-  evr2=Ia/(Ia*Ib-Iab^2)
+  evr2=max(0,Ia/(Ia*Ib-Iab^2))
+
   s2=r2*sigmay2
-  evs2=evr2*sigmay2^2
+  evs2=max(0,evr2*sigmay2^2)
 
   len=length(alpha)
   cir2=r2+sqrt(evr2)*qnorm(c(alpha/2,1-alpha/2))
