@@ -22,6 +22,7 @@ Collate:
     'RVls.R'
     'RVmle.R'
     'RVmlea.R'
+    'REML.R'
     'RVsd.R'
     'RVsdold.R'
     'utils.R'
