@@ -94,7 +94,7 @@ REML=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
     Ib=Ib+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3)/(sigmay2*(1-r2)^3)
   }
   Ia=2*n/sigmay2
-
+print(c(Ia,Iab,Ib))
   evr2=max(0,Ia/(Ia*Ib-Iab^2))
 
   s2=r2*sigmay2
