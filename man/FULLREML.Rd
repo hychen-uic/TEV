@@ -32,7 +32,7 @@ This method assume the independent covariates with fixed effects but can be
 equivalently treated as random effects
 }
 \examples{
-\dontrun{REML(y,x)}
+\dontrun{FULLREML(y,x)}
 
 }
 \references{

@@ -18,7 +18,7 @@
 #'
 #' @references Restricted maximum likelihood estimator of the random effects model
 #'
-#' @examples \dontrun{REML(y,x)}
+#' @examples \dontrun{FULLREML(y,x)}
 #'
 #' @export
 #'
