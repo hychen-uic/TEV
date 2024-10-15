@@ -34,6 +34,7 @@
 #'
 #'
 #' @export
+#'
 RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),delta=1,KV=array(0,c(3,100)),know="no",nrep=1000){
 
   n=dim(x)[1]

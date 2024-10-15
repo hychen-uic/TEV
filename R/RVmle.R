@@ -19,7 +19,7 @@
 #'           variance estimation in high-dimensional linear models.
 #'  Proceedings of the 19th International Conference on Articial Intelligence and Statistics
 #'
-#' @examples \dontrun{RVMLE(y,x)}
+#' @examples \dontrun{RVMLE(y,x,alpha=c(0.05,0.01))}
 #'
 #' @export
 #'

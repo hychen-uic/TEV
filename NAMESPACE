@@ -2,9 +2,10 @@
 
 export(CHIVE)
 export(EigenPrism)
+export(FULLREML)
+export(GCTAREML)
 export(GRE)
 export(R2GCTA)
-export(REML)
 export(RVee)
 export(RVep)
 export(RVls)

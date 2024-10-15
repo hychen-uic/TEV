@@ -1,7 +1,7 @@
 #' This function implement the maximum likelihood approach with variance estimated
-#' by inverse of information matrix.
+#' by inverse of information matrix assuming sigma^2_Y=1.
 #'
-#' This the reml for the high dimensional linear model
+#' This is the reml for the high dimensional linear model assuming known sigma_Y^2=1
 #'
 #' @param y outcome: a vector of length n.
 #' @param x covariates: a matrix of nxp dimension.
@@ -18,12 +18,12 @@
 #'
 #' @references Restricted maximum likelihood estimator of the random effects model
 #'
-#' @examples \dontrun{REML(y,x)}
+#' @examples \dontrun{GCTAREML(y,x)}
 #'
 #' @export
 #'
 
-REML=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
+GCTAREML=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]
@@ -56,49 +56,39 @@ REML=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
   r2=min(1,max(0,(num+com)/(den+com))) # initial value
 
   for(iter in 1: niter){
+    lam=r2/(1-r2)
+    r2old=r2
+    Wev=tau/(1+lam*(tau+1))^2
     if(n>=p){
-      num=sum(tau*uy^2/(1+r2*tau)^2)-dif/(1-r2)^2
-      num=num-((sum(uy^2/(1+r2*tau))+dif/(1-r2))/n)*(sum(tau/(1+r2*tau))-(n-p)/(1-r2))
-      den=-2*(sum(tau^2*uy^2/(1+r2*tau)^3)+dif/(1-r2)^3)
-      den=den+((sum(tau^2*uy^2/(1+r2*tau)^2)+dif/(1-r2)^2)/n)*(sum(tau/(1+r2*tau))-(n-p)/(1-r2))
-      den=den+((sum(uy^2/(1+r2*tau))+dif/(1-r2))/n)*(sum(tau^2/(1+r2*tau)^2)+(n-p)/(1-r2))
+      com=sum(u1^2*(Wev+1))/n-1 #negligible
+      num=sum(uy^2*(Wev+1))-sum(y^2)-sum(Wev)+n-p
+      den=sum(Wev*tau)+n-p
     }else{ #No additional terms if n<=p
-      num=sum(tau*uy^2/(1+r2*tau)^2)
-      num=num-(sum(uy^2/(1+r2*tau))/n)*sum(tau/(1+r2*tau))
-      den=-2*sum(tau^2*uy^2/(1+r2*tau)^3)
-      den=den+(sum(tau^2*uy^2/(1+r2*tau)^2)/n)*sum(tau/(1+r2*tau))
-      den=den+(sum(uy^2/(1+r2*tau))/n)*sum(tau^2/(1+r2*tau)^2)
+      com=sum(u1^2*Wev)/n #negligible
+      num=sum(uy^2*Wev)-sum(Wev)
+      den=sum(Wev*tau)
     }
+    r2=min(1,max(0,(num+com)/(den+com)))
 
-    factor=1
-    while(r2-factor*num/den<0 | r2-factor*num/den>=1 ){
-      factor=factor/2
-    }
-    r2=r2-factor*num/den
-
-    if(abs(num/den)<eps){break}
+    if(abs(r2-r2old)<eps){break}
   }
   #print("MLEa")
   #print(c(iter,factor,abs(num/den),r2))
-  # REML estimate of the variance
+
+  # REML estimate of the variance assume sigmay2=1
   lam=r2/(1-r2)
   if(n>p){
-    sigmay2=(sum(y^2)+sum(uy^2*xsvd$d^2/(p+lam*xsvd$d^2)))/n
-    Iab=(-sum(y^2)+sum(uy^2)+sum(uy^2*(xsvd$d^2/p-1)/(1+lam*xsvd$d^2/p)^2))/(sigmay2^(3/2)*(1-r2)^2)
     Ib=-0.5*(sum((xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^2)+n-p)/(1-r2)^2
-    Ib=Ib+(sum(y^2)-sum(uy^2)+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3))/(sigmay2*(1-r2)^3)
+    Ib=Ib+(sum(y^2)-sum(uy^2)+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3))/((1-r2)^3)
   }else{
-    sigmay2=sum(uy^2*p/(p+lam*xsvd$d^2))/n/(1-r2)
-    Iab=sum(uy^2*(xsvd$d^2/p-1)/(1+lam*xsvd$d^2/p)^2)/(sigmay2^(3/2)*(1-r2)^2)
     Ib=-0.5*sum((xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^2)/(1-r2)^2
-    Ib=Ib+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3)/(sigmay2*(1-r2)^3)
+    Ib=Ib+sum(uy^2*(xsvd$d^2/p-1)^2/(1+lam*xsvd$d^2/p)^3)/((1-r2)^3)
   }
-  Ia=2*n/sigmay2
 
-  evr2=max(0,Ia/(Ia*Ib-Iab^2))
+  evr2=max(0,1/Ib)
 
-  s2=r2*sigmay2
-  evs2=max(0,evr2*sigmay2^2)
+  s2=r2*sdy^2
+  evs2=max(0,evr2*sdy^4)
 
   len=length(alpha)
   cir2=r2+sqrt(evr2)*qnorm(c(alpha/2,1-alpha/2))
