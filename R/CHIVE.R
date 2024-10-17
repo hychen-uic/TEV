@@ -58,7 +58,7 @@ CHIVE=function(y,x,xext=NULL,alpha=c(0.05)){
 
   #4. variance estimate
   evQ=4*sigma2*Q/n+sum((pred^2-Q)^2)/(n+N)^2
-  evr2=(evQ+Q^2*as.numeric(var(y^2))/n)/vy^2 #This is not a consistent variance estimator
+  evr2=evQ/vy^2+(Q/vy^2)^2*as.numeric(var(y^2))/n #This is not a consistent variance estimator
 
   #5 confidence interval
   len=length(alpha)
