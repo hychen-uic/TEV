@@ -94,10 +94,10 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),delta=1,KV=array(0,c(3,1
   #4. Estimate the variance
   if(know!='yes'){ # calculating VA and EB by simulation
     u=rep(1,p)/sqrt(p)
+    SUZWZU=rep(0,nrep)
+    #SUZWWZU=rep(0,nrep)
     SUZZU=rep(0,nrep)
-    SUZWZU= rep(0,nrep)
-    #SUZWWZU= rep(0,nrep)
-    STRWM= rep(0,nrep)
+    STRWM=rep(0,nrep)
 
     for(j in 1:nrep){
       z=matrix(rnorm(n*p),ncol=p)
@@ -105,32 +105,26 @@ RVsd=function(y,x,xsup=NULL,lam=1,niter=1,alpha=c(0.05),delta=1,KV=array(0,c(3,1
       zu=z%*%u
       Z=matrix(rnorm(N*p),ncol=p)
       Z=zscale(Z)[[1]]
-      SM=z%*%chol2inv(chol(t(z)%*%z+delta*t(Z)%*%Z))%*%t(z)*(n+N*delta)/p
-      SMsvd=svd(SM,nv=0)
-      QZU=t(SMsvd$u)%*%zu
+      SM=z%*%chol2inv(chol(t(z)%*%z+t(Z)%*%Z))%*%t(z)*(n+N)/p
+      ISM=chol2inv(chol(diag(rep(1,n))+lam*SM))
+      SW=ISM%*%(SM-diag(rep(1,n)))%*%ISM
+      SWzu=SW%*%zu
 
-      SUZZU[j] = sum(zu^2)
-      nr2=dim(KV)[2]
-      for(k in 1:nr2){
-        lam=(k-1)/(nr2-k+1)
-        SUZWZU[j,k] =sum(QZU^2*(SMsvd$d-1)/(1+lam*SMsvd$d)^2)
-        #SUZWWZU[j,k] =sum(QZU^2*(SMsvd$d-1)^2/(1+lam*SMsvd$d)^4)
-        STRWM[j,k] = sum(SMsvd$d*(SMsvd$d-1)/(1+lam*SMsvd$d)^2)/n
-        # sum(diag(SW %*% SM))/n # is it M or ZZ^t/p?
-      }
+      SUZZU[j]=sum(zu^2)
+      SUZWZU[j]=t(zu)%*%SW%*%zu
+      #SUZWWZU[j]=t(SWzu)%*%SWzu
+      #STRW[j]=sum(diag(SW))/n
+      STRWM[j]=sum(diag(SW%*%SM))/n
     }
-
-    K1 = var(SUZZU - n)
-    K2 = var(SUZWZU - STRWM)
-    K3 = cov(SUZWZU - STRWM, SUZZU - n)
-
+    K1=var(SUZWZU-STRWM)
+    K2=cov(SUZWZU-STRWM,SUZZU-n)
+    K3=var(SUZZU-n)
   }else{
     kn=dim(KV)[2]
     K1=KV[1,kn];K2=KV[2,kn];K3=KV[3,kn] # set initial values at the maximum r2
-    for(k in 1:kn){
+    for(k in 1:kn){ # Search for the right lambda
       if(lam<=(k-1)/(kn-k+1)){K1=KV[1,k];K2=KV[2,k];K3=KV[3,k];break}
     }
-
   }
 
   # Variance under normal random error
