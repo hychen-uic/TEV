@@ -38,6 +38,8 @@ CHIVE=function(y,x,xext=NULL,alpha=c(0.05)){
 
   #1. Fit scaled lasso to estimate beta and sigma^2
 
+  y=y-mean(y) # need to be centered.
+
   fit=scalreg(x,y)
   sigma2=fit[[1]]
   beta=fit[[2]]
@@ -54,7 +56,7 @@ CHIVE=function(y,x,xext=NULL,alpha=c(0.05)){
   pred=x%*%beta
   Q=as.numeric(t(beta)%*%xsig%*%beta)+2*sum((y-pred)*pred)/n
   vy=as.numeric(var(y))
-  r2=Q/vy
+  r2=min(1,max(0,Q/vy))
 
   #4. variance estimate
   evQ=4*sigma2*Q/n+sum((pred^2-Q)^2)/(n+N)^2
