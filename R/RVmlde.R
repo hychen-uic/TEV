@@ -24,7 +24,7 @@
 #' @export
 #'
 
-RVmle=function(y,x, alpha=c(0.05),eta2=1.0,niter=100,eps=1e-6){
+RVmlde=function(y,x, alpha=c(0.05),eta2=1.0,niter=100,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]

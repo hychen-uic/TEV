@@ -1,6 +1,6 @@
 Package: TEV
 Title: Total Explained Variation
-Version: 0.0.0.9001
+Version: 0.0.1.0
 Authors@R: 
     person("Hua Yun", "Chen", , "hychen@uic.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6791-6425"))
@@ -13,8 +13,9 @@ RoxygenNote: 7.3.2
 Collate: 
     'CHIVE.R'
     'DataGen.R'
-    'EigenPrism.R'
     'example.R'
+    'EigenPrism.R'
+    'EigenPrismFull.R'
     'FULLREML.R'
     'GCTA.R'
     'GCTAREML.R'
@@ -22,16 +23,23 @@ Collate:
     'RVee.R'
     'RVep.R'
     'RVls.R'
-    'RVmle.R'
-    'RVmlea.R'
+    'RVmlde.R'
+    'RVmldea.R'
     'RVsd.R'
     'RVsdold.R'
     'utils.R'
+    'jasaSimulation.R'
+    'jasaDataAnalysis.R'
+    'jasaBPs.R'
+    'jasaCCBPs.R'
+    'jasaIMPallcov.R'
 Depends: 
     R (>= 2.10)
 Imports:
     cccp,
     graphics,
     scalreg,
-    lars
+    lars,
+    RidgeVar
 LazyData: true
+LazyDataCompression:xz

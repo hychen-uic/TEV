@@ -11,9 +11,8 @@ RVsd(
   lam = 1,
   niter = 1,
   alpha = c(0.05),
-  delta = 1,
-  KV = array(0, c(3, 100)),
   know = "no",
+  KV = array(0, c(3, 100)),
   nrep = 1000
 )
 }
@@ -31,12 +30,10 @@ when xsup=NULL and n>p, it performs least-square with the simulation variance es
 
 \item{alpha}{a vector of type I errors used to generate (1-alpha)confidence intervals.}
 
-\item{delta}{parameter controling the weight for the supplementary data in matrix inversion.}
+\item{know}{if KV is known, options include "yes" and "no". Default is "no".}
 
 \item{KV, }{a matrix with 3 rows and 100 collums corresponding to different lambda values.
 the first component of the row vector KV=kappa_1, the second=kappa_2, the third=kappa_3}
-
-\item{know}{if KV is known, options include "yes" and "no". Default is "no".}
 
 \item{nrep}{Monte Carlo sample size for computinging KV.}
 }
