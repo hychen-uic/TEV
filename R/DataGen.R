@@ -196,7 +196,7 @@ sqrtpdm=function(corr){
 #'          y outcome variable
 #' @export
 #'
-trueR2=function(nrep,p,beta,xsig,errsig,powx,powy,sd){
+trueRV=function(nrep,p,beta,xsig,errsig,powx,powy,sd){
 
   xy=makedat(nrep,p,beta,xsig,errsig,powx,powy,sd)
   s2=as.numeric(var(xy[[1]]%*%beta))

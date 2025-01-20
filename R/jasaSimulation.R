@@ -38,7 +38,7 @@ NULL
 #'
 #' @export
 #'
-jasaSIMULATION=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0,
+jasaSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0,
                 powx=1,powy=1,xsig=1,errsig=1,method="our",rho=0.9,nrep=1000,rept=1000){
 # 1. Parameter setup in the simulation study
 #cindep="F" # covariate independent ("T") or not ("F")
@@ -80,7 +80,7 @@ if(sparse=="T"){
 
 # 2. Find true r2 by simulation approximation
 
-fit=TEV::trueR2(n*1000,p,beta,xsig,errsig,powx,powy,sqrtsig)
+fit=TEV::trueRV(n*1000,p,beta,xsig,errsig,powx,powy,sqrtsig)
 r20=fit[[1]]
 v20=fit[[2]]
 print(c(r20,v20))

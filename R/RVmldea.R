@@ -24,7 +24,7 @@
 #' @export
 #'
 
-RVmlea=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
+RVmldea=function(y,x, alpha=c(0.05),lam=1.0, niter=100,eps=1e-6){
 
   n = dim(x)[1]
   p = dim(x)[2]
