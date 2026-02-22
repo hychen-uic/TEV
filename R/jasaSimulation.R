@@ -367,14 +367,14 @@ for(i in 1:rept){
        X=rbind(x,xsup)
        fit=flare::sugm(X, lambda=c(climeconst)*sqrt(log(p)/n), method="clime",verbose=FALSE)
        Omega=fit$icov[[1]]
-       sqrtOmega=chol(Omega/2+t(Omega)/2)
+       sqrtOmega=sqrtpdm(Omega/2+t(Omega)/2)[[1]]
        z=x%*%sqrtOmega
 
      }else{
        # z=transf(x)[[1]]
        fit=flare::sugm(x, lambda=c(climeconst)*sqrt(log(p)/n), method="clime",verbose=FALSE)
        Omega=fit$icov[[1]]
-       sqrtOmega=chol(Omega/2+t(Omega)/2)
+       sqrtOmega=sqrtpdm(Omega/2+t(Omega)/2)[[1]]
        z=x%*%sqrtOmega
      }
     aa=TEV::RVee(y,z,alpha=palpha,lam=ilam,niter=iiter)
