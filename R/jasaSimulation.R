@@ -4,11 +4,15 @@
  #library(devtools)
  #devtools::install_github("hychen-uic/TEV",force=T)
  #devtools::install_github("xliusufe/RidgeVar")
-
-# library(TEV)
-# library(RidgeVar)
+ #install.packages("flare") #Family of Lasso regression including Dantzig Selector, LAD Lasso,
+                           #SQRT Lasso, Lq Lasso for estimating high dimensional
+                           #sparse linear model.
+ #library(flare)
+ #library(TEV)
+ #library(RidgeVar)
 #}
 #' @import RidgeVar
+#' @import flare
 NULL
 #' Simulation studies for JASA submission
 #'
@@ -21,13 +25,14 @@ NULL
 #' @param p dimension of the covariates, for example, p=200,
 #' @param p1 subdimension of covariates having nonzero effects p1<=p, e.g. p1=100 when p=200.
 #'           in the simulation of sparse effects, p1=4.
-#' @param cs the constant for determining regression coefficients. it needs to be adjusted to achieve R2 wanted.
+#' @param effectconst the constant for determining regression coefficients. it needs to be adjusted to achieve R2 wanted.
+#' @param climeconst the const used in adjusting selection in CLIME constaints in R-package flare.
 #' @param powx powertansformation of normal covariates, powx=1 means normal, powx=2 means chi-square
 #' @param powy powertansformation of normal random error, powx=1 means normal, powx=2 means chi-square
 #' @param xsig standard deviation of covariates
 #' @param errsig standard deviation of random error.
 #' @param method method for dependence generate: method="our" means our approach, otherwise Cai and Guo's approach.
-#' @param rho correlation coefficient in the AR(1) covariate dependence model. This has effects only when method!="our".
+#' @param rho correlation coefficient in the AR(1) covariate dependence model. This has effects only when method is not "our".
 #' @param nrep number of replicates in simulation sample for variance estimation nrep=1000 by default.
 #' @param rept number of replicates in simulation rept=1000 by default.
 #'
@@ -38,7 +43,7 @@ NULL
 #'
 #' @export
 #'
-jasaSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0,
+jasaSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, effectconst=1.0,climeconst=1.0,
                 powx=1,powy=1,xsig=1,errsig=1,method="our",rho=0.9,nrep=1000,rept=1000){
 # 1. Parameter setup in the simulation study
 #cindep="F" # covariate independent ("T") or not ("F")
@@ -57,18 +62,18 @@ if(cindep=="T"){
     if(method=='our'){
       sqrtsig=sqrtpdm(makecora(1.0,0,0,p)[[1]])[[1]] # half of the dependence matrix of covariates
     }else{
-      sqrtsig=sqrtpdm(makecorb(rho=0.9,fix=F,p)[[1]])[[1]] #alternative dependence matrix of x
+      sqrtsig=sqrtpdm(makecorb(rho=rho,fix=F,p)[[1]])[[1]] #alternative dependence matrix of x
     }
   }
 
 if(sparse=="T"){
  #p1=4    # sparse regression parameters
  sgn=1 #sign(runif(p1)-0.5)
- beta=c(sgn*rep(cs/sqrt(p1),p1),rep(0,p-p1))
+ beta=c(sgn*rep(effectconst/sqrt(p1),p1),rep(0,p-p1))
 }else{
  #p1=p/2    # dense regression parameters
  sgn=1.0 #sign(runif(p1)-0.5)
- beta=c(sgn*rep(cs/sqrt(p1),p1),rep(0,p-p1)) #0.18, 0.35 (corr. normal)                                           #0.26, 0.52 (corr. nonnormal)
+ beta=c(sgn*rep(effectconst/sqrt(p1),p1),rep(0,p-p1)) #0.18, 0.35 (corr. normal)                                           #0.26, 0.52 (corr. nonnormal)
  #beta=c(sgn*1.0/c(1:p1), rep(0,p-p1)) #alternative dense effects
 }
 
@@ -355,12 +360,22 @@ for(i in 1:rept){
     V2CHIVE[i,3:(2+2*pa)]=aa[[4]]   # 99%, 95%, 90% confidence intervals under normal
 }
 
-#3.6. Transformation approach with supplementary covariates
-    #transform correlated covariates before applying estimating equation approach
+#3.6. Transformation approach with or without supplementary covariates
+    #Use CLIME of Cai et al (2011) to estimate precision matrix for the transformation
     if(N>0){
-        z=transf(rbind(x,xsup))[[1]][1:n,]
+        #z=transf(rbind(x,xsup))[[1]][1:n,]
+       X=rbind(x,xsup)
+       fit=flare::sugm(X, lambda=c(climeconst)*sqrt(log(p)/n), method="clime",verbose=FALSE)
+       Omega=fit$icov[[1]]
+       sqrtOmega=chol(Omega/2+t(Omega)/2)
+       z=x%*%sqrtOmega
+
      }else{
-        z=transf(x)[[1]]
+       # z=transf(x)[[1]]
+       fit=flare::sugm(x, lambda=c(climeconst)*sqrt(log(p)/n), method="clime",verbose=FALSE)
+       Omega=fit$icov[[1]]
+       sqrtOmega=chol(Omega/2+t(Omega)/2)
+       z=x%*%sqrtOmega
      }
     aa=TEV::RVee(y,z,alpha=palpha,lam=ilam,niter=iiter)
     R2TS[i,1:3]=aa[[1]]   # estimator of R2, variance estimate under normal, variance estimate

@@ -11,7 +11,8 @@ jasaSimulation(
   N = 200,
   p = 200,
   p1 = 100,
-  cs = 1,
+  effectconst = 1,
+  climeconst = 1,
   powx = 1,
   powy = 1,
   xsig = 1,
@@ -38,7 +39,9 @@ sparse="F" if effects are dense}
 \item{p1}{subdimension of covariates having nonzero effects p1<=p, e.g. p1=100 when p=200.
 in the simulation of sparse effects, p1=4.}
 
-\item{cs}{the constant for determining regression coefficients. it needs to be adjusted to achieve R2 wanted.}
+\item{effectconst}{the constant for determining regression coefficients. it needs to be adjusted to achieve R2 wanted.}
+
+\item{climeconst}{the const used in adjusting selection in CLIME constaints in R-package flare.}
 
 \item{powx}{powertansformation of normal covariates, powx=1 means normal, powx=2 means chi-square}
 
@@ -50,7 +53,7 @@ in the simulation of sparse effects, p1=4.}
 
 \item{method}{method for dependence generate: method="our" means our approach, otherwise Cai and Guo's approach.}
 
-\item{rho}{correlation coefficient in the AR(1) covariate dependence model. This has effects only when method!="our".}
+\item{rho}{correlation coefficient in the AR(1) covariate dependence model. This has effects only when method is not "our".}
 
 \item{nrep}{number of replicates in simulation sample for variance estimation nrep=1000 by default.}
 
