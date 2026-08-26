@@ -119,111 +119,126 @@ submitDataAnalysis=function(dataseta1,dataseta2,dataseta3,nimpute=6,alpha=0.05){
   ilam=0.3
   aa=array(0,c(4,12,nimpute))
   bb=aa
-  for(k in 1:nimpute){ # Five imputed data sets
-    print(c(k,k,k))
-    X=seldifdat(as.matrix(dataseta3[((k-1)*m+1):(k*m),]),fulldata,1,1)
-    XX=X[[1]];xx=X[[2]]
-    CF=XX[,3:9];xsup=XX[,10:71]  #supplementary data part
-    cf=xx[,3:9];x=xx[,10:71]  #full data part, x1 should be x in the full data
+  for(j in c(1,2)){ # for no or with interactions
+    if(j==1){print("No interactions")}else{
+      print("With interactions")
+    }
+    for(k in 1:nimpute){ # Five imputed data sets
+      print(c(k,k,k))
+      X=seldifdat(as.matrix(dataseta3[((k-1)*m+1):(k*m),]),fulldata,1,1)
+      XX=X[[1]];xx=X[[2]]
+      CF=XX[,3:9];xsup=XX[,10:71]  #supplementary data part, CF for confounders.
+      cf=xx[,3:9];x=xx[,10:71]  #full data part, x1 should be x in the full data
 
-
+      if(j==2){
+        x=cbind(x,interaction(x)[[1]])
+        xsup=cbind(xsup,interaction(xsup)[[1]])
+      }
+      print("Unadjusted Analysis")
   #1. Unadjusted analysis
 
-    aa1=TEV::RVep(y,x,alpha=palpha)
-    aa[,1,k]=c(aa1[[1]],0,aa1[[2]])
+      aa1=TEV::RVep(y,x,alpha=palpha)
+      aa[,1,k]=c(aa1[[1]],0,aa1[[2]])
 
-    aa2=TEV::RVee(y,x,lam=ilam, niter=0, alpha=palpha)
-    aa[,2,k]=c(aa2[[1]][1:2],aa2[[2]])
+      aa2=TEV::RVee(y,x,lam=ilam, niter=0, alpha=palpha)
+      aa[,2,k]=c(aa2[[1]][1:2],aa2[[2]])
 
-    aa3=TEV::RVee(y,x,lam=ilam,niter=20,alpha=palpha)
-    aa[,3,k]=c(aa3[[1]][1:2],aa3[[2]])
+      aa3=TEV::RVee(y,x,lam=ilam,niter=20,alpha=palpha)
+      aa[,3,k]=c(aa3[[1]][1:2],aa3[[2]])
 
-    aa4=TEV::RVls(y,x,alpha=palpha)
-    aa[,4,k]=c(aa4[[1]][1:2],aa4[[2]])
+      aa4=TEV::RVls(y,x,alpha=palpha)
+      aa[,4,k]=c(aa4[[1]][1:2],aa4[[2]])
 
-    aa5=TEV::GRE(y,x)
-    aa[,5,k]=c(aa5[[1]],aa5[[2]],aa5[[3]])
+      aa5=TEV::GRE(y,x)
+      aa[,5,k]=c(aa5[[1]],aa5[[2]],aa5[[3]])
 
-    aa6=TEV::RVsd(y,x,xsup, lam =ilam, alpha=palpha, niter =0, know="no")
-    aa[,6,k]=c(aa6[[1]][1:2],aa6[[2]])
+      aa6=TEV::RVsd(y,x,xsup, lam =ilam, alpha=palpha, niter =0, know="no")
+      aa[,6,k]=c(aa6[[1]][1:2],aa6[[2]])
 
-    aa7=TEV::RVsd(y,x,xsup, lam =ilam, alpha=palpha, niter =20, know="no")
-    aa[,7,k]=c(aa7[[1]][1:2],aa7[[2]])
+      aa7=TEV::RVsd(y,x,xsup, lam =ilam, alpha=palpha, niter =20, know="no")
+      aa[,7,k]=c(aa7[[1]][1:2],aa7[[2]])
 
-    aa8=TEV::CHIVE(y,x,xsup,alpha=palpha)
-    aa[,8,k]=c(aa8[[1]][1:2],aa8[[2]])
+      aa8=TEV::CHIVE(y,x,xsup,alpha=palpha)
+      aa[,8,k]=c(aa8[[1]][1:2],aa8[[2]])
 
-    aa9=TEV::CHIVE(y,x,alpha=palpha)
-    aa[,9,k]=c(aa9[[1]][1:2],aa9[[2]])
+      aa9=TEV::CHIVE(y,x,alpha=palpha)
+      aa[,9,k]=c(aa9[[1]][1:2],aa9[[2]])
 
-    aa10=TEV::RVmlde(y,x,alpha=palpha)    #MLDE
-    aa[,10,k]=c(aa10[[1]][1:2],aa10[[2]])
+      aa10=TEV::RVmlde(y,x,alpha=palpha)    #MLDE
+      aa[,10,k]=c(aa10[[1]][1:2],aa10[[2]])
 
-    aa11=TEV::FULLREML(y,x,alpha=palpha) #MLRE
-    aa[,11,k]=c(aa11[[1]][1:2],aa11[[2]])
+      aa11=TEV::FULLREML(y,x,alpha=palpha) #MLRE
+      aa[,11,k]=c(aa11[[1]][1:2],aa11[[2]])
 
-    aa12=TEV::GCTAREML(y,x,alpha=palpha) #EEML
-    aa[,12,k]=c(aa12[[1]],aa12[[2]])
+      aa12=TEV::GCTAREML(y,x,alpha=palpha) #EEML
+      aa[,12,k]=c(aa12[[1]],aa12[[2]])
 
 
   #2. Adjusted analysis
+      print("adjusted analysis")
 
-    xsup1=projed(xsup,CF)[[1]] # confounder adjusted for supplementary data
-    x1=projed(x,cf)[[1]]       # confounder adjusted for original data
-    fit=lm(y~cf)
-    yr=as.numeric(fit$resid)   #adjusted outcome
+      xsup1=projed(xsup,CF)[[1]] # confounder adjusted for supplementary data
+      x1=projed(x,cf)[[1]]       # confounder adjusted for original data
+      fit=lm(y~cf)
+      yr=as.numeric(fit$resid)   #adjusted outcome
 
-    bb1=TEV::RVep(yr,x1,alpha=palpha)
-    bb[,1,k]=c(bb1[[1]],0,bb1[[2]])
+      if(j==2){
+        x1=cbind(x1,interaction(x1)[[1]])
+        xsup1=cbind(xsup1,interaction(xsup1)[[1]])
+      }
 
-    bb2=TEV::RVee(yr,x1,lam=ilam, niter=0, alpha=palpha)
-    bb[,2,k]=c(bb2[[1]][1:2],bb2[[2]])
+      bb1=TEV::RVep(yr,x1,alpha=palpha)
+      bb[,1,k]=c(bb1[[1]],0,bb1[[2]])
 
-    bb3=TEV::RVee(yr,x1,lam=ilam,niter=20,alpha=palpha)
-    bb[,3,k]=c(bb3[[1]][1:2],bb3[[2]])
+      bb2=TEV::RVee(yr,x1,lam=ilam, niter=0, alpha=palpha)
+      bb[,2,k]=c(bb2[[1]][1:2],bb2[[2]])
 
-    bb4=TEV::RVls(yr,x1,alpha=palpha)
-    bb[,4,k]=c(bb4[[1]][1:2],bb4[[2]])
+      bb3=TEV::RVee(yr,x1,lam=ilam,niter=20,alpha=palpha)
+      bb[,3,k]=c(bb3[[1]][1:2],bb3[[2]])
 
-    bb5=TEV::GRE(yr,x1)
-    bb[,5,k]=c(bb5[[1]],bb5[[2]],bb5[[3]])
+      bb4=TEV::RVls(yr,x1,alpha=palpha)
+      bb[,4,k]=c(bb4[[1]][1:2],bb4[[2]])
 
-    bb6=TEV::RVsd(yr,x1,xsup1, lam =ilam, alpha=palpha, niter =0, know="no")
-    bb[,6,k]=c(bb6[[1]][1:2],bb6[[2]])
+      bb5=TEV::GRE(yr,x1)
+      bb[,5,k]=c(bb5[[1]],bb5[[2]],bb5[[3]])
 
-    bb7=TEV::RVsd(yr,x1,xsup1, lam =ilam, alpha=palpha, niter =20, know="no")
-    bb[,7,k]=c(bb7[[1]][1:2],bb7[[2]])
+      bb6=TEV::RVsd(yr,x1,xsup1, lam =ilam, alpha=palpha, niter =0, know="no")
+      bb[,6,k]=c(bb6[[1]][1:2],bb6[[2]])
 
-    bb8=TEV::CHIVE(yr,x1,alpha=palpha)
-    bb[,8,k]=c(bb8[[1]][1:2],bb8[[2]])
+      bb7=TEV::RVsd(yr,x1,xsup1, lam =ilam, alpha=palpha, niter =20, know="no")
+      bb[,7,k]=c(bb7[[1]][1:2],bb7[[2]])
 
-    bb9=TEV::CHIVE(yr,x1,xsup1,alpha=palpha)
-    bb[,9,k]=c(bb9[[1]][1:2],bb9[[2]])
+      bb8=TEV::CHIVE(yr,x1,alpha=palpha)
+      bb[,8,k]=c(bb8[[1]][1:2],bb8[[2]])
 
-    bb10=TEV::RVmlde(yr,x1,alpha=palpha)    #MLDE
-    bb[,10,k]=c(bb10[[1]],bb10[[2]])
+      bb9=TEV::CHIVE(yr,x1,xsup1,alpha=palpha)
+      bb[,9,k]=c(bb9[[1]][1:2],bb9[[2]])
 
-    bb11=TEV::FULLREML(yr,x1,alpha=palpha) #MLRE
-    bb[,11,k]=c(bb11[[1]],bb11[[2]])
+      bb10=TEV::RVmlde(yr,x1,alpha=palpha)    #MLDE
+      bb[,10,k]=c(bb10[[1]],bb10[[2]])
 
-    bb12=TEV::GCTAREML(yr,x1,alpha=palpha) #EEML
-    bb[,12,k]=c(bb12[[1]],bb12[[2]])
+      bb11=TEV::FULLREML(yr,x1,alpha=palpha) #MLRE
+      bb[,11,k]=c(bb11[[1]],bb11[[2]])
+
+      bb12=TEV::GCTAREML(yr,x1,alpha=palpha) #EEML
+      bb[,12,k]=c(bb12[[1]],bb12[[2]])
+    }
+
+    maa=apply(aa,c(1,2),mean)
+    vaa=apply(aa,c(1,2),var)
+    print("Unadjusted analysis results")
+    print("Methods: 1.EP, 2.EE, 3.EEit, 4.LS, 5.GRE, 6.SD, 7.SDit, 8.CHIVE0, 9.CHIVE, 10.MLDE, 11.MLRE, 12.EEML")
+    print("Rubin's combination for estimator and variance")
+    print( cbind(maa[1,],maa[2,]+vaa[1,]) )
+    print("CI(general) and CI(normal)")
+    print( cbind(maa[1,]-1.96*sqrt(maa[2,]+vaa[1,]),maa[1,]+1.96*sqrt(maa[2,]+vaa[1,]),
+          maa[3,],maa[4,]) )
+
+    print("Adjusted analysis results")
+    mbb=apply(bb,c(1,2),mean)
+    vbb=apply(bb,c(1,2),var)
+    print( cbind(mbb[1,],mbb[2,]+vbb[1,]) )
+    print( cbind(mbb[1,]-1.96*sqrt(mbb[2,]+vbb[1,]),mbb[1,]+1.96*sqrt(mbb[2,]+vbb[1,]),
+          mbb[3,],mbb[4,]) )
   }
-
-  maa=apply(aa,c(1,2),mean)
-  vaa=apply(aa,c(1,2),var)
-  print("Unadjusted analysis")
-  print("Methods: 1.EP, 2.EE, 3.EEit, 4.LS, 5.GRE, 6.SD, 7.SDit, 8.CHIVE0, 9.CHIVE, 10.MLDE, 11.MLRE, 12.EEML")
-  print("Rubin's combination for estimator and variance")
-  print( cbind(maa[1,],maa[2,]+vaa[1,]) )
-  print("CI(general) and CI(normal)")
-  print( cbind(maa[1,]-1.96*sqrt(maa[2,]+vaa[1,]),maa[1,]+1.96*sqrt(maa[2,]+vaa[1,]),
-        maa[3,],maa[4,]) )
-
-  print("Adjusted analysis")
-  mbb=apply(bb,c(1,2),mean)
-  vbb=apply(bb,c(1,2),var)
-  print( cbind(mbb[1,],mbb[2,]+vbb[1,]) )
-  print( cbind(mbb[1,]-1.96*sqrt(mbb[2,]+vbb[1,]),mbb[1,]+1.96*sqrt(mbb[2,]+vbb[1,]),
-        mbb[3,],mbb[4,]) )
 }
