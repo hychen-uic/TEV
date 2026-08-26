@@ -93,7 +93,7 @@ projed=function(x,z){ # with supplementary data
 #'
 #' @return estimators, variance estimates, and confidence intervals.
 #'
-#' @examples \dontrun{jasaDataAnalysis(outcome,covariates,supplecov)}
+#' @examples \dontrun{submitDataAnalysis(outcome,covariates,supplecov)}
 #'
 #' @export
 

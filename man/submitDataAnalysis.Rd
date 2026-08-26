@@ -29,6 +29,6 @@ This function performance data analysis with multiply imputed datasets
 perform both unadjusted and adjusted analyses and using Rubin's rule to combine results
 }
 \examples{
-\dontrun{jasaDataAnalysis(outcome,covariates,supplecov)}
+\dontrun{submitDataAnalysis(outcome,covariates,supplecov)}
 
 }
