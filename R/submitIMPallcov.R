@@ -1,4 +1,4 @@
-#' six copies of imputed data for the jasa paper
+#' six copies of imputed data for the submitted paper
 #'
 #' NHANES Data with 71 variables and 28986 observations
 #'

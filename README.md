@@ -11,8 +11,7 @@ language](https://img.shields.io/github/languages/top/hychen-uic/TEV?color=red)
 <!-- ![GitHub R package version](https://img.shields.io/github/r-package/v/hychen-uic/TEV) -->
 <!-- badges: end -->
 
-The goal of TEV is to estimate the total variation of an outcome
-explained by a set of covariates.
+The goal of TEV is to estimate the proportion of outcome variation explained by a set of covariates.
 
 ## Installation
 

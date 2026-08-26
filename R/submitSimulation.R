@@ -26,7 +26,7 @@ NULL
 #' @param powy powertansformation of normal random error, powx=1 means normal, powx=2 means chi-square
 #' @param xsig standard deviation of covariates
 #' @param errsig standard deviation of random error.
-#' @param method method for dependence generate: method="our" means our approach, otherwise Cai and Guo's approach.
+#' @param covrate rate of combination for two different covariance generators (to create vary correlation structure)
 #' @param rho correlation coefficient in the AR(1) covariate dependence model. This has effects only when method!="our".
 #' @param nrep number of replicates in simulation sample for variance estimation nrep=1000 by default.
 #' @param rept number of replicates in simulation rept=1000 by default.
@@ -38,8 +38,8 @@ NULL
 #'
 #' @export
 #'
-jasaSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0,
-                powx=1,powy=1,xsig=1,errsig=1,method="our",rho=0.9,nrep=1000,rept=1000){
+submitSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0,
+                powx=1,powy=1,xsig=1,errsig=1,covrate=0.5,rho=0.9,nrep=1000,rept=1000){
 # 1. Parameter setup in the simulation study
 #cindep="F" # covariate independent ("T") or not ("F")
 
@@ -53,13 +53,12 @@ jasaSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0,
 
 if(cindep=="T"){
    sqrtsig=diag(rep(1,p))      # independent covariates
-  }else{
-    if(method=='our'){
-      sqrtsig=sqrtpdm(makecora(1.0,0,0,p)[[1]])[[1]] # half of the dependence matrix of covariates
-    }else{
-      sqrtsig=sqrtpdm(makecorb(rho=0.9,fix=F,p)[[1]])[[1]] #alternative dependence matrix of x
-    }
-  }
+}else{
+  sqrtsig1=sqrtpdm(makecora(1.0,0.01,0.3,p)[[1]])[[1]] # our dependence matrix of x
+  sqrtsig2=sqrtpdm(makecorb(rho=rho,fix=F,p)[[1]])[[1]] #alternative dependence matrix of x
+  sqrtsig=sqrtsig1*covrate+sqrtsig2*(1-covrate) # combine two covariance matrices
+}
+
 
 if(sparse=="T"){
  #p1=4    # sparse regression parameters
@@ -134,6 +133,9 @@ V2SDT=R2SD20
 
 R2TS=array(0,c(rept,3+4*pa)) #Transformed data estimating equation approach
 V2TS=R2TS                    #An ad hoc approach
+
+R2TSa=array(0,c(rept,3+4*pa)) #Transformed data estimating equation approach
+V2TSa=R2TSa
 
 R2MLDE=array(0,c(rept,2+2*pa))# MLE from Dicker and Erdogdu (2016)
 V2MLDE=R2MLDE                 # use MLE for parameter estimate but spectrum for variance estimate
@@ -357,18 +359,76 @@ for(i in 1:rept){
 
 #3.6. Transformation approach with supplementary covariates
     #transform correlated covariates before applying estimating equation approach
-    if(N>0){
-        z=transf(rbind(x,xsup))[[1]][1:n,]
-     }else{
-        z=transf(x)[[1]]
-     }
-    aa=TEV::RVee(y,z,alpha=palpha,lam=ilam,niter=iiter)
-    R2TS[i,1:3]=aa[[1]]   # estimator of R2, variance estimate under normal, variance estimate
+if(1==2){
+    if(N>0){xx=rbind(x,xsup)}else{xx=x}
+
+    maxpc=10 # maximum number of PCs to be identified
+    svdx=svd(xx)
+    # print(svdx$d[1:10])
+    npc=0
+    for(ijk in 1:maxpc){
+      if(svdx$d[ijk]>2*svdx$d[ijk+1]-svdx$d[ijk+10]){npc=ijk}
+    }
+    # print(npc)
+
+    if(npc>0){
+      pc=xx%*%svdx$v[,1:npc]
+      fit=lm(y~pc)
+      yres=as.numeric(fit$residual)
+      exvar=var(y-yres)/var(y) #proportion of variation explained by all pcs.
+      coef=as.vector(fit$coefficients)[-1]
+      residvar=(summary(fit)$sigma)^2/n
+      vexvar=2*t(coef)%*%(t(pc)%*%pc/n)%*%coef*residvar/(var(y))^2/n # need to be updated
+      # since diag(a number)=identity matrix with that dimension, it has to be cautious
+      xx=xx-as.matrix(svdx$u[,1:npc])%*%diag(svdx$d)[1:npc,1:npc]%*%t(as.matrix(svdx$v[,1:npc]))
+      # remove the PC components from x
+    }else{
+      yres=y
+      exvar=0
+      vexvar=0
+    }
+
+
+  # identify sparse precision matrix
+
+    fit=SILGGM(xx,alpha=palpha,global=TRUE)
+
+    #Omega=fit$precision # precision matrix
+
+    network=fit$global_decision[[1]]
+    # print(sum(network))
+    #Omega=nodewisereg(dat=xx, fixstruct=network)
+    Omega=lezhong(dat=xx, network=network)
+
+    sqrtOmega=sqrtpdm(Omega)[[1]]
+
+    z=xx%*%sqrtOmega
+
+    aa=TEV::RVee(yres,z,alpha=palpha,lam=ilam,niter=1)
+    R2TS[i,1]=aa[[1]][1]*(1-exvar)+exvar   # estimator of R2, variance estimate under normal, variance estimate
+    R2TS[i,2]=aa[[1]][2]*(1-exvar)^2+vexvar*(1-aa[[1]][1])^2
+    R2TS[i,3]=aa[[1]][3]*(1-exvar)^2+vexvar*(1-aa[[1]][1])^2
+
     R2TS[i,4:(3+2*pa)]=aa[[2]]   # 99%, 95%, 90% confidence intervals under normal
     R2TS[i,(4+2*pa):(3+4*pa)]=aa[[3]] # 99%, 95%, 90% confidence intervals in general
     V2TS[i,1:3]=aa[[4]]   # estimatorof V2, variance estimate under normal, variance estimate
     V2TS[i,4:(3+2*pa)]=aa[[5]]   # 99%, 95%, 90% confidence intervals under normal
     V2TS[i,(4+2*pa):(3+4*pa)]=aa[[6]] # 99%, 95%, 90% confidence intervals in general
+    # print(exvar)
+}
+
+    z=decor(dat=xx,decorate=0.5,inter=0) #transformed by truth
+
+    aa=TEV::RVee(yres,z,alpha=palpha,lam=ilam,niter=1)
+    R2TSa[i,1]=aa[[1]][1]*(1-exvar)+exvar   # estimator of R2, variance estimate under normal, variance estimate
+    R2TSa[i,2]=aa[[1]][2]*(1-exvar)^2+vexvar*(1-aa[[1]][1])^2
+    R2TSa[i,3]=aa[[1]][3]*(1-exvar)^2+vexvar*(1-aa[[1]][1])^2
+
+    R2TSa[i,4]=R2TSa[i,1]-1.96*sqrt(R2TSa[i,2])
+    R2TSa[i,5]=R2TSa[i,1]+1.96*sqrt(R2TSa[i,2])
+    R2TSa[i,6]=R2TSa[i,1]-1.96*sqrt(R2TSa[i,3])
+    R2TSa[i,7]=R2TSa[i,1]+1.96*sqrt(R2TSa[i,3])
+
 
 #3.7. DEMLE method of Dicker and Erdogdu (2016)
 
@@ -487,12 +547,21 @@ for(i in 1:rept){
    Soutput(R2SDT,pa,r20,rept)
    print("SDT V2")
    Soutput(V2SDT,pa,v20,rept)
-   }
-#4.5. print("Results on the transformation approach with supplementary covariate data")
- print("Transform R2")
+ }
+#4.5  print("Results on the sparse precision matrix decorrelation")
+
+ print("R2 from Transformation (sparse)")
  Soutput(R2TS,pa,r20,rept)
- print("Transform V2")
+ print("EE V2")
  Soutput(V2TS,pa,v20,rept)
+
+#4.6  print("Results on the simple block wise decorrelation")
+
+ print("R2 from Transformation (sparse)")
+ Soutput(R2TSa,pa,r20,rept)
+ print("EE V2")
+ Soutput(V2TSa,pa,v20,rept)
+
 
 #4.7  print("Results on the MLE method by Dicker and Erdogdu (2016)")
     print("MLDE R2")

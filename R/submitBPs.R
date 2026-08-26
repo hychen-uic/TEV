@@ -1,4 +1,4 @@
-#' Bloop pressure data (outcomes)for the jasa paper
+#' Bloop pressure data (outcomes)for the submitted paper
 #'
 #' NHANES Data with 3 variables (ID, SBP, DBP), and 22270 observations
 #'

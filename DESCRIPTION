@@ -9,13 +9,16 @@ Description: This package estimates and infers both the proportion of the total
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Collate: 
     'CHIVE.R'
     'DataGen.R'
+    'decor.R'
     'example.R'
     'EigenPrism.R'
     'EigenPrismFull.R'
+    'lezhong.R'
+    'nodewisereg.R'
     'FULLREML.R'
     'GCTA.R'
     'GCTAREML.R'
@@ -27,12 +30,15 @@ Collate:
     'RVmldea.R'
     'RVsd.R'
     'RVsdold.R'
+    'RVts.R'
     'utils.R'
-    'jasaSimulation.R'
-    'jasaDataAnalysis.R'
-    'jasaBPs.R'
-    'jasaCCBPs.R'
-    'jasaIMPallcov.R'
+    'submitSimulation.R'
+    'submitDataAnalysis.R'
+    'submitBPs.R'
+    'submitCCBPs.R'
+    'submitIMPallcov.R'
+    'plink2ToR.R'
+    'NGsimulation.R'
 Depends: 
     R (>= 2.10)
 Imports:
@@ -40,6 +46,7 @@ Imports:
     graphics,
     scalreg,
     lars,
-    RidgeVar
+    RidgeVar,
+    SILGGM
 LazyData: true
-LazyDataCompression:xz
+LazyDataCompression: xz

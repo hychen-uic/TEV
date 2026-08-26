@@ -97,7 +97,7 @@ projed=function(x,z){ # with supplementary data
 #'
 #' @export
 
-jasaDataAnalysis=function(dataseta1,dataseta2,dataseta3,nimpute=6,alpha=0.05){
+submitDataAnalysis=function(dataseta1,dataseta2,dataseta3,nimpute=6,alpha=0.05){
 ## 1. read data
  #file1="F:/seagatebackupDec3-2024/NIEHSpapers/Combined/JASA/DataAnalysis/BPs"
  #file2="F:/seagatebackupDec3-2024/NIEHSpapers/Combined/JASA/DataAnalysis/CCPCBs"
