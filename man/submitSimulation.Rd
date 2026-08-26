@@ -12,7 +12,6 @@ submitSimulation(
   p = 200,
   p1 = 100,
   effectconst = 1,
-  climeconst = 1,
   powx = 1,
   powy = 1,
   xsig = 1,
@@ -41,8 +40,6 @@ in the simulation of sparse effects, p1=4.}
 
 \item{effectconst}{the constant for determining regression coefficients. it needs to be adjusted to achieve R2 wanted.}
 
-\item{climeconst}{the const used in adjusting selection in CLIME constaints in R-package flare.}
-
 \item{powx}{powertansformation of normal covariates, powx=1 means normal, powx=2 means chi-square}
 
 \item{powy}{powertansformation of normal random error, powx=1 means normal, powx=2 means chi-square}
@@ -66,7 +63,7 @@ Estimate of the proportion of the explained variation and confidence intervals f
 Simulation studies for JASA submission
 }
 \examples{
-\dontrun{jasaSIMULATION(cindep="T",sparse="F", p=200, p1=100, n=400,N=200,
+\dontrun{submitSIMULATION(cindep="T",sparse="F", p=200, p1=100, n=400,N=200,
                                   powx=1,powy=1,xsig=1,errsig=1,rho=0.9,rept=100,nrep=1000)}
 
 }

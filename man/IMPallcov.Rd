@@ -3,7 +3,7 @@
 \docType{data}
 \name{IMPallcov}
 \alias{IMPallcov}
-\title{six copies of imputed data for the jasa paper}
+\title{six copies of imputed data for the submitted paper}
 \format{
 a data frame: V1=ID, V2=imputation index, V3-9: confounders
 V10-V71: Pollutants(PCBs,POPs, and Metals, total=62).

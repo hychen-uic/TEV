@@ -3,7 +3,7 @@
 \docType{data}
 \name{BPs}
 \alias{BPs}
-\title{Bloop pressure data (outcomes)for the jasa paper}
+\title{Bloop pressure data (outcomes)for the submitted paper}
 \format{
 a data frame with 22270 records and 3 variables.
 }
