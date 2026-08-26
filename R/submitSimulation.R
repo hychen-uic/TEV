@@ -1,14 +1,5 @@
-# upload package TEV
-#if(1==1){
- #install.packages("devtools")
- #library(devtools)
- #devtools::install_github("hychen-uic/TEV",force=T)
- #devtools::install_github("xliusufe/RidgeVar")
-
-# library(TEV)
-# library(RidgeVar)
-#}
 #' @import RidgeVar
+#' @import SILGGM
 NULL
 #' Simulation studies for JASA submission
 #'
@@ -21,25 +12,28 @@ NULL
 #' @param p dimension of the covariates, for example, p=200,
 #' @param p1 subdimension of covariates having nonzero effects p1<=p, e.g. p1=100 when p=200.
 #'           in the simulation of sparse effects, p1=4.
-#' @param cs the constant for determining regression coefficients. it needs to be adjusted to achieve R2 wanted.
+#' @param effectconst the constant for determining regression coefficients. it needs to be adjusted to achieve R2 wanted.
 #' @param powx powertansformation of normal covariates, powx=1 means normal, powx=2 means chi-square
 #' @param powy powertansformation of normal random error, powx=1 means normal, powx=2 means chi-square
 #' @param xsig standard deviation of covariates
 #' @param errsig standard deviation of random error.
 #' @param covrate rate of combination for two different covariance generators (to create vary correlation structure)
 #' @param rho correlation coefficient in the AR(1) covariate dependence model. This has effects only when method!="our".
+#' @param rho correlation coefficient in the AR(1) covariate dependence model. This has effects only when method is not "our".
 #' @param nrep number of replicates in simulation sample for variance estimation nrep=1000 by default.
 #' @param rept number of replicates in simulation rept=1000 by default.
 #'
 #' @return Estimate of the proportion of the explained variation and confidence intervals for the proportion.
 #'
-#' @examples \dontrun{jasaSIMULATION(cindep="T",sparse="F", p=200, p1=100, n=400,N=200,
+#' @examples \dontrun{submitSIMULATION(cindep="T",sparse="F", p=200, p1=100, n=400,N=200,
 #'                                   powx=1,powy=1,xsig=1,errsig=1,rho=0.9,rept=100,nrep=1000)}
 #'
 #' @export
 #'
-submitSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0,
+
+submitSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, effectconst=1.0,
                 powx=1,powy=1,xsig=1,errsig=1,covrate=0.5,rho=0.9,nrep=1000,rept=1000){
+
 # 1. Parameter setup in the simulation study
 #cindep="F" # covariate independent ("T") or not ("F")
 
@@ -53,21 +47,21 @@ submitSimulation=function(cindep="T",sparse="F",n=400,N=200,p=200,p1=100, cs=1.0
 
 if(cindep=="T"){
    sqrtsig=diag(rep(1,p))      # independent covariates
+
 }else{
   sqrtsig1=sqrtpdm(makecora(1.0,0.01,0.3,p)[[1]])[[1]] # our dependence matrix of x
   sqrtsig2=sqrtpdm(makecorb(rho=rho,fix=F,p)[[1]])[[1]] #alternative dependence matrix of x
   sqrtsig=sqrtsig1*covrate+sqrtsig2*(1-covrate) # combine two covariance matrices
 }
 
-
 if(sparse=="T"){
  #p1=4    # sparse regression parameters
  sgn=1 #sign(runif(p1)-0.5)
- beta=c(sgn*rep(cs/sqrt(p1),p1),rep(0,p-p1))
+ beta=c(sgn*rep(effectconst/sqrt(p1),p1),rep(0,p-p1))
 }else{
  #p1=p/2    # dense regression parameters
  sgn=1.0 #sign(runif(p1)-0.5)
- beta=c(sgn*rep(cs/sqrt(p1),p1),rep(0,p-p1)) #0.18, 0.35 (corr. normal)                                           #0.26, 0.52 (corr. nonnormal)
+ beta=c(sgn*rep(effectconst/sqrt(p1),p1),rep(0,p-p1)) #0.18, 0.35 (corr. normal)                                           #0.26, 0.52 (corr. nonnormal)
  #beta=c(sgn*1.0/c(1:p1), rep(0,p-p1)) #alternative dense effects
 }
 
@@ -415,7 +409,7 @@ if(1==2){
     V2TS[i,4:(3+2*pa)]=aa[[5]]   # 99%, 95%, 90% confidence intervals under normal
     V2TS[i,(4+2*pa):(3+4*pa)]=aa[[6]] # 99%, 95%, 90% confidence intervals in general
     # print(exvar)
-}
+} # end of comment out
 
     z=decor(dat=xx,decorate=0.5,inter=0) #transformed by truth
 
